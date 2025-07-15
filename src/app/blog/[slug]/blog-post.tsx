@@ -44,7 +44,7 @@ interface RelatedPost {
   title: string;
   slug: string;
   excerpt: string;
-  featuredImage: string;
+  featuredImage: string | any;
   publishedAt: string;
   readTime: string;
   category: string;
@@ -208,10 +208,14 @@ export default function BlogPost({
                 <h2 className='text-2xl font-bold'>Bài viết liên quan</h2>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                   {relatedPosts.map((relatedPost) => (
-                    <Card key={relatedPost.id} className='group hover:shadow-lg transition-shadow'>
-                      <div className='relative aspect-video overflow-hidden rounded-t-lg'>
+                    <Card
+                      key={relatedPost.id}
+                      className='group hover:shadow-lg transition-shadow py-0 gap-0'
+                    >
+                      <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg'>
                         <Image
                           src={relatedPost.featuredImage || '/placeholder.svg'}
+                          // src={'/placeholder.svg'}
                           alt={relatedPost.title}
                           fill
                           className='object-cover group-hover:scale-105 transition-transform duration-300'
@@ -219,7 +223,7 @@ export default function BlogPost({
                         <Badge className='absolute top-2 left-2 text-xs'>
                           {relatedPost.category}
                         </Badge>
-                      </div>
+                      </CardHeader>
                       <CardContent className='p-4 space-y-3'>
                         <Link href={`/blog/${relatedPost.slug}`} className='block'>
                           <h3 className='font-semibold line-clamp-2 group-hover:text-primary transition-colors'>

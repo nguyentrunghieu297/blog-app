@@ -261,6 +261,10 @@ body {
     @apply mb-4 leading-relaxed text-justify text-foreground;
   } */
 
+  .blog-content p {
+    @apply mb-4 leading-relaxed text-foreground;
+  }
+
   .blog-content ul {
     @apply my-4 pl-6 space-y-1;
   }

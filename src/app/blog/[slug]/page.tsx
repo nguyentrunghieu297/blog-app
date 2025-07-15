@@ -1,5 +1,6 @@
 import BlogPost from './blog-post';
 import Saigon from '@/public/images/saigon-xua.jpg';
+import Saigon1 from '@/public/images/test-img.jpg';
 
 // Mock data - trong thực tế bạn sẽ fetch từ database hoặc CMS
 const blogPost = {
@@ -96,7 +97,7 @@ const blogPost = {
 
       <p>Ngày nay, Hà Nội không chỉ là trung tâm chính trị mà còn là trung tâm kinh tế, văn hóa, giáo dục và khoa học công nghệ quan trọng của cả nước. Thành phố đã và đang hiện đại hóa với nhiều công trình kiến trúc mới, hệ thống giao thông phát triển, đồng thời vẫn giữ được những giá trị văn hóa truyền thống quý báu.</p>
 
-      <p>Với hơn 1000 năm lịch sử, Hà Nội đã trở thành biểu tượng của sự kiên cường, bất굴 và khát vọng phát triển của dân tộc Việt Nam. Từ thành Thăng Long cổ kính đến Hà Nội hiện đại, thủ đô đã chứng kiến và đồng hành cùng mọi thăng trầm của lịch sử dân tộc, xứng đáng với danh hiệu "Thành phố vì hòa bình" mà UNESCO đã trao tặng.</p>
+      <p>Với hơn 1000 năm lịch sử, Hà Nội đã trở thành biểu tượng của sự kiên cường, bất khuất và khát vọng phát triển của dân tộc Việt Nam. Từ thành Thăng Long cổ kính đến Hà Nội hiện đại, thủ đô đã chứng kiến và đồng hành cùng mọi thăng trầm của lịch sử dân tộc, xứng đáng với danh hiệu "Thành phố vì hòa bình" mà UNESCO đã trao tặng.</p>
     </div>
   `,
   author: {
@@ -157,7 +158,7 @@ const relatedPosts = [
     title: 'Làm chủ React Hooks trong 30 phút',
     slug: 'lam-chu-react-hooks',
     excerpt: 'Tìm hiểu các React Hooks phổ biến và cách sử dụng hiệu quả',
-    featuredImage: '/placeholder.svg?height=200&width=300',
+    featuredImage: Saigon,
     publishedAt: '2024-01-12',
     readTime: '6 phút đọc',
     category: 'Tutorial',
@@ -167,7 +168,7 @@ const relatedPosts = [
     title: 'Deployment Next.js lên Vercel trong 5 phút',
     slug: 'deployment-nextjs-vercel',
     excerpt: 'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel',
-    featuredImage: '/placeholder.svg?height=200&width=300',
+    featuredImage: Saigon1,
     publishedAt: '2024-01-09',
     readTime: '4 phút đọc',
     category: 'DevOps',
@@ -177,7 +178,7 @@ const relatedPosts = [
     title: 'State Management với Zustand',
     slug: 'state-management-zustand',
     excerpt: 'Khám phá Zustand - thư viện state management nhẹ và mạnh mẽ',
-    featuredImage: '/placeholder.svg?height=200&width=300',
+    featuredImage: Saigon1,
     publishedAt: '2024-01-07',
     readTime: '8 phút đọc',
     category: 'Tutorial',
