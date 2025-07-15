@@ -1,37 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, Clock, Tag, ChevronRight } from 'lucide-react';
-
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: {
-    name: string;
-    avatar: string;
-    bio: string;
-  };
-  publishedAt: string;
-  readTime: string;
-  tags: string[];
-  featuredImage: string | any;
-  category: string;
-}
-
-interface RecentPost {
-  id: string;
-  title: string;
-  slug: string;
-  publishedAt: string;
-  readTime: string;
-}
+import { BlogPost as PostBLog, RecentPost, RelatedPost } from '@/types/post';
 
 interface MonthlyArchive {
   month: string;
@@ -39,19 +13,8 @@ interface MonthlyArchive {
   slug: string;
 }
 
-interface RelatedPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage: string | any;
-  publishedAt: string;
-  readTime: string;
-  category: string;
-}
-
 interface BlogPostProps {
-  post: BlogPost;
+  post: PostBLog;
   recentPosts: RecentPost[];
   monthlyArchive: MonthlyArchive[];
   relatedPosts: RelatedPost[];
@@ -68,7 +31,7 @@ export default function BlogPost({
       <div className='container mx-auto px-4 py-8'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
           {/* Sidebar */}
-          <aside className='lg:col-span-1 space-y-6'>
+          <aside className='sticky top-16 lg:col-span-1 space-y-6'>
             {/* Recent Posts */}
             <Card>
               <CardHeader>
