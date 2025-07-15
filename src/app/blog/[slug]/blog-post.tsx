@@ -29,11 +29,11 @@ export default function BlogPost({
   return (
     <div className='min-h-screen bg-background'>
       <div className='container mx-auto px-4 py-8'>
-        <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
+        <div className='grid grid-cols-1 lg:grid-cols-4 gap-12'>
           {/* Sidebar */}
-          <aside className='sticky top-16 lg:col-span-1 space-y-6'>
+          <aside className='lg:col-span-1 space-y-6 h-full lg:sticky lg:top-16'>
             {/* Recent Posts */}
-            <Card>
+            <Card className='shadow-none'>
               <CardHeader>
                 <CardTitle className='text-lg font-semibold'>Bài viết mới</CardTitle>
               </CardHeader>
@@ -59,9 +59,9 @@ export default function BlogPost({
             </Card>
 
             {/* Monthly Archive */}
-            <Card>
+            <Card className='shadow-none'>
               <CardHeader>
-                <CardTitle className='text-lg font-semibold'>Lưu trữ theo tháng</CardTitle>
+                <CardTitle className='text-lg font-semibold'>Bài viết theo tháng</CardTitle>
               </CardHeader>
               <CardContent className='space-y-2'>
                 {monthlyArchive.map((archive) => (
@@ -83,7 +83,7 @@ export default function BlogPost({
           </aside>
 
           {/* Main Content */}
-          <main className='lg:col-span-3'>
+          <main className='lg:col-span-3 min-h-[calc(100vh-theme(spacing.16))]'>
             <article className='space-y-8'>
               {/* Header */}
               <header className='space-y-4'>

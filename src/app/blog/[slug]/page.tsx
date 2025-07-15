@@ -18,8 +18,9 @@ const blogPost = {
 
       <p>Trong thời kỳ các vua Hùng xây dựng nhà nước Văn Lang (thế kỷ VII - III trước Công nguyên), vùng đất này thuộc bộ Mê Linh, một trong 15 bộ của nước Văn Lang. Đây cũng là nơi sinh ra nữ tướng Hai Bà Trưng, những người anh hùng đã lãnh đạo cuộc khởi nghĩa chống quân xâm lược phương Bắc vào thế kỷ I sau Công nguyên.</p>
 
-      <div style="text-align: center; margin: 2rem 0;">
-        <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=400&fit=crop" alt="Văn Miếu Hà Nội - Biểu tượng của nền giáo dục truyền thống Việt Nam" style="width: 100%; max-width: 800px; height: 400px; object-fit: cover; border-radius: 8px;" />
+      <div style="text-align: center; margin: 2rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=400&fit=crop" 
+        alt="Văn Miếu Hà Nội - Biểu tượng của nền giáo dục truyền thống Việt Nam" style="width: 100%; max-width: 1000px; height: 500px; object-fit: cover; border-radius: 8px;" />
         <p style="font-style: italic; color: #666; margin-top: 0.5rem; font-size: 0.9rem;">Văn Miếu Hà Nội - Biểu tượng của nền giáo dục truyền thống Việt Nam</p>
       </div>
 
@@ -39,8 +40,9 @@ const blogPost = {
         "Đại Việt quốc Thăng Long thành, địa thế long hùng, thiên nhiên hiểm cố" - Trích từ bia đá thời Lý, mô tả vị trí địa lý quan trọng của Thăng Long.
       </blockquote>
 
-      <div style="text-align: center; margin: 2rem 0;">
-        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=400&fit=crop" alt="Hoàng thành Thăng Long - Di sản văn hóa thế giới" style="width: 100%; max-width: 800px; height: 400px; object-fit: cover; border-radius: 8px;" />
+      <div style="text-align: center; margin: 2rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=400&fit=crop" 
+        alt="Hoàng thành Thăng Long - Di sản văn hóa thế giới" style="width: 100%; max-width: 1000px; height: 500px; object-fit: cover; border-radius: 8px;" />
         <p style="font-style: italic; color: #666; margin-top: 0.5rem; font-size: 0.9rem;">Hoàng thành Thăng Long - Di sản văn hóa thế giới được UNESCO công nhận</p>
       </div>
 
@@ -62,8 +64,11 @@ const blogPost = {
 
       <p>Cuối thế kỷ XVI, khi họ Trịnh nắm quyền ở phía Bắc, Thăng Long trở thành trung tâm của vùng Đàng Ngoài. Tuy nhiên, do tình trạng phân tranh Trịnh - Nguyễn kéo dài, thành phố không thể phát triển như thời kỳ thống nhất trước đó.</p>
 
-      <div style="text-align: center; margin: 2rem 0;">
-        <img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=400&fit=crop" alt="Hồ Hoàn Kiếm - Trái tim của Hà Nội" style="width: 100%; max-width: 800px; height: 400px; object-fit: cover; border-radius: 8px;" />
+      <div style="text-align: center; margin: 2rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <img 
+        src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=400&fit=crop" 
+        alt="Hồ Hoàn Kiếm - Trái tim của Hà Nội" 
+        style="width: 100%; max-width: 1000px; height: 500px; margin-left: auto; margin-right: auto; object-fit: cover; border-radius: 8px;" />
         <p style="font-style: italic; color: #666; margin-top: 0.5rem; font-size: 0.9rem;">Hồ Hoàn Kiếm - Trái tim của Hà Nội với những truyền thuyết cổ xưa</p>
       </div>
 
