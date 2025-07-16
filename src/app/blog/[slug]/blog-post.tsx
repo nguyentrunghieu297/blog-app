@@ -28,7 +28,7 @@ export default function BlogPost({
 }: BlogPostProps) {
   return (
     <div className='min-h-screen bg-background'>
-      <div className='container mx-auto px-4 py-8'>
+      <div className='container mx-auto px-0 py-8'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-12'>
           {/* Sidebar */}
           <aside className='lg:col-span-1 space-y-6 h-full lg:sticky lg:top-16'>

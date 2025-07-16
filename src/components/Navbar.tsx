@@ -72,9 +72,9 @@ export default function Navbar() {
                   </SheetClose>
                 ))}
 
-                <div className='pt-4 border-t'>
-                  <Button className='w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'>
-                    Get Started
+                <div className='pt-4 mx-4 border-t'>
+                  <Button className='w-full px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'>
+                    Đăng nhập
                   </Button>
                 </div>
               </div>

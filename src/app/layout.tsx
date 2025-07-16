@@ -25,7 +25,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={beVietnamPro.className}>
         <Navbar />
-        <main className='p-4 max-w-7xl mx-auto'>{children}</main>
+        <main className='p-4 max-w-[calc(100vw-5rem)] mx-auto min-h-[calc(100vh-126px)]'>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
