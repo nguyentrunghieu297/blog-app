@@ -143,7 +143,7 @@ export default function BlogList({
             {/* Monthly Archive */}
             <Card>
               <CardHeader>
-                <CardTitle className='text-lg font-semibold'>Lưu trữ theo tháng</CardTitle>
+                <CardTitle className='text-lg font-semibold'>Bài viết theo tháng</CardTitle>
               </CardHeader>
               <CardContent className='space-y-2'>
                 {monthlyArchive.map((archive) => (

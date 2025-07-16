@@ -2,86 +2,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, Clock, Tag, ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BlogPost as PostBLog, RecentPost, RelatedPost } from '@/types/post';
-
-interface MonthlyArchive {
-  month: string;
-  count: number;
-  slug: string;
-}
+import { BlogPost as PostBLog, RelatedPost } from '@/types/post';
 
 interface BlogPostProps {
   post: PostBLog;
-  recentPosts: RecentPost[];
-  monthlyArchive: MonthlyArchive[];
   relatedPosts: RelatedPost[];
 }
 
-export default function BlogPost({
-  post,
-  recentPosts,
-  monthlyArchive,
-  relatedPosts,
-}: BlogPostProps) {
+export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
   return (
     <div className='min-h-screen bg-background'>
-      <div className='container mx-auto px-0 py-8'>
-        <div className='grid grid-cols-1 lg:grid-cols-4 gap-12'>
-          {/* Sidebar */}
-          <aside className='lg:col-span-1 space-y-6 h-full lg:sticky lg:top-16'>
-            {/* Recent Posts */}
-            <Card className='shadow-none'>
-              <CardHeader>
-                <CardTitle className='text-lg font-semibold'>Bài viết mới</CardTitle>
-              </CardHeader>
-              <CardContent className='space-y-4'>
-                {recentPosts.map((recentPost) => (
-                  <div key={recentPost.id} className='space-y-2'>
-                    <Link
-                      href={`/blog/${recentPost.slug}`}
-                      className='block text-sm font-medium hover:text-primary transition-colors line-clamp-2'
-                    >
-                      {recentPost.title}
-                    </Link>
-                    <div className='flex items-center text-xs text-muted-foreground space-x-2'>
-                      <Calendar className='h-3 w-3' />
-                      <span>{new Date(recentPost.publishedAt).toLocaleDateString('vi-VN')}</span>
-                      <Clock className='h-3 w-3' />
-                      <span>{recentPost.readTime}</span>
-                    </div>
-                    <Separator />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Monthly Archive */}
-            <Card className='shadow-none'>
-              <CardHeader>
-                <CardTitle className='text-lg font-semibold'>Bài viết theo tháng</CardTitle>
-              </CardHeader>
-              <CardContent className='space-y-2'>
-                {monthlyArchive.map((archive) => (
-                  <Link
-                    key={archive.slug}
-                    href={`/blog/archive/${archive.slug}`}
-                    className='flex items-center justify-between py-1 text-sm hover:text-primary transition-colors group'
-                  >
-                    <span className='group-hover:translate-x-1 transition-transform'>
-                      {archive.month}
-                    </span>
-                    <Badge variant='secondary' className='text-xs'>
-                      {archive.count}
-                    </Badge>
-                  </Link>
-                ))}
-              </CardContent>
-            </Card>
-          </aside>
-
+      <div className='container mx-auto px-[10.5rem] py-8'>
+        <div className=''>
           {/* Main Content */}
           <main className='lg:col-span-3 min-h-[calc(100vh-theme(spacing.16))]'>
             <article className='space-y-8'>

@@ -1,6 +1,6 @@
 import BlogPost from './blog-post';
 import Saigon from '@/public/images/saigon-xua.jpg';
-import Saigon1 from '@/public/images/test-img.jpg';
+import blog_image from '@/public/images/test-img.jpg';
 
 // Mock data - trong thực tế bạn sẽ fetch từ database hoặc CMS
 const blogPost = {
@@ -118,85 +118,57 @@ const blogPost = {
   category: 'Lịch sử',
 };
 
-const recentPosts = [
+const relatedPosts = [
+  {
+    id: '1',
+    title: 'Lịch sử hình thành và phát triển của Hà Nội - Thủ đô ngàn năm văn hiến',
+    excerpt:
+      'Khám phá hành trình lịch sử hơn 1000 năm của Hà Nội, từ thành Thăng Long cổ kính đến thủ đô hiện đại của Việt Nam ngày nay.',
+    slug: 'lich-su-ha-noi-thu-do-ngan-nam',
+    featuredImage: blog_image,
+    publishedAt: '2024-01-15',
+    readTime: '15 phút đọc',
+    category: 'Lịch sử',
+    tags: ['Lịch sử Việt Nam', 'Hà Nội', 'Thăng Long'],
+    author: {
+      name: 'Tiến sĩ Nguyễn Văn Sử',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
+  },
   {
     id: '2',
     title: 'Tối ưu hóa hiệu suất React với useMemo và useCallback',
+    excerpt:
+      'Tìm hiểu cách sử dụng useMemo và useCallback để tối ưu hóa hiệu suất ứng dụng React của bạn một cách hiệu quả.',
     slug: 'toi-uu-hoa-hieu-suat-react',
+    featuredImage: blog_image,
     publishedAt: '2024-01-10',
-    readTime: '5 phút đọc',
+    readTime: '8 phút đọc',
+    category: 'Lập trình',
+    tags: ['React', 'JavaScript', 'Performance'],
+    author: {
+      name: 'Nguyễn Văn Dev',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
   },
   {
     id: '3',
     title: 'Xây dựng API RESTful với Node.js và Express',
+    excerpt:
+      'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
     slug: 'xay-dung-api-restful-nodejs',
+    featuredImage: blog_image,
     publishedAt: '2024-01-08',
     readTime: '12 phút đọc',
-  },
-  {
-    id: '4',
-    title: 'CSS Grid vs Flexbox: Khi nào nên sử dụng?',
-    slug: 'css-grid-vs-flexbox',
-    publishedAt: '2024-01-05',
-    readTime: '7 phút đọc',
-  },
-];
-
-const monthlyArchive = [
-  { month: 'January 2024', count: 4, slug: '2024-01' },
-  { month: 'December 2023', count: 6, slug: '2023-12' },
-  { month: 'November 2023', count: 3, slug: '2023-11' },
-  { month: 'October 2023', count: 5, slug: '2023-10' },
-  { month: 'September 2023', count: 2, slug: '2023-09' },
-  { month: 'August 2023', count: 4, slug: '2023-08' },
-  { month: 'July 2023', count: 3, slug: '2023-07' },
-  { month: 'June 2023', count: 2, slug: '2023-06' },
-  { month: 'May 2023', count: 5, slug: '2023-05' },
-  { month: 'April 2023', count: 3, slug: '2023-04' },
-  { month: 'March 2023', count: 4, slug: '2023-03' },
-  { month: 'February 2023', count: 2, slug: '2023-02' },
-];
-
-const relatedPosts = [
-  {
-    id: '5',
-    title: 'Làm chủ React Hooks trong 30 phút',
-    slug: 'lam-chu-react-hooks',
-    excerpt: 'Tìm hiểu các React Hooks phổ biến và cách sử dụng hiệu quả',
-    featuredImage: Saigon,
-    publishedAt: '2024-01-12',
-    readTime: '6 phút đọc',
-    category: 'Tutorial',
-  },
-  {
-    id: '6',
-    title: 'Deployment Next.js lên Vercel trong 5 phút',
-    slug: 'deployment-nextjs-vercel',
-    excerpt: 'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel',
-    featuredImage: Saigon1,
-    publishedAt: '2024-01-09',
-    readTime: '4 phút đọc',
-    category: 'DevOps',
-  },
-  {
-    id: '7',
-    title: 'State Management với Zustand',
-    slug: 'state-management-zustand',
-    excerpt: 'Khám phá Zustand - thư viện state management nhẹ và mạnh mẽ',
-    featuredImage: Saigon1,
-    publishedAt: '2024-01-07',
-    readTime: '8 phút đọc',
-    category: 'Tutorial',
+    category: 'Backend',
+    tags: ['Node.js', 'Express', 'API'],
+    author: {
+      name: 'Trần Văn Backend',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
   },
 ];
 
 export default function BlogPostPage() {
-  return (
-    <BlogPost
-      post={blogPost}
-      recentPosts={recentPosts}
-      monthlyArchive={monthlyArchive}
-      relatedPosts={relatedPosts}
-    />
-  );
+  return <BlogPost post={blogPost} relatedPosts={relatedPosts} />;
 }
