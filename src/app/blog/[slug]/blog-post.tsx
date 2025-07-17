@@ -5,6 +5,13 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BlogPost as PostBLog, RelatedPost } from '@/types/post';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 interface BlogPostProps {
   post: PostBLog;
@@ -77,7 +84,10 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
               </div>
 
               {/* Content với custom CSS classes */}
-              <div className='blog-content' dangerouslySetInnerHTML={{ __html: post.content }} />
+              <div
+                className='blog-content'
+                dangerouslySetInnerHTML={{ __html: post.content ? post.content : '' }}
+              />
 
               {/* Author Bio */}
               <Card className='bg-muted/50'>
@@ -102,45 +112,58 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
 
               {/* Related Posts */}
               <section className='space-y-6'>
-                <h2 className='text-2xl font-bold'>Bài viết liên quan</h2>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {relatedPosts.map((relatedPost) => (
-                    <Card
-                      key={relatedPost.id}
-                      className='group hover:shadow-lg transition-shadow py-0 gap-0'
-                    >
-                      <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg'>
-                        <Image
-                          src={relatedPost.featuredImage || '/placeholder.svg'}
-                          // src={'/placeholder.svg'}
-                          alt={relatedPost.title}
-                          fill
-                          className='object-cover group-hover:scale-105 transition-transform duration-300'
-                        />
-                        <Badge className='absolute top-2 left-2 text-xs'>
-                          {relatedPost.category}
-                        </Badge>
-                      </CardHeader>
-                      <CardContent className='p-4 space-y-3'>
-                        <Link href={`/blog/${relatedPost.slug}`} className='block'>
-                          <h3 className='font-semibold line-clamp-2 group-hover:text-primary transition-colors'>
-                            {relatedPost.title}
-                          </h3>
-                        </Link>
-                        <p className='text-sm text-muted-foreground line-clamp-2'>
-                          {relatedPost.excerpt}
-                        </p>
-                        <div className='flex items-center text-xs text-muted-foreground space-x-2'>
-                          <Calendar className='h-3 w-3' />
-                          <span>
-                            {new Date(relatedPost.publishedAt).toLocaleDateString('vi-VN')}
-                          </span>
-                          <Clock className='h-3 w-3' />
-                          <span>{relatedPost.readTime}</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                <h2 className='text-2xl font-bold'>Bài viết vừa xem</h2>
+                <div>
+                  <Carousel
+                    opts={{
+                      align: 'start',
+                      loop: false,
+                    }}
+                    className='w-full'
+                  >
+                    <CarouselContent className='-ml-2 md:-ml-4'>
+                      {relatedPosts.map((relatedPost) => (
+                        <CarouselItem
+                          key={relatedPost.id}
+                          className='pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3'
+                        >
+                          <Card className='group hover:shadow-lg transition-shadow py-0 gap-0 h-full'>
+                            <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg p-0'>
+                              <Image
+                                src={relatedPost.featuredImage || '/placeholder.svg'}
+                                alt={relatedPost.title}
+                                fill
+                                className='object-cover group-hover:scale-105 transition-transform duration-300'
+                              />
+                              <Badge className='absolute top-2 left-2 text-xs'>
+                                {relatedPost.category}
+                              </Badge>
+                            </CardHeader>
+                            <CardContent className='p-4 space-y-3 flex-1'>
+                              <Link href={`/blog/${relatedPost.slug}`} className='block'>
+                                <h3 className='font-semibold line-clamp-2 group-hover:text-primary transition-colors'>
+                                  {relatedPost.title}
+                                </h3>
+                              </Link>
+                              <p className='text-sm text-muted-foreground line-clamp-3'>
+                                {relatedPost.excerpt}
+                              </p>
+                              <div className='flex items-center text-xs text-muted-foreground space-x-2'>
+                                <Calendar className='h-3 w-3' />
+                                <span>
+                                  {new Date(relatedPost.publishedAt).toLocaleDateString('vi-VN')}
+                                </span>
+                                <Clock className='h-3 w-3' />
+                                <span>{relatedPost.readTime}</span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
                 </div>
               </section>
             </article>

@@ -167,6 +167,38 @@ const relatedPosts = [
       avatar: '/placeholder.svg?height=40&width=40',
     },
   },
+  {
+    id: '4',
+    title: 'Xây dựng API RESTful với Node.js và Express',
+    excerpt:
+      'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
+    slug: 'xay-dung-api-restful-nodejs',
+    featuredImage: blog_image,
+    publishedAt: '2024-01-08',
+    readTime: '12 phút đọc',
+    category: 'Backend',
+    tags: ['Node.js', 'Express', 'API'],
+    author: {
+      name: 'Trần Văn Backend',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
+  },
+  {
+    id: '5',
+    title: 'Xây dựng API RESTful với Node.js và Express',
+    excerpt:
+      'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
+    slug: 'xay-dung-api-restful-nodejs',
+    featuredImage: blog_image,
+    publishedAt: '2024-01-08',
+    readTime: '12 phút đọc',
+    category: 'Backend',
+    tags: ['Node.js', 'Express', 'API'],
+    author: {
+      name: 'Trần Văn Backend',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
+  },
 ];
 
 export default function BlogPostPage() {

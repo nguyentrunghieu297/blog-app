@@ -28,7 +28,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className='text-sm font-medium text-muted-foreground transition-colors duration-300 hover:text-green-900 relative group'
+                className='text-sm font-medium text-muted-foreground transition-colors duration-300 hover:text-black relative group'
               >
                 {link.label}
               </Link>

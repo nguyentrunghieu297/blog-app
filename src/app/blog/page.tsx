@@ -98,6 +98,53 @@ const blogPosts = [
       avatar: '/placeholder.svg?height=40&width=40',
     },
   },
+  {
+    id: '7',
+    title: 'CSS Grid vs Flexbox: Khi nào nên sử dụng?',
+    excerpt:
+      'So sánh chi tiết giữa CSS Grid và Flexbox, giúp bạn lựa chọn công cụ phù hợp cho từng tình huống thiết kế.',
+    slug: 'css-grid-vs-flexbox',
+    featuredImage: blog_image,
+    publishedAt: '2024-01-05',
+    readTime: '7 phút đọc',
+    category: 'Frontend',
+    tags: ['CSS', 'Grid', 'Flexbox'],
+    author: {
+      name: 'Lê Thị Frontend',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
+  },
+  {
+    id: '8',
+    title: 'Văn hóa ẩm thực Hà Nội xưa và nay',
+    excerpt: 'Hành trình khám phá ẩm thực truyền thống của người Hà Nội qua các thời kỳ lịch sử.',
+    slug: 'van-hoa-am-thuc-ha-noi',
+    featuredImage: blog_image,
+    publishedAt: '2024-01-03',
+    readTime: '6 phút đọc',
+    category: 'Văn hóa',
+    tags: ['Ẩm thực', 'Hà Nội', 'Văn hóa'],
+    author: {
+      name: 'Phạm Văn Ẩm thực',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
+  },
+  {
+    id: '9',
+    title: 'Deployment Next.js lên Vercel trong 5 phút',
+    excerpt:
+      'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel một cách nhanh chóng và hiệu quả.',
+    slug: 'deployment-nextjs-vercel',
+    featuredImage: blog_image,
+    publishedAt: '2023-12-28',
+    readTime: '4 phút đọc',
+    category: 'DevOps',
+    tags: ['Next.js', 'Vercel', 'Deployment'],
+    author: {
+      name: 'Hoàng Văn DevOps',
+      avatar: '/placeholder.svg?height=40&width=40',
+    },
+  },
 ];
 
 const categories = [

@@ -1,49 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Calendar, Clock, Tag, Search, Filter } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  slug: string;
-  featuredImage: string | any;
-  publishedAt: string;
-  readTime: string;
-  category: string;
-  tags: string[];
-  author: {
-    name: string;
-    avatar: string;
-  };
-}
-
-interface Category {
-  name: string;
-  slug: string;
-  count: number;
-}
-
-interface MonthlyArchive {
-  month: string;
-  count: number;
-  slug: string;
-}
-
-interface PopularTag {
-  name: string;
-  count: number;
-}
+import { BlogPost, Category, MonthlyArchive, PopularTag } from '@/types/post';
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -61,7 +27,6 @@ export default function BlogList({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedTag, setSelectedTag] = useState('');
-
   // Filter posts based on search term, category, and tag
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =
@@ -219,7 +184,7 @@ export default function BlogList({
 
             {/* Blog Posts Grid */}
             {filteredPosts.length > 0 ? (
-              <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
                 {filteredPosts.map((post) => (
                   <Card
                     key={post.id}
@@ -239,7 +204,7 @@ export default function BlogList({
                     <CardContent className='p-6 space-y-4'>
                       {/* Title */}
                       <Link href={`/blog/${post.slug}`} className='block'>
-                        <h2 className='text-xl font-semibold line-clamp-2 group-hover:text-primary transition-colors'>
+                        <h2 className='text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors'>
                           {post.title}
                         </h2>
                       </Link>
@@ -267,28 +232,13 @@ export default function BlogList({
 
                       {/* Meta Info */}
                       <div className='flex items-center justify-between text-xs text-muted-foreground'>
-                        <div className='flex items-center space-x-2'>
-                          <Avatar className='h-6 w-6'>
-                            <AvatarImage
-                              src={post.author.avatar || '/placeholder.svg'}
-                              alt={post.author.name}
-                            />
-                            <AvatarFallback className='text-xs'>
-                              {post.author.name.charAt(0)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span>{post.author.name}</span>
+                        <div className='flex items-center space-x-1'>
+                          <Calendar className='h-3 w-3' />
+                          <span>{new Date(post.publishedAt).toLocaleDateString('vi-VN')}</span>
                         </div>
-
-                        <div className='flex items-center space-x-3'>
-                          <div className='flex items-center space-x-1'>
-                            <Calendar className='h-3 w-3' />
-                            <span>{new Date(post.publishedAt).toLocaleDateString('vi-VN')}</span>
-                          </div>
-                          <div className='flex items-center space-x-1'>
-                            <Clock className='h-3 w-3' />
-                            <span>{post.readTime}</span>
-                          </div>
+                        <div className='flex items-center space-x-1'>
+                          <Clock className='h-3 w-3' />
+                          <span>{post.readTime}</span>
                         </div>
                       </div>
                     </CardContent>
@@ -296,7 +246,7 @@ export default function BlogList({
                 ))}
               </div>
             ) : (
-              <div className='text-center py-12'>
+              <div className='text-center py-12 mt-12'>
                 <div className='text-muted-foreground mb-4'>
                   <Search className='h-12 w-12 mx-auto mb-4 opacity-50' />
                   <h3 className='text-lg font-semibold mb-2'>Không tìm thấy bài viết</h3>
@@ -319,7 +269,7 @@ export default function BlogList({
             {filteredPosts.length > 0 && (
               <div className='mt-12 flex justify-center'>
                 <div className='flex items-center space-x-2'>
-                  <Button variant='outline' size='sm' disabled>
+                  <Button variant='ghost' size='sm' disabled>
                     Trước
                   </Button>
                   <Button variant='default' size='sm'>
@@ -331,7 +281,7 @@ export default function BlogList({
                   <Button variant='outline' size='sm'>
                     3
                   </Button>
-                  <Button variant='outline' size='sm'>
+                  <Button variant='ghost' size='sm'>
                     Sau
                   </Button>
                 </div>

@@ -9,14 +9,14 @@ export function Footer() {
       <div className='container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground'>
         {/* Social Media Links (Optional) */}
         <div className='flex items-center gap-4'>
-          <Link href='#' aria-label='GitHub' className='hover:text-foreground transition-colors'>
-            <FaFacebook className='h-5 w-5' />
+          <Link href={'https://www.facebook.com'}>
+            <FaFacebook className='size-5 text-muted-foreground transition duration-350 hover:text-blue-500' />
           </Link>
-          <Link href='#' aria-label='Twitter' className='hover:text-foreground transition-colors'>
-            <FaGithub className='h-5 w-5' />
+          <Link href={'https://github.com'}>
+            <FaGithub className='size-5 text-muted-foreground transition duration-350 hover:text-black' />
           </Link>
-          <Link href='#' aria-label='LinkedIn' className='hover:text-foreground transition-colors'>
-            <FaLinkedin className='h-5 w-5' />
+          <Link href={'https://www.linkedin.com'}>
+            <FaLinkedin className='size-5 text-muted-foreground transition duration-350 hover:text-blue-800' />
           </Link>
         </div>
 
