@@ -1,5 +1,5 @@
 import BlogList from './blog-list';
-import blog_image from '@/public/images/test-img.jpg';
+import blog_image from '@/assets/images/test-img.jpg';
 
 // Mock data cho demo
 const blogPosts = [

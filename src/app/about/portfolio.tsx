@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Phone, MapPin, ExternalLink, Download, Code, Server, Palette } from 'lucide-react';
 import Image from 'next/image';
-import blog_image from '@/public/images/test-img.jpg';
+import blog_image from '@/assets/images/test-img.jpg';
 import { FaGithub } from 'react-icons/fa';
 
 export default function Portfolio() {
@@ -99,11 +99,11 @@ export default function Portfolio() {
             <div className='space-y-6'>
               <div className='space-y-4'>
                 <h1 className='text-4xl lg:text-6xl font-bold tracking-tight'>
-                  Xin chào, tôi là <span className='text-primary'>Nguyễn Văn A</span>
+                  Xin chào, tôi là <span className='text-primary'>Nguyễn Trung Hiếu</span>
                 </h1>
-                <p className='text-xl text-muted-foreground'>Full Stack Web Developer</p>
+                <p className='text-xl text-muted-foreground'>Frontend Web Developer</p>
                 <p className='text-lg leading-relaxed max-w-lg'>
-                  Với 4+ năm kinh nghiệm phát triển web, tôi chuyên tạo ra những ứng dụng web hiện
+                  Với 0+ năm kinh nghiệm phát triển web, tôi chuyên tạo ra những ứng dụng web hiện
                   đại, responsive và user-friendly. Đam mê công nghệ mới và luôn học hỏi không
                   ngừng.
                 </p>
@@ -300,7 +300,7 @@ export default function Portfolio() {
 
       {/* Contact Section */}
       <section className='py-20 px-4'>
-        <div className='max-w-4xl mx-auto text-center'>
+        <div className='max-w-5xl mx-auto text-center'>
           <h2 className='text-3xl font-bold mb-4'>Liên hệ với tôi</h2>
           <p className='text-muted-foreground mb-12'>
             Sẵn sàng cho cơ hội hợp tác mới. Hãy liên hệ để thảo luận về dự án của bạn!
@@ -311,7 +311,7 @@ export default function Portfolio() {
               <CardContent className='pt-6 text-center'>
                 <Mail className='w-8 h-8 text-primary mx-auto mb-4' />
                 <h3 className='font-semibold mb-2'>Email</h3>
-                <p className='text-muted-foreground'>your.email@gmail.com</p>
+                <p className='text-muted-foreground text-sm'>trunghieunguyen2729@gmail.com</p>
               </CardContent>
             </Card>
 
@@ -319,7 +319,7 @@ export default function Portfolio() {
               <CardContent className='pt-6 text-center'>
                 <Phone className='w-8 h-8 text-primary mx-auto mb-4' />
                 <h3 className='font-semibold mb-2'>Điện thoại</h3>
-                <p className='text-muted-foreground'>+84 123 456 789</p>
+                <p className='text-muted-foreground text-sm'>+84 819 438 687</p>
               </CardContent>
             </Card>
 
@@ -327,7 +327,7 @@ export default function Portfolio() {
               <CardContent className='pt-6 text-center'>
                 <MapPin className='w-8 h-8 text-primary mx-auto mb-4' />
                 <h3 className='font-semibold mb-2'>Địa chỉ</h3>
-                <p className='text-muted-foreground'>TP. Hồ Chí Minh, Việt Nam</p>
+                <p className='text-muted-foreground text-sm'>TP. Hồ Chí Minh, Việt Nam</p>
               </CardContent>
             </Card>
           </div>

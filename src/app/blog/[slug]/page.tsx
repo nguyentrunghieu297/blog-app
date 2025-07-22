@@ -1,6 +1,6 @@
 import BlogPost from './blog-post';
-import Saigon from '@/public/images/saigon-xua.jpg';
-import blog_image from '@/public/images/test-img.jpg';
+import Saigon from '@/assets/images/saigon-xua.jpg';
+import blog_image from '@/assets/images/test-img.jpg';
 
 // Mock data - trong thực tế bạn sẽ fetch từ database hoặc CMS
 const blogPost = {
