@@ -51,18 +51,17 @@ export function Footer() {
 
           <div className='md:col-span-2'>
             <h3 className='font-semibold mb-4'>Liên hệ</h3>
-            <div className=' text-muted-foreground'>
+            <div className='space-y-2 text-muted-foreground'>
               <div className='flex items-center gap-2'>
                 <IoIosMail className='size-3 text-muted-foreground' />
                 <p>trunghieunguyen2729@gmail.com</p>
               </div>
               <div className='flex items-center gap-2'>
                 <FaPhone className='size-3 text-muted-foreground' />
-                <p>+84 819 438 687</p>
+                <p>(+84) 819 438 687</p>
               </div>
               <div className='flex items-center gap-2'>
                 <FaMap className='size-3 text-muted-foreground' />
-
                 <p>TP. Hồ Chí Minh, Việt Nam</p>
               </div>
             </div>

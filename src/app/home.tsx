@@ -1,5 +1,7 @@
 'use client';
 
+import SplitText from '@/components/SplitText';
+import TextType from '@/components/TextType';
 import { StatsCounter } from '@/components/StatsCounter';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -23,9 +25,12 @@ import {
   Zap,
   Calendar,
   Clock,
+  Loader,
+  ExternalLink,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaGithub } from 'react-icons/fa';
 
 export default function Home() {
   const stats = [
@@ -123,29 +128,42 @@ export default function Home() {
     },
   ];
 
-  const featuredProjects = [
+  const projects = [
     {
       title: 'E-Commerce Platform',
-      description: 'Nền tảng thương mại điện tử với Next.js và Stripe',
-      tech: ['Next.js', 'TypeScript', 'Stripe'],
+      description:
+        'Nền tảng thương mại điện tử hoàn chỉnh với thanh toán trực tuyến, quản lý kho hàng và dashboard admin.',
+      tech: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
       image:
         'https://images.unsplash.com/photo-1752503650851-cbc3f8b00679?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      github: 'https://github.com',
+      demo: 'https://demo.com',
     },
     {
       title: 'Task Management App',
-      description: 'Ứng dụng quản lý công việc real-time',
-      tech: ['React', 'Node.js', 'Socket.io'],
+      description:
+        'Ứng dụng quản lý công việc với tính năng real-time collaboration, drag & drop và notifications.',
+      tech: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
       image:
         'https://images.unsplash.com/photo-1752503650851-cbc3f8b00679?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      github: 'https://github.com',
+      demo: 'https://demo.com',
     },
     {
-      title: 'Task Management App',
-      description: 'Ứng dụng quản lý công việc real-time',
-      tech: ['React', 'Node.js', 'Socket.io'],
+      title: 'Blog CMS',
+      description:
+        'Hệ thống quản lý nội dung blog với editor WYSIWYG, SEO optimization và analytics dashboard.',
+      tech: ['Vue.js', 'Laravel', 'MySQL', 'TinyMCE', 'Chart.js'],
       image:
         'https://images.unsplash.com/photo-1752503650851-cbc3f8b00679?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      github: 'https://github.com',
+      demo: 'https://demo.com',
     },
   ];
+
+  const handleAnimationComplete = () => {
+    console.log('All letters have animated!');
+  };
 
   return (
     <div className='min-h-screen bg-background'>
@@ -155,12 +173,36 @@ export default function Home() {
           <div className='grid lg:grid-cols-2 gap-12 items-center'>
             <div className='space-y-6'>
               <div className='space-y-4'>
-                <Badge variant='secondary' className='w-fit'>
-                  👋 Chào mừng đến với blog của tôi
-                </Badge>
-                <h1 className='text-3xl lg:text-5xl font-bold tracking-tight'>
-                  Something new to me and maybe to you
-                </h1>
+                <SplitText
+                  text='👋 Chào mừng đến với blog của tôi'
+                  className='text-xs font-normal text-left'
+                  delay={100}
+                  duration={0.6}
+                  ease='power3.out'
+                  splitType='chars'
+                  from={{ opacity: 0, y: 40 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin='-100px'
+                  textAlign='left'
+                  onLetterAnimationComplete={handleAnimationComplete}
+                />
+                <div className='space-y-2 h-24'>
+                  <h1 className='text-3xl lg:text-5xl font-bold tracking-tight'>
+                    {/* Something new to me and maybe to you */}
+                    <TextType
+                      text={[
+                        'Something new to me and maybe to you',
+                        'Một điều gì đó mới với tôi và có thể với bạn',
+                      ]}
+                      typingSpeed={75}
+                      pauseDuration={1500}
+                      showCursor={true}
+                      textColors={['#000']}
+                      cursorCharacter='|'
+                    />
+                  </h1>
+                </div>
                 <p className='text-xl text-muted-foreground leading-relaxed'>
                   Nơi tôi chia sẻ những kiến thức linh tinh được góp nhặt từ khắp nơi trên internet.
                   Mục đích là để lưu giữ và chia sẻ với mọi người.
@@ -316,6 +358,7 @@ export default function Home() {
                   </div>
                 </div>
                 <Button disabled className='w-full'>
+                  <Loader />
                   Đang phát triển...
                 </Button>
               </CardContent>
@@ -411,23 +454,38 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className='grid md:grid-cols-3 gap-8'>
-            {featuredProjects.map((project, index) => (
-              <Card key={index} className='overflow-hidden hover:shadow-lg transition-shadow p-0'>
+          <div className='grid lg:grid-cols-3 gap-8'>
+            {projects.map((project, index) => (
+              <Card key={index} className='overflow-hidden py-0'>
                 <div className='relative h-48'>
-                  <Image src={project.image} alt={project.title} fill className='object-cover' />
+                  <Image
+                    src={project.image || '/placeholder.svg'}
+                    alt={project.title}
+                    fill
+                    className='object-cover'
+                  />
                 </div>
                 <CardHeader>
                   <CardTitle>{project.title}</CardTitle>
                   <CardDescription>{project.description}</CardDescription>
                 </CardHeader>
-                <CardContent className='space-y-2 pb-6'>
-                  <div className='flex flex-wrap gap-2'>
+                <CardContent>
+                  <div className='flex flex-wrap gap-2 mb-4'>
                     {project.tech.map((tech) => (
                       <Badge key={tech} variant='outline' className='text-xs'>
                         {tech}
                       </Badge>
                     ))}
+                  </div>
+                  <div className='flex gap-2 pb-6'>
+                    <Button variant='outline' size='sm' className='gap-2 bg-transparent'>
+                      <FaGithub className='w-4 h-4' />
+                      Code
+                    </Button>
+                    <Button size='sm' className='gap-2'>
+                      <ExternalLink className='w-4 h-4' />
+                      Demo
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
