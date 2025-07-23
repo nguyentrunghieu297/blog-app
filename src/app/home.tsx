@@ -456,13 +456,16 @@ export default function Home() {
 
           <div className='grid lg:grid-cols-3 gap-8'>
             {projects.map((project, index) => (
-              <Card key={index} className='overflow-hidden py-0'>
+              <Card
+                key={index}
+                className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'
+              >
                 <div className='relative h-48'>
                   <Image
                     src={project.image || '/placeholder.svg'}
                     alt={project.title}
                     fill
-                    className='object-cover'
+                    className='object-cover group-hover:scale-105 transition-transform duration-300'
                   />
                 </div>
                 <CardHeader>
