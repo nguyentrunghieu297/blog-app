@@ -480,12 +480,12 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                  <div className='flex gap-2 pb-6'>
-                    <Button variant='outline' size='sm' className='gap-2 bg-transparent'>
+                  <div className='flex justify-end gap-2 pb-6'>
+                    <Button variant='outline' size='sm' className='gap-2 w-1/2 bg-transparent'>
                       <FaGithub className='w-4 h-4' />
                       Code
                     </Button>
-                    <Button size='sm' className='gap-2'>
+                    <Button size='sm' className='gap-2 w-1/2'>
                       <ExternalLink className='w-4 h-4' />
                       Demo
                     </Button>

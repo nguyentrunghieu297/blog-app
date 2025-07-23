@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Navigation } from '@/components/Navigation';
 import {
   Home,
   BookOpen,
@@ -73,8 +72,6 @@ export default function NotFound() {
 
   return (
     <div className='min-h-screen bg-background'>
-      <Navigation />
-
       <div className='container mx-auto px-4 py-16'>
         <div className='max-w-4xl mx-auto'>
           {/* Main 404 Section */}

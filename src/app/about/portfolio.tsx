@@ -229,13 +229,16 @@ export default function Portfolio() {
 
           <div className='grid lg:grid-cols-3 gap-8'>
             {projects.map((project, index) => (
-              <Card key={index} className='overflow-hidden py-0'>
+              <Card
+                key={index}
+                className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'
+              >
                 <div className='relative h-48'>
                   <Image
                     src={project.image || '/placeholder.svg'}
                     alt={project.title}
                     fill
-                    className='object-cover'
+                    className='object-cover group-hover:scale-105 transition-transform duration-300'
                   />
                 </div>
                 <CardHeader>
@@ -251,11 +254,11 @@ export default function Portfolio() {
                     ))}
                   </div>
                   <div className='flex gap-2 pb-6'>
-                    <Button variant='outline' size='sm' className='gap-2 bg-transparent'>
+                    <Button variant='outline' size='sm' className='gap-2 w-1/2 bg-transparent'>
                       <FaGithub className='w-4 h-4' />
                       Code
                     </Button>
-                    <Button size='sm' className='gap-2'>
+                    <Button size='sm' className='gap-2 w-1/2'>
                       <ExternalLink className='w-4 h-4' />
                       Demo
                     </Button>
