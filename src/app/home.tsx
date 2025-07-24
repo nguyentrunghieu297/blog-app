@@ -193,7 +193,7 @@ export default function Home() {
                     <TextType
                       text={[
                         'Something new to me and maybe to you',
-                        'Một điều gì đó mới với tôi và có thể với bạn',
+                        'Điều gì đó mới mẻ với tôi và có thể với bạn',
                       ]}
                       typingSpeed={75}
                       pauseDuration={1500}
@@ -370,7 +370,7 @@ export default function Home() {
       {/* Recent Blog Posts */}
       <section className='py-20 px-4 bg-muted/30'>
         <div className='max-w-6xl mx-auto'>
-          <div className='flex justify-between items-center mb-12'>
+          <div className='flex justify-between items-center mb-6'>
             <div>
               <h2 className='text-3xl font-bold mb-2'>Bài viết mới nhất</h2>
               <p className='text-muted-foreground'>Những bài viết gần đây từ blog</p>
@@ -397,7 +397,7 @@ export default function Home() {
                     key={relatedPost.id}
                     className='pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3'
                   >
-                    <Card className='group hover:shadow-lg transition-shadow py-0 gap-0 h-full'>
+                    <Card className='group hover:shadow-lg hover:shadow-black/10 transition-all duration-300 py-0 gap-0 h-full transform hover:-translate-y-2 mx-2 my-2'>
                       <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg p-0'>
                         <Image
                           src={relatedPost.featuredImage || '/placeholder.svg'}
@@ -458,9 +458,9 @@ export default function Home() {
             {projects.map((project, index) => (
               <Card
                 key={index}
-                className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'
+                className='overflow-hidden py-0 group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2'
               >
-                <div className='relative h-48'>
+                <div className='relative h-48 overflow-hidden'>
                   <Image
                     src={project.image || '/placeholder.svg'}
                     alt={project.title}

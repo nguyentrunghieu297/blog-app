@@ -116,18 +116,18 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                 <div>
                   <Carousel
                     opts={{
-                      align: 'start',
+                      align: 'center',
                       loop: false,
                     }}
-                    className='w-full'
+                    className='w-[102%]'
                   >
-                    <CarouselContent className='-ml-2 md:-ml-4'>
+                    <CarouselContent className='-ml-0 -mr-0 md:-ml-4'>
                       {relatedPosts.map((relatedPost) => (
                         <CarouselItem
                           key={relatedPost.id}
                           className='pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3'
                         >
-                          <Card className='group hover:shadow-lg transition-shadow py-0 gap-0 h-full'>
+                          <Card className='group py-0 gap-0 h-full'>
                             <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg p-0'>
                               <Image
                                 src={relatedPost.featuredImage || '/placeholder.svg'}
