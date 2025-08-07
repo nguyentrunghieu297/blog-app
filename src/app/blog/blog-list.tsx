@@ -1,46 +1,38 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-import { Calendar, Clock, Tag, Search, Filter } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { BlogPost, Category, MonthlyArchive, PopularTag } from '@/types/post';
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { Calendar, Clock, Tag, Search, Filter } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { BlogPost, Category, MonthlyArchive, PopularTag } from '@/types/blog'
 
 interface BlogListProps {
-  posts: BlogPost[];
-  categories: Category[];
-  monthlyArchive: MonthlyArchive[];
-  popularTags: PopularTag[];
+  posts: BlogPost[]
+  categories: Category[]
+  monthlyArchive: MonthlyArchive[]
+  popularTags: PopularTag[]
 }
 
-export default function BlogList({
-  posts,
-  categories,
-  monthlyArchive,
-  popularTags,
-}: BlogListProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedTag, setSelectedTag] = useState('');
+export default function BlogList({ posts, categories, monthlyArchive, popularTags }: BlogListProps) {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedTag, setSelectedTag] = useState('')
   // Filter posts based on search term, category, and tag
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesCategory =
-      selectedCategory === 'all' ||
-      post.category.toLowerCase() === selectedCategory.replace('-', ' ');
-    const matchesTag =
-      !selectedTag ||
-      post.tags.some((tag) => tag.toLowerCase().includes(selectedTag.toLowerCase()));
+      selectedCategory === 'all' || post.category.toLowerCase() === selectedCategory.replace('-', ' ')
+    const matchesTag = !selectedTag || post.tags.some((tag) => tag.toLowerCase().includes(selectedTag.toLowerCase()))
 
-    return matchesSearch && matchesCategory && matchesTag;
-  });
+    return matchesSearch && matchesCategory && matchesTag
+  })
 
   return (
     <div className='min-h-screen bg-background'>
@@ -91,9 +83,7 @@ export default function BlogList({
                     key={category.slug}
                     onClick={() => setSelectedCategory(category.slug)}
                     className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
-                      selectedCategory === category.slug
-                        ? 'bg-primary text-primary-foreground'
-                        : 'hover:bg-muted'
+                      selectedCategory === category.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                     }`}
                   >
                     <span>{category.name}</span>
@@ -117,9 +107,7 @@ export default function BlogList({
                     href={`/blog/archive/${archive.slug}`}
                     className='flex items-center justify-between py-1 text-sm hover:text-primary transition-colors group'
                   >
-                    <span className='group-hover:translate-x-1 transition-transform'>
-                      {archive.month}
-                    </span>
+                    <span className='group-hover:translate-x-1 transition-transform'>{archive.month}</span>
                     <Badge variant='secondary' className='text-xs'>
                       {archive.count}
                     </Badge>
@@ -140,9 +128,7 @@ export default function BlogList({
                       key={tag.name}
                       onClick={() => setSelectedTag(selectedTag === tag.name ? '' : tag.name)}
                       className={`inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full transition-colors ${
-                        selectedTag === tag.name
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted hover:bg-muted/80'
+                        selectedTag === tag.name ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
                       }`}
                     >
                       <Tag className='h-3 w-3' />
@@ -172,9 +158,9 @@ export default function BlogList({
                   variant='outline'
                   size='sm'
                   onClick={() => {
-                    setSearchTerm('');
-                    setSelectedCategory('all');
-                    setSelectedTag('');
+                    setSearchTerm('')
+                    setSelectedCategory('all')
+                    setSelectedTag('')
                   }}
                 >
                   Xóa bộ lọc
@@ -210,9 +196,7 @@ export default function BlogList({
                       </Link>
 
                       {/* Excerpt */}
-                      <p className='text-muted-foreground line-clamp-3 text-sm leading-relaxed'>
-                        {post.excerpt}
-                      </p>
+                      <p className='text-muted-foreground line-clamp-3 text-sm leading-relaxed'>{post.excerpt}</p>
 
                       {/* Tags */}
                       <div className='flex flex-wrap gap-1'>
@@ -255,9 +239,9 @@ export default function BlogList({
                 <Button
                   variant='outline'
                   onClick={() => {
-                    setSearchTerm('');
-                    setSelectedCategory('all');
-                    setSelectedTag('');
+                    setSearchTerm('')
+                    setSelectedCategory('all')
+                    setSelectedTag('')
                   }}
                 >
                   Xóa tất cả bộ lọc
@@ -291,5 +275,5 @@ export default function BlogList({
         </div>
       </div>
     </div>
-  );
+  )
 }

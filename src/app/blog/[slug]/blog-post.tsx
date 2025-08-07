@@ -1,21 +1,15 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { Calendar, Clock, Tag, ChevronRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BlogPost as PostBLog, RelatedPost } from '@/types/post';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+import Image from 'next/image'
+import Link from 'next/link'
+import { Calendar, Clock, Tag, ChevronRight } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { BlogPost as PostBLog, RelatedPost } from '@/types/blog'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
 interface BlogPostProps {
-  post: PostBLog;
-  relatedPosts: RelatedPost[];
+  post: PostBLog
+  relatedPosts: RelatedPost[]
 }
 
 export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
@@ -44,10 +38,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                 <div className='flex flex-wrap items-center gap-4 text-sm text-muted-foreground'>
                   <div className='flex items-center space-x-2'>
                     <Avatar className='h-8 w-8'>
-                      <AvatarImage
-                        src={post.author.avatar || '/placeholder.svg'}
-                        alt={post.author.name}
-                      />
+                      <AvatarImage src={post.author.avatar || '/placeholder.svg'} alt={post.author.name} />
                       <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <span>{post.author.name}</span>
@@ -75,32 +66,19 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
 
               {/* Featured Image */}
               <div className='relative aspect-video rounded-lg overflow-hidden'>
-                <Image
-                  src={post.featuredImage || '/placeholder.svg'}
-                  alt={post.title}
-                  fill
-                  className='object-cover'
-                />
+                <Image src={post.featuredImage || '/placeholder.svg'} alt={post.title} fill className='object-cover' />
               </div>
 
               {/* Content với custom CSS classes */}
-              <div
-                className='blog-content'
-                dangerouslySetInnerHTML={{ __html: post.content ? post.content : '' }}
-              />
+              <div className='blog-content' dangerouslySetInnerHTML={{ __html: post.content ? post.content : '' }} />
 
               {/* Author Bio */}
               <Card className='bg-muted/50'>
                 <CardContent className='p-6'>
                   <div className='flex items-start space-x-4'>
                     <Avatar className='h-16 w-16'>
-                      <AvatarImage
-                        src={post.author.avatar || '/placeholder.svg'}
-                        alt={post.author.name}
-                      />
-                      <AvatarFallback className='text-lg'>
-                        {post.author.name.charAt(0)}
-                      </AvatarFallback>
+                      <AvatarImage src={post.author.avatar || '/placeholder.svg'} alt={post.author.name} />
+                      <AvatarFallback className='text-lg'>{post.author.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className='space-y-2'>
                       <h3 className='text-lg font-semibold'>{post.author.name}</h3>
@@ -117,16 +95,13 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                   <Carousel
                     opts={{
                       align: 'center',
-                      loop: false,
+                      loop: false
                     }}
                     className='w-[102%]'
                   >
                     <CarouselContent className='-ml-0 -mr-0 md:-ml-4'>
                       {relatedPosts.map((relatedPost) => (
-                        <CarouselItem
-                          key={relatedPost.id}
-                          className='pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3'
-                        >
+                        <CarouselItem key={relatedPost.id} className='pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3'>
                           <Card className='group py-0 gap-0 h-full'>
                             <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg p-0'>
                               <Image
@@ -135,9 +110,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                                 fill
                                 className='object-cover group-hover:scale-105 transition-transform duration-300'
                               />
-                              <Badge className='absolute top-2 left-2 text-xs'>
-                                {relatedPost.category}
-                              </Badge>
+                              <Badge className='absolute top-2 left-2 text-xs'>{relatedPost.category}</Badge>
                             </CardHeader>
                             <CardContent className='p-4 space-y-3 flex-1'>
                               <Link href={`/blog/${relatedPost.slug}`} className='block'>
@@ -145,14 +118,10 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                                   {relatedPost.title}
                                 </h3>
                               </Link>
-                              <p className='text-sm text-muted-foreground line-clamp-3'>
-                                {relatedPost.excerpt}
-                              </p>
+                              <p className='text-sm text-muted-foreground line-clamp-3'>{relatedPost.excerpt}</p>
                               <div className='flex items-center text-xs text-muted-foreground space-x-2'>
                                 <Calendar className='h-3 w-3' />
-                                <span>
-                                  {new Date(relatedPost.publishedAt).toLocaleDateString('vi-VN')}
-                                </span>
+                                <span>{new Date(relatedPost.publishedAt).toLocaleDateString('vi-VN')}</span>
                                 <Clock className='h-3 w-3' />
                                 <span>{relatedPost.readTime}</span>
                               </div>
@@ -171,5 +140,5 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }
