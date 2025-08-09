@@ -1,14 +1,3 @@
-import { QueryClient } from '@tanstack/react-query'
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 3,
-      retryDelay: 1000
-    }
-  }
-})
-
 export const dateFormatList = ['YYYY-MM-DD', 'DD-MM-YYYY']
 
 export const AUTHORITIES = {

@@ -1,5 +1,8 @@
-import BlogList from './blog-list';
-import blog_image from '@/assets/images/test-img.jpg';
+'use client'
+
+import BlogList from './blog-list'
+import blog_image from '@/assets/images/test-img.jpg'
+import useViewBlogList from './hook/useViewBlogList'
 
 // Mock data cho demo
 const blogPosts = [
@@ -16,8 +19,8 @@ const blogPosts = [
     tags: ['Lịch sử Việt Nam', 'Hà Nội', 'Thăng Long'],
     author: {
       name: 'Tiến sĩ Nguyễn Văn Sử',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '2',
@@ -32,14 +35,13 @@ const blogPosts = [
     tags: ['React', 'JavaScript', 'Performance'],
     author: {
       name: 'Nguyễn Văn Dev',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '3',
     title: 'Xây dựng API RESTful với Node.js và Express',
-    excerpt:
-      'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
+    excerpt: 'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
     slug: 'xay-dung-api-restful-nodejs',
     featuredImage: blog_image,
     publishedAt: '2024-01-08',
@@ -48,8 +50,8 @@ const blogPosts = [
     tags: ['Node.js', 'Express', 'API'],
     author: {
       name: 'Trần Văn Backend',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '4',
@@ -64,8 +66,8 @@ const blogPosts = [
     tags: ['CSS', 'Grid', 'Flexbox'],
     author: {
       name: 'Lê Thị Frontend',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '5',
@@ -79,14 +81,13 @@ const blogPosts = [
     tags: ['Ẩm thực', 'Hà Nội', 'Văn hóa'],
     author: {
       name: 'Phạm Văn Ẩm thực',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '6',
     title: 'Deployment Next.js lên Vercel trong 5 phút',
-    excerpt:
-      'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel một cách nhanh chóng và hiệu quả.',
+    excerpt: 'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel một cách nhanh chóng và hiệu quả.',
     slug: 'deployment-nextjs-vercel',
     featuredImage: blog_image,
     publishedAt: '2023-12-28',
@@ -95,8 +96,8 @@ const blogPosts = [
     tags: ['Next.js', 'Vercel', 'Deployment'],
     author: {
       name: 'Hoàng Văn DevOps',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '7',
@@ -111,8 +112,8 @@ const blogPosts = [
     tags: ['CSS', 'Grid', 'Flexbox'],
     author: {
       name: 'Lê Thị Frontend',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '8',
@@ -126,14 +127,13 @@ const blogPosts = [
     tags: ['Ẩm thực', 'Hà Nội', 'Văn hóa'],
     author: {
       name: 'Phạm Văn Ẩm thực',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
   },
   {
     id: '9',
     title: 'Deployment Next.js lên Vercel trong 5 phút',
-    excerpt:
-      'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel một cách nhanh chóng và hiệu quả.',
+    excerpt: 'Hướng dẫn chi tiết cách deploy ứng dụng Next.js lên Vercel một cách nhanh chóng và hiệu quả.',
     slug: 'deployment-nextjs-vercel',
     featuredImage: blog_image,
     publishedAt: '2023-12-28',
@@ -142,10 +142,10 @@ const blogPosts = [
     tags: ['Next.js', 'Vercel', 'Deployment'],
     author: {
       name: 'Hoàng Văn DevOps',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
-  },
-];
+      avatar: '/placeholder.svg?height=40&width=40'
+    }
+  }
+]
 
 const categories = [
   { name: 'Tất cả', slug: 'all', count: 6 },
@@ -154,8 +154,8 @@ const categories = [
   { name: 'Frontend', slug: 'frontend', count: 1 },
   { name: 'Backend', slug: 'backend', count: 1 },
   { name: 'DevOps', slug: 'devops', count: 1 },
-  { name: 'Văn hóa', slug: 'van-hoa', count: 1 },
-];
+  { name: 'Văn hóa', slug: 'van-hoa', count: 1 }
+]
 
 const monthlyArchive = [
   { month: 'January 2024', count: 4, slug: '2024-01' },
@@ -169,8 +169,8 @@ const monthlyArchive = [
   { month: 'May 2023', count: 5, slug: '2023-05' },
   { month: 'April 2023', count: 3, slug: '2023-04' },
   { month: 'March 2023', count: 4, slug: '2023-03' },
-  { month: 'February 2023', count: 2, slug: '2023-02' },
-];
+  { month: 'February 2023', count: 2, slug: '2023-02' }
+]
 
 const popularTags = [
   { name: 'React', count: 8 },
@@ -180,16 +180,13 @@ const popularTags = [
   { name: 'Node.js', count: 7 },
   { name: 'Lịch sử Việt Nam', count: 5 },
   { name: 'Hà Nội', count: 4 },
-  { name: 'API', count: 6 },
-];
+  { name: 'API', count: 6 }
+]
 
 export default function BlogPage() {
+  const { data: blogPosts1 } = useViewBlogList()
+  console.log('Blog: ', blogPosts1)
   return (
-    <BlogList
-      posts={blogPosts}
-      categories={categories}
-      monthlyArchive={monthlyArchive}
-      popularTags={popularTags}
-    />
-  );
+    <BlogList posts={blogPosts} categories={categories} monthlyArchive={monthlyArchive} popularTags={popularTags} />
+  )
 }

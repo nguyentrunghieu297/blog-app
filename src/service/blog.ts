@@ -1,18 +1,29 @@
-import { BlogPost } from '@/types/blog'
+import apiInstance from '@/lib/axios'
+import { ApiResponse, BlogPost } from '@/types/blog'
 
-const getListBlog = async (): Promise<BlogPost[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
-    next: { revalidate: 60 }
-  })
-  if (!response.ok) {
-    throw new Error('Failed to fetch blog posts')
+const getBlogList = async (): Promise<BlogPost[]> => {
+  try {
+    const { data } = await apiInstance.get<ApiResponse<BlogPost[]>>('/blogs')
+    return data?.data
+  } catch (error) {
+    console.error('Error fetching blog list:', error)
+    throw new Error('Failed to fetch blog list')
   }
-  const data = await response.json()
-  return data as BlogPost[]
+}
+
+const getBlogDetail = async (slug: string): Promise<BlogPost> => {
+  try {
+    const { data } = await apiInstance.get<ApiResponse<BlogPost>>(`/blogs/${slug}`)
+    return data?.data
+  } catch (error) {
+    console.error('Error fetching blog detail:', error)
+    throw new Error('Failed to fetch blog detail')
+  }
 }
 
 const blogApi = {
-  getListBlog
+  getBlogList,
+  getBlogDetail
 }
 
 export default blogApi
