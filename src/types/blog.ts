@@ -32,7 +32,7 @@ export interface BlogPost {
   readTime: string
   tags: string[]
   featuredImage: string | any
-  category: string
+  category: Category
 }
 
 export interface RecentPost {

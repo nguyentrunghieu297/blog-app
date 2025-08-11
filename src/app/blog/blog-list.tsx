@@ -22,16 +22,25 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
+  const [selectedArchive, setSelectedArchive] = useState('all')
+
   // Filter posts based on search term, category, and tag
   const filteredPosts = posts.filter((post) => {
+    const [year, month] = selectedArchive.split('-')
+    const targetYear = parseInt(year)
+    const targetMonth = parseInt(month)
     const matchesSearch =
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory =
-      selectedCategory === 'all' || post.category.toLowerCase() === selectedCategory.replace('-', ' ')
+    const matchesCategory = selectedCategory === 'all' || post.category.slug === selectedCategory
     const matchesTag = !selectedTag || post.tags.some((tag) => tag.toLowerCase().includes(selectedTag.toLowerCase()))
 
-    return matchesSearch && matchesCategory && matchesTag
+    const matchesArchive =
+      selectedArchive === 'all' ||
+      (new Date(post.publishedAt).getFullYear() === targetYear &&
+        new Date(post.publishedAt).getMonth() + 1 === targetMonth)
+
+    return matchesSearch && matchesCategory && matchesTag && matchesArchive
   })
 
   return (
@@ -102,16 +111,18 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
               </CardHeader>
               <CardContent className='space-y-2'>
                 {monthlyArchive.map((archive) => (
-                  <Link
+                  <button
                     key={archive.slug}
-                    href={`/blog/archive/${archive.slug}`}
-                    className='flex items-center justify-between py-1 text-sm hover:text-primary transition-colors group'
+                    onClick={() => setSelectedArchive(archive.slug)}
+                    className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
+                      selectedArchive === archive.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+                    }`}
                   >
                     <span className='group-hover:translate-x-1 transition-transform'>{archive.month}</span>
                     <Badge variant='secondary' className='text-xs'>
                       {archive.count}
                     </Badge>
-                  </Link>
+                  </button>
                 ))}
               </CardContent>
             </Card>
@@ -183,8 +194,10 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                         alt={post.title}
                         fill
                         className='object-cover group-hover:scale-105 transition-transform duration-300'
+                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                        priority
                       />
-                      <Badge className='absolute top-3 left-3 text-xs'>{post.category}</Badge>
+                      <Badge className='absolute top-3 left-3 text-xs'>{post.category.name}</Badge>
                     </div>
 
                     <CardContent className='p-6 space-y-4'>
