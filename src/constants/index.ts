@@ -26,3 +26,8 @@ export const PAGINATION = {
   DEFAULT_SORT: 'id',
   DEFAULT_SORT_DIR: 'asc'
 }
+
+// CARD CONSTANTS
+
+export const NUMBER_OF_TAGS = 5
+export const FILTER_TAGS_LIMIT = 15

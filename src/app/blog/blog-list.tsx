@@ -1,15 +1,16 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
+import BlogCard from '@/components/blog-component/BlogCard'
 import { useState } from 'react'
-import { Calendar, Clock, Tag, Search, Filter } from 'lucide-react'
+import { Search, Filter } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { BlogPost, Category, MonthlyArchive, PopularTag } from '@/types/blog'
+import { FILTER_TAGS_LIMIT } from '@/constants'
+import FilterTag from '@/components/blog-component/FilterTag'
+import ShowMoreBtn from '@/components/blog-component/ShowMoreBtn'
 
 interface BlogListProps {
   posts: BlogPost[]
@@ -23,6 +24,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
   const [selectedArchive, setSelectedArchive] = useState('all')
+  const [showAllTags, setShowAllTags] = useState(false)
 
   // Filter posts based on search term, category, and tag
   const filteredPosts = posts.filter((post) => {
@@ -134,20 +136,23 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
               </CardHeader>
               <CardContent>
                 <div className='flex flex-wrap gap-2'>
-                  {popularTags.map((tag) => (
-                    <button
-                      key={tag.name}
-                      onClick={() => setSelectedTag(selectedTag === tag.name ? '' : tag.name)}
-                      className={`inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full transition-colors ${
-                        selectedTag === tag.name ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
-                      }`}
-                    >
-                      <Tag className='h-3 w-3' />
-                      {tag.name}
-                      <span className='ml-1 text-xs opacity-70'>({tag.count})</span>
-                    </button>
+                  {/* Hiển thị tags theo điều kiện */}
+                  {(showAllTags ? popularTags : popularTags.slice(0, FILTER_TAGS_LIMIT)).map((tag) => (
+                    <FilterTag key={tag.name} tag={tag} selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
                   ))}
                 </div>
+
+                {/* Nút hiển thị thêm/thu gọn */}
+                {popularTags.length > FILTER_TAGS_LIMIT && (
+                  <ShowMoreBtn
+                    isExpanded={showAllTags}
+                    onToggle={() => setShowAllTags(!showAllTags)}
+                    expandedText='Thu gọn'
+                    collapsedText='Xem thêm'
+                    className='mt-3'
+                    showChevron={true}
+                  />
+                )}
               </CardContent>
             </Card>
           </aside>
@@ -183,63 +188,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
             {filteredPosts.length > 0 ? (
               <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
                 {filteredPosts.map((post) => (
-                  <Card
-                    key={post.id}
-                    className='group hover:shadow-lg transition-all duration-300 overflow-hidden py-0 gap-0'
-                  >
-                    {/* Featured Image */}
-                    <div className='relative aspect-video overflow-hidden'>
-                      <Image
-                        src={post.featuredImage || '/placeholder.svg'}
-                        alt={post.title}
-                        fill
-                        className='object-cover group-hover:scale-105 transition-transform duration-300'
-                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                        priority
-                      />
-                      <Badge className='absolute top-3 left-3 text-xs'>{post.category.name}</Badge>
-                    </div>
-
-                    <CardContent className='p-6 space-y-4'>
-                      {/* Title */}
-                      <Link href={`/blog/${post.slug}`} className='block'>
-                        <h2 className='text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors'>
-                          {post.title}
-                        </h2>
-                      </Link>
-
-                      {/* Excerpt */}
-                      <p className='text-muted-foreground line-clamp-3 text-sm leading-relaxed'>{post.excerpt}</p>
-
-                      {/* Tags */}
-                      <div className='flex flex-wrap gap-1'>
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant='outline' className='text-xs'>
-                            {tag}
-                          </Badge>
-                        ))}
-                        {post.tags.length > 3 && (
-                          <Badge variant='outline' className='text-xs'>
-                            +{post.tags.length - 3}
-                          </Badge>
-                        )}
-                      </div>
-
-                      <Separator />
-
-                      {/* Meta Info */}
-                      <div className='flex items-center justify-between text-xs text-muted-foreground'>
-                        <div className='flex items-center space-x-1'>
-                          <Calendar className='h-3 w-3' />
-                          <span>{new Date(post.publishedAt).toLocaleDateString('vi-VN')}</span>
-                        </div>
-                        <div className='flex items-center space-x-1'>
-                          <Clock className='h-3 w-3' />
-                          <span>{post.readTime}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <BlogCard key={post.id} post={post} />
                 ))}
               </div>
             ) : (
