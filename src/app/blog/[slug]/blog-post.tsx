@@ -27,7 +27,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                     Blog
                   </Link>
                   <ChevronRight className='h-4 w-4' />
-                  <span>{post.category}</span>
+                  <span>{post.category.name}</span>
                 </div>
 
                 <h1 className='text-3xl lg:text-4xl font-bold leading-tight'>{post.title}</h1>
@@ -110,7 +110,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
                                 fill
                                 className='object-cover group-hover:scale-105 transition-transform duration-300'
                               />
-                              <Badge className='absolute top-2 left-2 text-xs'>{relatedPost.category}</Badge>
+                              <Badge className='absolute top-2 left-2 text-xs'>{relatedPost.category.name}</Badge>
                             </CardHeader>
                             <CardContent className='p-4 space-y-3 flex-1'>
                               <Link href={`/blog/${relatedPost.slug}`} className='block'>

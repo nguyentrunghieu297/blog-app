@@ -31,3 +31,5 @@ export const PAGINATION = {
 
 export const NUMBER_OF_TAGS = 5
 export const FILTER_TAGS_LIMIT = 15
+
+export const POSTS_PER_PAGE = 9

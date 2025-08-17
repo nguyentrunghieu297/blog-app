@@ -2,7 +2,7 @@
 
 import BlogCard from '@/components/blog-component/BlogCard'
 import { useState } from 'react'
-import { Search, Filter } from 'lucide-react'
+import { Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -19,12 +19,15 @@ interface BlogListProps {
   popularTags: PopularTag[]
 }
 
+const POSTS_PER_PAGE = 9
+
 export default function BlogList({ posts, categories, monthlyArchive, popularTags }: BlogListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
   const [selectedArchive, setSelectedArchive] = useState('all')
   const [showAllTags, setShowAllTags] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
 
   // Filter posts based on search term, category, and tag
   const filteredPosts = posts.filter((post) => {
@@ -44,6 +47,76 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
 
     return matchesSearch && matchesCategory && matchesTag && matchesArchive
   })
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
+  const endIndex = startIndex + POSTS_PER_PAGE
+  const currentPosts = filteredPosts.slice(startIndex, endIndex)
+
+  // Reset to page 1 when filters change
+  const resetFilters = () => {
+    setSearchTerm('')
+    setSelectedCategory('all')
+    setSelectedTag('')
+    setSelectedArchive('all')
+    setCurrentPage(1)
+  }
+
+  // Handle filter changes and reset to page 1
+  const handleFilterChange = (filterType: string, value: string) => {
+    setCurrentPage(1)
+    switch (filterType) {
+      case 'search':
+        setSearchTerm(value)
+        break
+      case 'category':
+        setSelectedCategory(value)
+        break
+      case 'tag':
+        setSelectedTag(value)
+        break
+      case 'archive':
+        setSelectedArchive(value)
+        break
+    }
+  }
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = []
+    const maxVisiblePages = 5
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i)
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i)
+        }
+        pages.push('...')
+        pages.push(totalPages)
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1)
+        pages.push('...')
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i)
+        }
+      } else {
+        pages.push(1)
+        pages.push('...')
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i)
+        }
+        pages.push('...')
+        pages.push(totalPages)
+      }
+    }
+
+    return pages
+  }
 
   return (
     <div className='min-h-screen bg-background'>
@@ -73,7 +146,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                   <Input
                     placeholder='Tìm kiếm bài viết...'
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => handleFilterChange('search', e.target.value)}
                     className='pl-10'
                   />
                 </div>
@@ -92,7 +165,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                 {categories.map((category) => (
                   <button
                     key={category.slug}
-                    onClick={() => setSelectedCategory(category.slug)}
+                    onClick={() => handleFilterChange('category', category.slug)}
                     className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
                       selectedCategory === category.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                     }`}
@@ -115,7 +188,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                 {monthlyArchive.map((archive) => (
                   <button
                     key={archive.slug}
-                    onClick={() => setSelectedArchive(archive.slug)}
+                    onClick={() => handleFilterChange('archive', archive.slug)}
                     className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
                       selectedArchive === archive.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                     }`}
@@ -138,7 +211,12 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                 <div className='flex flex-wrap gap-2'>
                   {/* Hiển thị tags theo điều kiện */}
                   {(showAllTags ? popularTags : popularTags.slice(0, FILTER_TAGS_LIMIT)).map((tag) => (
-                    <FilterTag key={tag.name} tag={tag} selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
+                    <FilterTag
+                      key={tag.name}
+                      tag={tag}
+                      selectedTag={selectedTag}
+                      setSelectedTag={(value) => handleFilterChange('tag', value)}
+                    />
                   ))}
                 </div>
 
@@ -160,34 +238,29 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
           {/* Main Content - Blog Posts */}
           <main className='lg:col-span-3'>
             {/* Results Info */}
-            <div className='mb-6 flex items-center justify-between'>
-              <p className='text-sm text-muted-foreground'>
-                Hiển thị {filteredPosts.length} bài viết
-                {searchTerm && ` cho "${searchTerm}"`}
-                {selectedCategory !== 'all' &&
-                  ` trong danh mục "${categories.find((c) => c.slug === selectedCategory)?.name}"`}
-                {selectedTag && ` với tag "${selectedTag}"`}
-              </p>
+            <div className='pb-6 flex items-center justify-between'>
+              <div>
+                <p className='text-sm text-muted-foreground'>
+                  Hiển thị {startIndex + 1}-{Math.min(endIndex, filteredPosts.length)} của {filteredPosts.length} bài
+                  viết
+                  {searchTerm && ` cho "${searchTerm}"`}
+                  {selectedCategory !== 'all' &&
+                    ` trong danh mục "${categories.find((c) => c.slug === selectedCategory)?.name}"`}
+                  {selectedTag && ` với tag "${selectedTag}"`}
+                </p>
+              </div>
 
-              {(searchTerm || selectedCategory !== 'all' || selectedTag) && (
-                <Button
-                  variant='outline'
-                  size='sm'
-                  onClick={() => {
-                    setSearchTerm('')
-                    setSelectedCategory('all')
-                    setSelectedTag('')
-                  }}
-                >
+              {(searchTerm || selectedCategory !== 'all' || selectedTag || selectedArchive !== 'all') && (
+                <Button variant='outline' size='sm' onClick={resetFilters}>
                   Xóa bộ lọc
                 </Button>
               )}
             </div>
 
             {/* Blog Posts Grid */}
-            {filteredPosts.length > 0 ? (
+            {currentPosts.length > 0 ? (
               <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
-                {filteredPosts.map((post) => (
+                {currentPosts.map((post) => (
                   <BlogCard key={post.id} post={post} />
                 ))}
               </div>
@@ -198,37 +271,56 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                   <h3 className='text-lg font-semibold mb-2'>Không tìm thấy bài viết</h3>
                   <p>Thử thay đổi từ khóa tìm kiếm hoặc bộ lọc của bạn</p>
                 </div>
-                <Button
-                  variant='outline'
-                  onClick={() => {
-                    setSearchTerm('')
-                    setSelectedCategory('all')
-                    setSelectedTag('')
-                  }}
-                >
+                <Button variant='outline' onClick={resetFilters}>
                   Xóa tất cả bộ lọc
                 </Button>
               </div>
             )}
 
-            {/* Pagination (Optional) */}
-            {filteredPosts.length > 0 && (
+            {/* Pagination */}
+            {totalPages > 1 && currentPosts.length > 0 && (
               <div className='mt-12 flex justify-center'>
-                <div className='flex items-center space-x-2'>
-                  <Button variant='ghost' size='sm' disabled>
+                <div className='flex items-center space-x-1'>
+                  {/* Previous Button */}
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className='flex items-center gap-1'
+                  >
+                    <ChevronLeft className='h-4 w-4' />
                     Trước
                   </Button>
-                  <Button variant='default' size='sm'>
-                    1
-                  </Button>
-                  <Button variant='outline' size='sm'>
-                    2
-                  </Button>
-                  <Button variant='outline' size='sm'>
-                    3
-                  </Button>
-                  <Button variant='ghost' size='sm'>
+
+                  {/* Page Numbers */}
+                  {getPageNumbers().map((page, index) => (
+                    <div key={index}>
+                      {page === '...' ? (
+                        <span className='px-3 py-2 text-sm text-muted-foreground'>...</span>
+                      ) : (
+                        <Button
+                          variant={currentPage === page ? 'default' : 'outline'}
+                          size='sm'
+                          onClick={() => setCurrentPage(page as number)}
+                          className='min-w-[40px]'
+                        >
+                          {page}
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Next Button */}
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className='flex items-center gap-1'
+                  >
                     Sau
+                    <ChevronRight className='h-4 w-4' />
                   </Button>
                 </div>
               </div>
