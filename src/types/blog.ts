@@ -14,11 +14,7 @@ export interface RelatedPost {
   featuredImage: string | any
   publishedAt: string
   readTime: string
-  category: {
-    name: string
-    slug: string
-    count: number
-  }
+  category: Category
 }
 
 export interface BlogPost {

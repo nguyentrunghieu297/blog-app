@@ -1,94 +1,65 @@
-'use client';
+'use client'
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin, ExternalLink, Download, Code, Server, Palette } from 'lucide-react';
-import Image from 'next/image';
-import blog_image from '@/assets/images/test-img.jpg';
-import { FaGithub } from 'react-icons/fa';
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Mail, Phone, MapPin, ExternalLink, Download, Code, Server, Palette } from 'lucide-react'
+import { FaGithub } from 'react-icons/fa'
+import Image from 'next/image'
+import html_03 from '@/assets/images/html_03.png'
+import html_04 from '@/assets/images/html_04.png'
+import html_08 from '@/assets/images/html_08.png'
+import avatar from '@/assets/images/avatar2.jpg'
 
 export default function Portfolio() {
   const skills = {
-    Frontend: [
-      'React',
-      'Next.js',
-      'Vue.js',
-      'TypeScript',
-      'JavaScript',
-      'HTML5',
-      'CSS3',
-      'Tailwind CSS',
-      'SASS/SCSS',
-    ],
-    Backend: [
-      'Node.js',
-      'Express.js',
-      'Python',
-      'Django',
-      'FastAPI',
-      'PHP',
-      'Laravel',
-      'REST API',
-      'GraphQL',
-    ],
-    Database: ['MongoDB', 'PostgreSQL', 'MySQL', 'Redis', 'Supabase', 'Firebase'],
-    'Tools & Others': ['Git', 'Docker', 'AWS', 'Vercel', 'Figma', 'Photoshop', 'Linux'],
-  };
+    Frontend: ['React', 'Next.js', 'Vue.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'SASS/SCSS'],
+    'Tools & Others': ['Git', 'Github', 'Vercel', 'Figma', 'Photoshop'],
+    'Kĩ năng mềm': ['Tự học', 'Giải quyết vấn đề', 'Làm việc nhóm', 'Quản lý thời gian', 'Giao tiếp hiệu quả']
+  }
 
   const projects = [
     {
-      title: 'E-Commerce Platform',
+      title: 'ShineSmile - Nha khoa trực tuyến',
       description:
-        'Nền tảng thương mại điện tử hoàn chỉnh với thanh toán trực tuyến, quản lý kho hàng và dashboard admin.',
-      tech: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
-      image: blog_image,
-      github: 'https://github.com',
-      demo: 'https://demo.com',
+        'Giao diện trang web cho phòng khám nha khoa với thông tin dịch vụ, đặt lịch hẹn và phản hồi từ khách hàng.',
+      tech: ['HTML5', 'CSS3', 'Sass'],
+      image: html_03,
+      github: 'https://github.com/nguyentrunghieu297/htmlcsspro-project-03',
+      demo: 'https://nguyentrunghieu297.github.io/htmlcsspro-project-03/'
     },
     {
-      title: 'Task Management App',
+      title: 'Lucy - Trạm xá thú cưng',
       description:
-        'Ứng dụng quản lý công việc với tính năng real-time collaboration, drag & drop và notifications.',
-      tech: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
-      image: blog_image,
-      github: 'https://github.com',
-      demo: 'https://demo.com',
+        'Giao diện trang web cho trạm xá thú cưng với thông tin dịch vụ, đặt lịch hẹn và phản hồi từ khách hàng.',
+      tech: ['HTML5', 'CSS3', 'Sass'],
+      image: html_04,
+      github: 'https://github.com/nguyentrunghieu297/htmlcsspro-project-04',
+      demo: 'https://nguyentrunghieu297.github.io/htmlcsspro-project-04/'
     },
     {
-      title: 'Blog CMS',
+      title: 'Grocerymart - Tạp hóa Online',
       description:
-        'Hệ thống quản lý nội dung blog với editor WYSIWYG, SEO optimization và analytics dashboard.',
-      tech: ['Vue.js', 'Laravel', 'MySQL', 'TinyMCE', 'Chart.js'],
-      image: blog_image,
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-    },
-  ];
+        'Giao diện 1 trang tạp hóa trực tuyến với danh sách sản phẩm, giỏ hàng, thanh toán và quản lý đơn hàng.',
+      tech: ['HTML5', 'CSS3', 'Sass'],
+      image: html_08,
+      github: 'https://github.com/nguyentrunghieu297/htmlcsspro-project-08',
+      demo: 'https://nguyentrunghieu297.github.io/htmlcsspro-project-08/'
+    }
+  ]
 
   const experiences = [
     {
-      title: 'Senior Frontend Developer',
-      company: 'Tech Company ABC',
-      period: '2022 - Hiện tại',
-      description:
-        'Phát triển và duy trì các ứng dụng web quy mô lớn, leading team 5 developers, tối ưu performance và UX.',
-    },
-    {
-      title: 'Full Stack Developer',
-      company: 'Startup XYZ',
-      period: '2020 - 2022',
-      description:
-        'Xây dựng MVP từ đầu, phát triển API backend, thiết kế database và implement frontend responsive.',
-    },
-    {
-      title: 'Junior Web Developer',
-      company: 'Digital Agency DEF',
-      period: '2019 - 2020',
-      description:
-        'Phát triển website cho khách hàng, maintenance và bug fixes, học hỏi best practices trong team.',
-    },
-  ];
+      title: 'Frontend Developer - Internship',
+      company: 'FPT Software Academy',
+      period: '01/2024 - 05/2024',
+      description: [
+        'Tham gia phát triển giao diện người dùng cho các dự án web nội bộ.',
+        'Tham gia phát triển giao diện người dùng cho các dự án web tốt nghiệp.',
+        'Học hỏi và áp dụng các công nghệ mới như React, Next.js và Tailwind CSS.'
+      ]
+    }
+  ]
 
   return (
     <div className='min-h-screen bg-background'>
@@ -103,17 +74,20 @@ export default function Portfolio() {
                 </h1>
                 <p className='text-xl text-muted-foreground'>Frontend Web Developer</p>
                 <p className='text-lg leading-relaxed max-w-lg'>
-                  Với 0+ năm kinh nghiệm phát triển web, tôi chuyên tạo ra những ứng dụng web hiện
-                  đại, responsive và user-friendly. Đam mê công nghệ mới và luôn học hỏi không
-                  ngừng.
+                  Là sinh viên tốt nghiệp chuyên ngành kĩ thuật phần mềm tại Đại học FPT HCM. Tôi được đào tạo để có thể
+                  tạo ra những ứng dụng website hiện đại, tương thích trên nhiều thiết bị và có giao diện thân thiện với
+                  người dùng.
                 </p>
               </div>
 
               <div className='flex flex-wrap gap-4'>
                 <Button size='lg' className='gap-2'>
-                  <Download className='w-4 h-4' />
-                  Tải CV
+                  <a href='/files/CV_NguyenTrungHieu_Intern_Frontend.pdf' download className='flex items-center'>
+                    <Download className='w-4 h-4' />
+                    Tải CV
+                  </a>
                 </Button>
+
                 <Button variant='outline' size='lg' className='gap-2 bg-transparent'>
                   <Mail className='w-4 h-4' />
                   Liên hệ
@@ -124,7 +98,7 @@ export default function Portfolio() {
             <div className='relative'>
               <div className='relative w-80 h-80 mx-auto'>
                 <Image
-                  src='/placeholder.svg?height=320&width=320'
+                  src={avatar || ''}
                   alt='Profile'
                   fill
                   className='rounded-full object-cover border-4 border-background shadow-2xl'
@@ -142,8 +116,7 @@ export default function Portfolio() {
           <div className='text-center mb-16'>
             <h2 className='text-3xl font-bold mb-4'>Về tôi</h2>
             <p className='text-muted-foreground max-w-2xl mx-auto'>
-              Tôi là một lập trình viên web đam mê tạo ra những sản phẩm có ý nghĩa và mang lại giá
-              trị cho người dùng.
+              Tôi là một lập trình viên web đam mê tạo ra những sản phẩm có ý nghĩa và mang lại giá trị cho người dùng.
             </p>
           </div>
 
@@ -155,8 +128,8 @@ export default function Portfolio() {
               </CardHeader>
               <CardContent>
                 <p className='text-muted-foreground'>
-                  Chuyên về React, Next.js, Vue.js và các công nghệ frontend hiện đại. Tạo ra UI/UX
-                  đẹp mắt và responsive.
+                  Chuyên về React, Next.js, Vue.js và các công nghệ frontend hiện đại. Tạo ra UI/UX đẹp mắt và
+                  responsive.
                 </p>
               </CardContent>
             </Card>
@@ -168,8 +141,7 @@ export default function Portfolio() {
               </CardHeader>
               <CardContent>
                 <p className='text-muted-foreground'>
-                  Phát triển API robust với Node.js, Python, PHP. Thiết kế database và tối ưu
-                  performance.
+                  Phát triển API robust với Node.js, Python, PHP. Thiết kế database và tối ưu performance.
                 </p>
               </CardContent>
             </Card>
@@ -181,8 +153,7 @@ export default function Portfolio() {
               </CardHeader>
               <CardContent>
                 <p className='text-muted-foreground'>
-                  Hiểu biết về design principles, user experience và có thể làm việc với Figma,
-                  Photoshop.
+                  Hiểu biết về design principles, user experience và có thể làm việc với Figma, Photoshop.
                 </p>
               </CardContent>
             </Card>
@@ -198,7 +169,7 @@ export default function Portfolio() {
             <p className='text-muted-foreground'>Các công nghệ và tools tôi sử dụng hàng ngày</p>
           </div>
 
-          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {Object.entries(skills).map(([category, skillList]) => (
               <Card key={category}>
                 <CardHeader>
@@ -229,10 +200,7 @@ export default function Portfolio() {
 
           <div className='grid lg:grid-cols-3 gap-8'>
             {projects.map((project, index) => (
-              <Card
-                key={index}
-                className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'
-              >
+              <Card key={index} className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'>
                 <div className='relative h-48'>
                   <Image
                     src={project.image || '/placeholder.svg'}
@@ -255,12 +223,26 @@ export default function Portfolio() {
                   </div>
                   <div className='flex gap-2 pb-6'>
                     <Button variant='outline' size='sm' className='gap-2 w-1/2 bg-transparent'>
-                      <FaGithub className='w-4 h-4' />
-                      Code
+                      <a
+                        href={project.github}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='flex items-center gap-2 w-1/2'
+                      >
+                        <FaGithub className='w-4 h-4' />
+                        Code
+                      </a>
                     </Button>
                     <Button size='sm' className='gap-2 w-1/2'>
-                      <ExternalLink className='w-4 h-4' />
-                      Demo
+                      <a
+                        href={project.demo}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='flex items-center gap-2 w-1/2'
+                      >
+                        <ExternalLink className='w-4 h-4' />
+                        Demo
+                      </a>
                     </Button>
                   </div>
                 </CardContent>
@@ -280,20 +262,29 @@ export default function Portfolio() {
 
           <div className='space-y-8'>
             {experiences.map((exp, index) => (
-              <Card key={index}>
+              <Card key={index} className='gap-3'>
                 <CardHeader>
                   <div className='flex justify-between items-start'>
                     <div>
                       <CardTitle>{exp.title}</CardTitle>
-                      <CardDescription className='text-base font-medium text-primary'>
+                      <CardDescription className='text-base mt-2 font-medium text-primary'>
                         {exp.company}
                       </CardDescription>
                     </div>
-                    <Badge variant='outline'>{exp.period}</Badge>
+                    <Badge variant='outline' className='text-sm'>
+                      {exp.period}
+                    </Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className='text-muted-foreground'>{exp.description}</p>
+                  {/* <p className='text-muted-foreground'>{exp.description}</p> */}
+                  {Array.isArray(exp.description) && (
+                    <ul className='list-disc list-inside mt-2 text-muted-foreground'>
+                      {exp.description.map((point, idx) => (
+                        <li key={idx}>{point}</li>
+                      ))}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -334,13 +325,8 @@ export default function Portfolio() {
               </CardContent>
             </Card>
           </div>
-
-          <Button size='lg' className='gap-2'>
-            <Mail className='w-4 h-4' />
-            Gửi tin nhắn
-          </Button>
         </div>
       </section>
     </div>
-  );
+  )
 }
