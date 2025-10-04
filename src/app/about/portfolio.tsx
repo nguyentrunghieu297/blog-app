@@ -12,11 +12,24 @@ import html_08 from '@/assets/images/html_08.png'
 import avatar from '@/assets/images/avatar2.jpg'
 
 export default function Portfolio() {
-  const skills = {
-    Frontend: ['React', 'Next.js', 'Vue.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'SASS/SCSS'],
-    'Tools & Others': ['Git', 'Github', 'Vercel', 'Figma', 'Photoshop'],
-    'Kĩ năng mềm': ['Tự học', 'Giải quyết vấn đề', 'Làm việc nhóm', 'Quản lý thời gian', 'Giao tiếp hiệu quả']
-  }
+  const skills = [
+    { name: 'Javascript', icon: '/images/logos/icon-javascript.svg' },
+    { name: 'Typescript', icon: '/images/logos/icon-typescript.svg' },
+    { name: 'React', icon: '/images/logos/icon-react.svg' },
+    { name: 'Next.js', icon: '/images/logos/icon-nextjs.svg' },
+    // { name: 'Node.js', icon: '/images/logos/icon-nodejs.svg' },
+    { name: 'Bootstrap', icon: '/images/logos/icon-bootstrap.svg' },
+    { name: 'HTML5', icon: '/images/logos/icon-html5.svg' },
+    { name: 'Redux', icon: '/images/logos/icon-redux.svg' },
+    // { name: 'PostgreSQL', icon: '/images/logos/icon-postgresql.svg' },
+    { name: 'MongoDB', icon: '/images/logos/icon-mongodb.svg' },
+    { name: 'Sass/Scss', icon: '/images/logos/icon-sass.svg' },
+    { name: 'Tailwindcss', icon: '/images/logos/icon-tailwindcss.svg' },
+    { name: 'Figma', icon: '/images/logos/icon-figma.svg' },
+    { name: 'Ant Design', icon: '/images/logos/icon-antdesign.svg' },
+    { name: 'Postman', icon: '/images/logos/icon-postman.svg' },
+    { name: 'Git', icon: '/images/logos/icon-git.svg' }
+  ]
 
   const projects = [
     {
@@ -162,29 +175,21 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section className='py-20 px-4 bg-muted/30'>
+      <section className='py-20 px-4 bg-mute text-center'>
         <div className='max-w-6xl mx-auto'>
           <div className='text-center mb-16'>
-            <h2 className='text-3xl font-bold mb-4'>Kỹ năng</h2>
-            <p className='text-muted-foreground'>Các công nghệ và tools tôi sử dụng hàng ngày</p>
+            {' '}
+            <h2 className='text-3xl font-bold mb-4'>Kỹ năng</h2>{' '}
+            <p className='text-muted-foreground'>Các công nghệ và tools tôi sử dụng hàng ngày</p>{' '}
           </div>
-
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {Object.entries(skills).map(([category, skillList]) => (
-              <Card key={category}>
-                <CardHeader>
-                  <CardTitle className='text-lg'>{category}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className='flex flex-wrap gap-2'>
-                    {skillList.map((skill) => (
-                      <Badge key={skill} variant='secondary'>
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-8 place-items-center'>
+            {skills.map((skill) => (
+              <div key={skill.name} className='flex flex-col items-center space-y-2 group'>
+                <div className='relative w-12 h-12 transition-transform duration-300 group-hover:scale-110'>
+                  <Image src={skill.icon} alt={skill.name} fill className='object-contain' />
+                </div>
+                <span className='text-gray-300 text-sm'>{skill.name}</span>
+              </div>
             ))}
           </div>
         </div>
