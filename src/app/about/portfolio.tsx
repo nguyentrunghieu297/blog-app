@@ -13,22 +13,35 @@ import avatar from '@/assets/images/avatar2.jpg'
 
 export default function Portfolio() {
   const skills = [
-    { name: 'Javascript', icon: '/images/logos/icon-javascript.svg' },
-    { name: 'Typescript', icon: '/images/logos/icon-typescript.svg' },
-    { name: 'React', icon: '/images/logos/icon-react.svg' },
-    { name: 'Next.js', icon: '/images/logos/icon-nextjs.svg' },
-    // { name: 'Node.js', icon: '/images/logos/icon-nodejs.svg' },
-    { name: 'Bootstrap', icon: '/images/logos/icon-bootstrap.svg' },
-    { name: 'HTML5', icon: '/images/logos/icon-html5.svg' },
-    { name: 'Redux', icon: '/images/logos/icon-redux.svg' },
-    // { name: 'PostgreSQL', icon: '/images/logos/icon-postgresql.svg' },
-    { name: 'MongoDB', icon: '/images/logos/icon-mongodb.svg' },
-    { name: 'Sass/Scss', icon: '/images/logos/icon-sass.svg' },
-    { name: 'Tailwindcss', icon: '/images/logos/icon-tailwindcss.svg' },
-    { name: 'Figma', icon: '/images/logos/icon-figma.svg' },
-    { name: 'Ant Design', icon: '/images/logos/icon-antdesign.svg' },
-    { name: 'Postman', icon: '/images/logos/icon-postman.svg' },
-    { name: 'Git', icon: '/images/logos/icon-git.svg' }
+    {
+      name: 'HTML5',
+      icon: '/images/logos/icon-html5.svg',
+      link: 'https://developer.mozilla.org/en-US/docs/Glossary/HTML5'
+    },
+    { name: 'CSS', icon: '/images/logos/icon-css.svg', link: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+    {
+      name: 'Javascript',
+      icon: '/images/logos/icon-javascript.svg',
+      link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript'
+    },
+    { name: 'Typescript', icon: '/images/logos/icon-typescript.svg', link: 'https://www.typescriptlang.org/' },
+    { name: 'React', icon: '/images/logos/icon-react.svg', link: 'https://react.dev/' },
+    { name: 'Redux', icon: '/images/logos/icon-redux.svg', link: 'https://redux.js.org/' },
+    { name: 'Next.js', icon: '/images/logos/icon-nextjs.svg', link: 'https://nextjs.org/' },
+    { name: 'Sass/Scss', icon: '/images/logos/icon-sass.svg', link: 'https://sass-lang.com/' },
+    { name: 'Bootstrap', icon: '/images/logos/icon-bootstrap.svg', link: 'https://getbootstrap.com/' },
+    { name: 'Tailwindcss', icon: '/images/logos/icon-tailwindcss.svg', link: 'https://tailwindcss.com/' },
+    { name: 'Ant Design', icon: '/images/logos/icon-antdesign.svg', link: 'https://ant.design/' },
+    { name: 'Node.js', icon: '/images/logos/icon-nodejs.svg', link: 'https://nodejs.org/' },
+    { name: 'Express.js', icon: '/images/logos/icon-express.svg', link: 'https://expressjs.com/' },
+    { name: 'MongoDB', icon: '/images/logos/icon-mongodb.svg', link: 'https://www.mongodb.com/' },
+    { name: 'Postman', icon: '/images/logos/icon-postman.svg', link: 'https://www.postman.com/' },
+    { name: 'Git', icon: '/images/logos/icon-git.svg', link: 'https://git-scm.com/' },
+    { name: 'GitHub', icon: '/images/logos/icon-github.svg', link: 'https://github.com/' },
+    { name: 'VS Code', icon: '/images/logos/icon-vscode.svg', link: 'https://code.visualstudio.com/' },
+    { name: 'Figma', icon: '/images/logos/icon-figma.svg', link: 'https://www.figma.com/' },
+    { name: 'Jira', icon: '/images/logos/icon-jira.svg', link: 'https://www.atlassian.com/software/jira' },
+    { name: 'Trello', icon: '/images/logos/icon-trello.svg', link: 'https://trello.com/' }
   ]
 
   const projects = [
@@ -70,7 +83,10 @@ export default function Portfolio() {
         'Tham gia phát triển giao diện người dùng cho các dự án web nội bộ.',
         'Tham gia phát triển giao diện người dùng cho các dự án web tốt nghiệp.',
         'Học hỏi và áp dụng các công nghệ mới như React, Next.js và Tailwind CSS.'
-      ]
+      ],
+      technologies: ['React', 'Typescript', 'TailwindCSS', 'Figma', 'Tanstack query'],
+      link: 'https://www.fpt-software.com/',
+      logo: '/images/fpt-sw.png'
     }
   ]
 
@@ -82,14 +98,15 @@ export default function Portfolio() {
           <div className='grid lg:grid-cols-2 gap-12 items-center'>
             <div className='space-y-6'>
               <div className='space-y-4'>
-                <h1 className='text-4xl lg:text-6xl font-bold tracking-tight'>
-                  Xin chào, tôi là <span className='text-primary'>Nguyễn Trung Hiếu</span>
+                <h1 className='text-4xl lg:text-5xl font-bold tracking-tight'>
+                  Xin chào, tôi là <span className='text-primary block mt-2'>Nguyễn Trung Hiếu</span>
                 </h1>
-                <p className='text-xl text-muted-foreground'>Frontend Web Developer</p>
-                <p className='text-lg leading-relaxed max-w-lg'>
-                  Là sinh viên tốt nghiệp chuyên ngành kĩ thuật phần mềm tại Đại học FPT HCM. Tôi được đào tạo để có thể
-                  tạo ra những ứng dụng website hiện đại, tương thích trên nhiều thiết bị và có giao diện thân thiện với
-                  người dùng.
+                <p className='text-xl text-muted-foreground'>Frontend Developer | React & UI Enthusiast</p>
+
+                <p className='text-lg leading-relaxed'>
+                  Tôi là một lập trình viên web trẻ, đam mê tạo ra những giao diện hiện đại, trực quan và mượt mà. Với
+                  nền tảng <b>Kỹ thuật phần mềm</b> tại Đại học FPT, tôi tập trung phát triển các sản phẩm có trải
+                  nghiệm người dùng tốt và dễ mở rộng.
                 </p>
               </div>
 
@@ -178,18 +195,22 @@ export default function Portfolio() {
       <section className='py-20 px-4 bg-mute text-center'>
         <div className='max-w-6xl mx-auto'>
           <div className='text-center mb-16'>
-            {' '}
-            <h2 className='text-3xl font-bold mb-4'>Kỹ năng</h2>{' '}
-            <p className='text-muted-foreground'>Các công nghệ và tools tôi sử dụng hàng ngày</p>{' '}
+            <h2 className='text-3xl font-bold mb-4'>Kỹ năng</h2>
+            <p className='text-muted-foreground'>Các công nghệ và tools tôi sử dụng</p>
           </div>
           <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-8 place-items-center'>
             {skills.map((skill) => (
-              <div key={skill.name} className='flex flex-col items-center space-y-2 group'>
+              <a
+                href={skill.link}
+                target='_blank'
+                key={skill.name}
+                className='flex flex-col items-center space-y-2 group'
+              >
                 <div className='relative w-12 h-12 transition-transform duration-300 group-hover:scale-110'>
                   <Image src={skill.icon} alt={skill.name} fill className='object-contain' />
                 </div>
-                <span className='text-gray-300 text-sm'>{skill.name}</span>
-              </div>
+                <span className='text-gray-400 text-sm'>{skill.name}</span>
+              </a>
             ))}
           </div>
         </div>
@@ -270,11 +291,14 @@ export default function Portfolio() {
               <Card key={index} className='gap-3'>
                 <CardHeader>
                   <div className='flex justify-between items-start'>
-                    <div>
-                      <CardTitle>{exp.title}</CardTitle>
-                      <CardDescription className='text-base mt-2 font-medium text-primary'>
-                        {exp.company}
-                      </CardDescription>
+                    <div className='flex items-center gap-4'>
+                      <Image width={100} height={50} src='/images/icon-fpt.png' alt='' />
+                      <div>
+                        <CardTitle>{exp.company}</CardTitle>
+                        <CardDescription className='text-base mt-2 font-light text-primary'>
+                          {exp.title}
+                        </CardDescription>
+                      </div>
                     </div>
                     <Badge variant='outline' className='text-sm'>
                       {exp.period}
@@ -282,13 +306,24 @@ export default function Portfolio() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  {/* <p className='text-muted-foreground'>{exp.description}</p> */}
                   {Array.isArray(exp.description) && (
-                    <ul className='list-disc list-inside mt-2 text-muted-foreground'>
+                    <ul className='list-disc list-inside mt-2 text-muted-foreground space-y-1'>
                       {exp.description.map((point, idx) => (
                         <li key={idx}>{point}</li>
                       ))}
                     </ul>
+                  )}
+
+                  {exp.technologies && (
+                    <div className='mt-[-2px]'>
+                      <div className='flex flex-wrap gap-2 mt-5'>
+                        {exp.technologies.map((tech) => (
+                          <Badge key={tech} variant='secondary'>
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </CardContent>
               </Card>

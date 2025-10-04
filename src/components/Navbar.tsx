@@ -1,22 +1,22 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { Menu } from 'lucide-react';
-import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import Link from 'next/link'
+import { Menu } from 'lucide-react'
+import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet'
 
 const navigationLinks = [
-  { href: '/', label: 'Trang chủ' },
+  { href: '/', label: 'Trang chủ', logo: true },
   { href: '/blog', label: 'Biết chút cho vui' },
   { href: '/forwork', label: 'Cần cho công việc' },
   { href: '/about', label: 'Tự giới thiệu' },
-  { href: '/admin', label: 'Admin' },
-];
+  { href: '/admin', label: 'Admin' }
+]
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <nav className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
@@ -83,5 +83,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }

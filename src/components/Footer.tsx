@@ -1,10 +1,10 @@
-import { Code } from 'lucide-react';
-import Link from 'next/link';
-import { FaFacebook, FaGithub, FaLinkedin, FaMap, FaPhone } from 'react-icons/fa';
-import { IoIosMail } from 'react-icons/io';
+import { Code } from 'lucide-react'
+import Link from 'next/link'
+import { FaFacebook, FaGithub, FaLinkedin, FaMap, FaPhone } from 'react-icons/fa'
+import { IoIosMail } from 'react-icons/io'
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer className='pt-12 pb-8 text-md px-4 border-t bg-muted/30'>
@@ -15,11 +15,11 @@ export function Footer() {
               <div className='w-8 h-8 bg-primary rounded-lg flex items-center justify-center'>
                 <Code className='w-5 h-5 text-primary-foreground' />
               </div>
-              <span className='font-bold text-xl'>DevBlog</span>
+              <span className='font-bold text-xl'>Vài thứ hay ho</span>
             </div>
             <p className='text-muted-foreground mb-4'>
-              Blog cá nhân chia sẻ kiến thức linh tinh được góp nhặt từ khắp nơi trên internet. Mục
-              đích là để lưu giữ và chia sẻ với mọi người.
+              Blog cá nhân chia sẻ kiến thức linh tinh được góp nhặt từ khắp nơi trên internet. Mục đích là để lưu giữ
+              và chia sẻ với mọi người.
             </p>
             <div className='flex gap-4'>
               <Link href={'https://www.facebook.com'}>
@@ -68,9 +68,9 @@ export function Footer() {
           </div>
         </div>
         <div className='border-t mt-8 pt-8 text-center text-muted-foreground'>
-          <p>&copy; {currentYear} DevBlog. Tất cả quyền được bảo lưu.</p>
+          <p>&copy; {currentYear} Vài thứ hay ho. Tất cả quyền được bảo lưu.</p>
         </div>
       </div>
     </footer>
-  );
+  )
 }
