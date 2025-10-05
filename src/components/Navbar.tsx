@@ -10,9 +10,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 const navigationLinks = [
   { href: '/', label: 'Trang chủ', logo: true },
   { href: '/blog', label: 'Biết chút cho vui' },
-  { href: '/forwork', label: 'Cần cho công việc' },
-  { href: '/about', label: 'Tự giới thiệu' },
-  { href: '/admin', label: 'Admin' }
+  // { href: '/forwork', label: 'Cần cho công việc' },
+  { href: '/about', label: 'Tự giới thiệu' }
+  // { href: '/admin', label: 'Admin' }
 ]
 
 export default function Navbar() {
