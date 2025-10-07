@@ -3,13 +3,22 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Mail, Phone, MapPin, ExternalLink, Download, Code, Palette, Smartphone } from 'lucide-react'
-import { FaGithub } from 'react-icons/fa'
-import Image from 'next/image'
+import { Mail, Phone, MapPin, Download, Code, Palette, Smartphone } from 'lucide-react'
+import Image, { StaticImageData } from 'next/image'
 import html_03 from '@/assets/images/html_03.png'
 import html_04 from '@/assets/images/html_04.png'
 import html_08 from '@/assets/images/html_08.png'
 import avatar from '@/assets/images/avatar2.jpg'
+import ProjectCard from '@/components/portfolio-component/project-card'
+
+type Project = {
+  title: string
+  description: string
+  tech: string[]
+  image: string | StaticImageData
+  github: string
+  demo: string
+}
 
 export default function Portfolio() {
   const skills = [
@@ -46,7 +55,7 @@ export default function Portfolio() {
 
   const projects = [
     {
-      title: 'ShineSmile - Nha khoa trực tuyến',
+      title: 'ShineSmile - Nha khoa online',
       description:
         'Giao diện trang web cho phòng khám nha khoa với thông tin dịch vụ, đặt lịch hẹn và phản hồi từ khách hàng.',
       tech: ['HTML5', 'CSS3', 'Sass'],
@@ -231,53 +240,7 @@ export default function Portfolio() {
 
           <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
             {projects.map((project, index) => (
-              <Card key={index} className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'>
-                <div className='relative h-40 sm:h-48'>
-                  <Image
-                    src={project.image || '/placeholder.svg'}
-                    alt={project.title}
-                    fill
-                    className='object-cover group-hover:scale-105 transition-transform duration-300'
-                  />
-                </div>
-                <CardHeader className='pb-3'>
-                  <CardTitle className='text-lg sm:text-xl'>{project.title}</CardTitle>
-                  <CardDescription className='text-sm'>{project.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className='flex flex-wrap gap-2 mb-4'>
-                    {project.tech.map((tech) => (
-                      <Badge key={tech} variant='outline' className='text-xs'>
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className='flex gap-2 pb-6'>
-                    <Button variant='outline' size='sm' className='gap-2 flex-1 bg-transparent'>
-                      <a
-                        href={project.github}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='flex items-center justify-center gap-2 w-full'
-                      >
-                        <FaGithub className='w-4 h-4' />
-                        <span className='hidden xs:inline'>Code</span>
-                      </a>
-                    </Button>
-                    <Button size='sm' className='gap-2 flex-1'>
-                      <a
-                        href={project.demo}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='flex items-center justify-center gap-2 w-full'
-                      >
-                        <ExternalLink className='w-4 h-4' />
-                        <span className='hidden xs:inline'>Demo</span>
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <ProjectCard key={index} project={project as Project} index={index} />
             ))}
           </div>
         </div>

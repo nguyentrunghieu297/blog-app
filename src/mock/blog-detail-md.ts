@@ -4,7 +4,7 @@ import Saigon from '@/assets/images/saigon-xua.jpg'
 const markdownContent = `
 Hà Nội, thủ đô của nước Cộng hòa xã hội chủ nghĩa Việt Nam, là một trong những thành phố có lịch sử lâu đời nhất Đông Nam Á. Với hơn 1000 năm lịch sử, Hà Nội đã chứng kiến sự thăng trầm của nhiều triều đại phfeudal và là trung tâm chính trị, văn hóa quan trọng của dân tộc Việt Nam qua các thời kỳ.
 
-## Khởi nguồn lịch sử - Thời kỳ tiền sử và cổ đại
+## 1. Khởi nguồn lịch sử - Thời kỳ tiền sử và cổ đại
 
 Vùng đất Hà Nội ngày nay đã có dấu vết sinh sống của con người từ thời đại đồ đá cũ, cách đây khoảng 500.000 năm. Các di tích khảo cổ học tại Thanh Trì, Đông Anh và nhiều nơi khác đã chứng minh rằng đây là một trong những cái nôi văn minh cổ xưa của Việt Nam.
 
@@ -13,13 +13,13 @@ Trong thời kỳ các vua Hùng xây dựng nhà nước Văn Lang (thế kỷ 
 ![Văn Miếu Hà Nội - Biểu tượng của nền giáo dục truyền thống Việt Nam](https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=400&fit=crop)  
 *Văn Miếu Hà Nội - Biểu tượng của nền giáo dục truyền thống Việt Nam*
 
-## Thời kỳ Đại La - Nền móng của kinh thành
+## 2. Thời kỳ Đại La - Nền móng của kinh thành
 
 Năm 866, dưới thời nhà Đường, tướng Cao Biền được cử vào An Nam để trấn áp các cuộc khởi nghĩa của người Việt. Ông đã cho xây dựng thành Đại La tại vị trí thuận lợi ở phía tây sông Hồng, nơi có nhiều sông ngòi giao thoa, tạo thành một hệ thống phòng thủ tự nhiên vững chắc.
 
 Thành Đại La được xây dựng theo quy hoạch bài bản với chu vi khoảng 6,5 km, có 8 cửa thành và hệ thống đường phố được chia theo ô bàn cờ. Đây chính là tiền thân của Hà Nội ngày nay và là nền tảng cho sự phát triển của kinh thành trong những thế kỷ sau.
 
-## Thăng Long - Kinh đô của các triều đại phong kiến
+## 3. Thăng Long - Kinh đô của các triều đại phong kiến
 
 Năm 1010, vua Lý Thái Tổ quyết định dời đô từ Hoa Lư (Ninh Bình) về Đại La và đổi tên thành Thăng Long. Theo "Việt sử lược", khi vua đến nơi, có thấy một con rồng vàng bay lên trời, nên đặt tên là Thăng Long (rồng bay lên).
 
@@ -30,19 +30,19 @@ Dưới triều Lý (1009-1225), Thăng Long trở thành trung tâm chính tr�
 ![Hoàng thành Thăng Long - Di sản văn hóa thế giới](https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=400&fit=crop)  
 *Hoàng thành Thăng Long - Di sản văn hóa thế giới được UNESCO công nhận*
 
-## Thời kỳ Trần và Ming - Biến động lịch sử
+## 4. Thời kỳ Trần và Ming - Biến động lịch sử
 
 Triều Trần (1225-1400) tiếp tục phát triển Thăng Long thành một kinh đô hùng mạnh. Dưới thời các vua Trần, thành phố không chỉ là trung tâm chính trị mà còn là nơi tập trung các học giả, nghệ nhân tài ba. Đặc biệt, đây là nơi các vua Trần hoạch định chiến lược chống lại ba lần xâm lược của quân Mông Cổ - Nguyên.
 
 Thời kỳ Hồ Quý Ly (1400-1407), kinh đô được dời về Tây Đô (Thanh Hóa), nhưng Thăng Long vẫn giữ vai trò quan trọng. Khi quân Minh xâm lược (1407-1427), họ đã đổi tên Thăng Long thành Đông Quan và biến nơi đây thành trung tâm cai trị của mình tại Đại Việt.
 
-## Thời Lê sơ và sự phục hưng của Thăng Long
+## 5. Thời Lê sơ và sự phục hưng của Thăng Long
 
 Sau khi Lê Lợi đánh bại quân Minh năm 1428, ông lên ngôi hoàng đế, lập ra triều Lê và khôi phục tên gọi Thăng Long cho kinh đô. Thời Lê Thánh Tông (1460-1497), Thăng Long đạt đến thời kỳ hoàng kim với sự phát triển mạnh mẽ về mọi mặt.
 
 Dưới triều Lê, hệ thống giáo dục được chú trọng phát triển. Văn Miếu - Quốc Tử Giám được mở rộng và trở thành trung tâm giáo dục cao nhất của cả nước. Các kỳ thi Hương và Hội được tổ chức thường xuyên, tạo ra một đội ngũ quan lại tài năng phục vụ triều đình.
 
-## Thời kỳ phân tranh và suy tàn
+## 6. Thời kỳ phân tranh và suy tàn
 
 Từ thế kỷ XVI, do các cuộc tranh chấp nội bộ và sự xuất hiện của các thế lực địa phương mạnh, Thăng Long dần mất đi vị thế trung tâm. Thời Mạc (1527-1592), kinh đô vẫn đặt tại Thăng Long nhưng quyền lực thực tế bị chia cắt.
 
@@ -51,31 +51,31 @@ Cuối thế kỷ XVI, khi họ Trịnh nắm quyền ở phía Bắc, Thăng Lo
 ![Hồ Hoàn Kiếm - Trái tim của Hà Nội](https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=400&fit=crop)  
 *Hồ Hoàn Kiếm - Trái tim của Hà Nội với những truyền thuyết cổ xưa*
 
-## Thời Nguyễn và sự thay đổi địa vị
+## 7. Thời Nguyễn và sự thay đổi địa vị
 
 Năm 1802, khi Nguyễn Ánh thống nhất cả nước và lên ngôi hoàng đế với tên hiệu Gia Long, ông quyết định dời đô về Phú Xuân (Huế). Thăng Long bị giáng cấp thành phủ lỵ và đổi tên thành Hà Nội, có nghĩa là "nằm trong lòng sông" (sông Hồng).
 
 Mặc dù không còn là kinh đô, Hà Nội vẫn giữ vai trò quan trọng như một trung tâm kinh tế, văn hóa của miền Bắc. Thành phố tiếp tục phát triển với các phố phường truyền thống và duy trì được bản sắc văn hóa đặc trưng.
 
-## Thời kỳ thuộc địa Pháp (1884-1945)
+## 8. Thời kỳ thuộc địa Pháp (1884-1945)
 
 Từ năm 1884, khi Pháp thiết lập chế độ bảo hộ tại Bắc Kỳ, Hà Nội trở thành trung tâm hành chính của toàn bộ Đông Dương Pháp. Người Pháp đã tiến hành nhiều công trình xây dựng và cải tạo đô thị, tạo nên diện mạo mới cho thành phố.
 
 Thời kỳ này, Hà Nội được chia thành hai khu vực chính: Khu phố cổ (36 phố phường) giữ nguyên lối kiến trúc truyền thống và Khu phố Pháp với kiến trúc châu Âu. Nhiều công trình quan trọng được xây dựng như Nhà hát Lớn, Bưu điện Trung tâm, Đại học Đông Dương và hệ thống đường phố rộng rãi.
 
-## Hà Nội trong thời kỳ đấu tranh giải phóng
+## 9. Hà Nội trong thời kỳ đấu tranh giải phóng
 
 Ngày 19 tháng 12 năm 1946, Chủ tịch Hồ Chí Minh đã ra "Lời kêu gọi toàn quốc kháng chiến" tại Hà Nội, mở đầu cuộc kháng chiến chống thực dân Pháp. Trong suốt 9 năm kháng chiến (1946-1954), mặc dù Chính phủ Việt Nam phải di chuyển ra vùng căn cứ, Hà Nội vẫn là biểu tượng của ý chí độc lập dân tộc.
 
 Ngày 10 tháng 10 năm 1954, quân đội Việt Nam tiến vào tiếp quản Hà Nội, chấm dứt gần 70 năm đô hộ của thực dân Pháp. Đây là một mốc son quan trọng trong lịch sử thành phố và cả nước.
 
-## Hà Nội - Thủ đô của nước Việt Nam thống nhất
+## 10. Hà Nội - Thủ đô của nước Việt Nam thống nhất
 
 Từ năm 1954 đến 1975, Hà Nội là thủ đô của nước Việt Nam Dân chủ Cộng hòa (miền Bắc). Thành phố đã trải qua nhiều thử thách, đặc biệt là cuộc chiến tranh chống Mỹ với những đợt oanh tạc dữ dội. Tuy nhiên, người dân Hà Nội đã kiên cường bảo vệ thủ đô và tiếp tục xây dựng đất nước.
 
 Sau ngày thống nhất đất nước (30/4/1975), Hà Nội chính thức trở thành thủ đô của nước Cộng hòa xã hội chủ nghĩa Việt Nam. Từ đây, thành phố bước vào giai đoạn phát triển mới với nhiều chính sách đổi mới và hội nhập quốc tế.
 
-## Hà Nội hiện đại - Thủ đô của thế kỷ XXI
+## 11. Hà Nội hiện đại - Thủ đô của thế kỷ XXI
 
 Từ năm 1986, với chính sách Đổi mới, Hà Nội đã có những bước phát triển vượt bậc. Năm 2008, thành phố được mở rộng địa giới hành chính, sáp nhập tỉnh Hà Tây và một số huyện của tỉnh Vĩnh Phúc, Hòa Bình, tạo thành Hà Nội mới với diện tích 3.359 km² và dân số hơn 8 triệu người.
 
