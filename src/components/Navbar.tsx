@@ -60,7 +60,7 @@ export default function Navbar() {
                   <span className='sr-only'>Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
+              <SheetContent side='left' className='w-[250px] sm:w-[400px]'>
                 <SheetTitle className='sr-only'>Menu điều hướng</SheetTitle>
                 <div className='flex flex-col space-y-4 mt-8'>
                   {navigationLinks.map((link) => (
