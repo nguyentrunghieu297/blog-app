@@ -5,13 +5,13 @@ import { Menu } from 'lucide-react'
 import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from '@/components/ui/sheet'
 
 const navigationLinks = [
   { href: '/', label: 'Trang chủ', logo: true },
   { href: '/blog', label: 'Biết chút cho vui' },
   // { href: '/forwork', label: 'Cần cho công việc' },
-  { href: '/about', label: 'Tự giới thiệu' }
+  { href: '/portfolio', label: 'Tự giới thiệu' }
   // { href: '/admin', label: 'Admin' }
 ]
 
@@ -50,36 +50,41 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Menu */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className='md:hidden'>
-              <Button variant='ghost' size='icon'>
-                <Menu className='h-5 w-5' />
-                <span className='sr-only'>Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side='right' className='w-[300px] sm:w-[400px]'>
-              <div className='flex flex-col space-y-4 mt-8'>
-                {navigationLinks.map((link) => (
-                  <SheetClose asChild key={link.href}>
-                    <Link
-                      href={link.href}
-                      className='flex items-center py-3 px-4 text-lg font-medium rounded-lg hover:bg-accent transition-colors'
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  </SheetClose>
-                ))}
-
-                <div className='pt-4 mx-4 border-t'>
-                  <Button className='w-full px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'>
-                    Đăng nhập
-                  </Button>
+          {/* Mobile Layout */}
+          <div className='flex md:hidden items-center justify-between w-full'>
+            {/* Mobile Menu Button */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant='ghost' size='icon'>
+                  <Menu className='h-5 w-5' />
+                  <span className='sr-only'>Toggle menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
+                <SheetTitle className='sr-only'>Menu điều hướng</SheetTitle>
+                <div className='flex flex-col space-y-4 mt-8'>
+                  {navigationLinks.map((link) => (
+                    <SheetClose asChild key={link.href}>
+                      <Link
+                        href={link.href}
+                        className='flex items-center py-3 px-4 text-lg font-medium rounded-lg hover:bg-accent transition-colors'
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    </SheetClose>
+                  ))}
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+
+            {/* Mobile Title - Centered */}
+            <div className='absolute left-1/2 -translate-x-1/2'>
+              <Link href='/' className='text-base font-semibold text-foreground'>
+                Vài thứ hay ho
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

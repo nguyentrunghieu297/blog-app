@@ -3,7 +3,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Mail, Phone, MapPin, ExternalLink, Download, Code, Server, Palette } from 'lucide-react'
+import { Mail, Phone, MapPin, ExternalLink, Download, Code, Palette, Smartphone } from 'lucide-react'
 import { FaGithub } from 'react-icons/fa'
 import Image from 'next/image'
 import html_03 from '@/assets/images/html_03.png'
@@ -93,40 +93,44 @@ export default function Portfolio() {
   return (
     <div className='min-h-screen bg-background'>
       {/* Hero Section */}
-      <section className='relative py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-secondary/5'>
+      <section className='relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-br from-primary/5 via-background sm:bg-accent to-secondary/5'>
         <div className='max-w-6xl mx-auto'>
-          <div className='grid lg:grid-cols-2 gap-12 items-center'>
-            <div className='space-y-6'>
-              <div className='space-y-4'>
-                <h1 className='text-4xl lg:text-5xl font-bold tracking-tight'>
+          <div className='grid lg:grid-cols-2 gap-8 md:gap-12 items-center'>
+            <div className='space-y-4 sm:space-y-6 order-2 lg:order-1'>
+              <div className='space-y-3 sm:space-y-4'>
+                <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight'>
                   Xin chào, tôi là <span className='text-primary block mt-2'>Nguyễn Trung Hiếu</span>
                 </h1>
-                <p className='text-xl text-muted-foreground'>Frontend Developer | React & UI Enthusiast</p>
+                <p className='text-lg sm:text-xl text-muted-foreground'>Frontend Developer | React & UI Enthusiast</p>
 
-                <p className='text-lg leading-relaxed'>
-                  Tôi là một lập trình viên web trẻ, đam mê tạo ra những giao diện hiện đại, trực quan và mượt mà. Với
-                  nền tảng <b>Kỹ thuật phần mềm</b> tại Đại học FPT, tôi tập trung phát triển các sản phẩm có trải
-                  nghiệm người dùng tốt và dễ mở rộng.
+                <p className='text-base sm:text-lg leading-relaxed'>
+                  Tôi là một lập trình viên <b>Frontend</b>, đam mê tạo ra những giao diện hiện đại, trực quan và mượt
+                  mà. Với nền tảng <b>Kỹ thuật phần mềm</b> tại <b>Đại học FPT</b>, tôi tập trung phát triển các sản
+                  phẩm có trải nghiệm người dùng tốt và dễ mở rộng.
                 </p>
               </div>
 
-              <div className='flex flex-wrap gap-4'>
-                <Button size='lg' className='gap-2'>
-                  <a href='/files/CV_NguyenTrungHieu_Intern_Frontend.pdf' download className='flex items-center'>
-                    <Download className='w-4 h-4' />
+              <div className='flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4'>
+                <Button size='lg' className='gap-2 w-full sm:w-auto'>
+                  <a
+                    href='/files/CV_NguyenTrungHieu_Intern_Frontend.pdf'
+                    download
+                    className='flex items-center justify-center w-full'
+                  >
+                    <Download className='w-4 h-4 mr-2' />
                     Tải CV
                   </a>
                 </Button>
 
-                <Button variant='outline' size='lg' className='gap-2 bg-transparent'>
+                <Button variant='outline' size='lg' className='gap-2 bg-transparent w-full sm:w-auto'>
                   <Mail className='w-4 h-4' />
                   Liên hệ
                 </Button>
               </div>
             </div>
 
-            <div className='relative'>
-              <div className='relative w-80 h-80 mx-auto'>
+            <div className='relative order-1 lg:order-2'>
+              <div className='relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mx-auto'>
                 <Image
                   src={avatar || ''}
                   alt='Profile'
@@ -141,49 +145,50 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section className='py-20 px-4'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6'>
         <div className='max-w-6xl mx-auto'>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl font-bold mb-4'>Về tôi</h2>
-            <p className='text-muted-foreground max-w-2xl mx-auto'>
-              Tôi là một lập trình viên web đam mê tạo ra những sản phẩm có ý nghĩa và mang lại giá trị cho người dùng.
+          <div className='text-center mb-12 md:mb-16'>
+            <h2 className='text-2xl sm:text-3xl font-bold mb-3 sm:mb-4'>Về tôi</h2>
+            <p className='text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base px-4'>
+              Tôi là một <b>Frontend Developer</b> đam mê tạo ra những trải nghiệm <b>web</b> và <b>mobile</b> mượt mà,
+              hiệu quả và thân thiện với người dùng.
             </p>
           </div>
 
-          <div className='grid lg:grid-cols-3 gap-8'>
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
             <Card>
               <CardHeader>
                 <Code className='w-8 h-8 text-primary mb-2' />
-                <CardTitle>Frontend Development</CardTitle>
+                <CardTitle className='text-lg sm:text-xl'>Web Development</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className='text-muted-foreground'>
-                  Chuyên về React, Next.js, Vue.js và các công nghệ frontend hiện đại. Tạo ra UI/UX đẹp mắt và
-                  responsive.
+                <p className='text-muted-foreground text-sm sm:text-base'>
+                  Hiểu biết cơ bản về React, Next.js, TypeScript. Ứng dụng công nghệ để xây dựng ứng dụng web hiện đại
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <Server className='w-8 h-8 text-primary mb-2' />
-                <CardTitle>Backend Development</CardTitle>
+                <Smartphone className='w-8 h-8 text-primary mb-2' />
+                <CardTitle className='text-lg sm:text-xl'>Mobile Development</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className='text-muted-foreground'>
-                  Phát triển API robust với Node.js, Python, PHP. Thiết kế database và tối ưu performance.
+                <p className='text-muted-foreground text-sm sm:text-base'>
+                  Phát triển ứng dụng di động đa nền tảng với React Native. Tạo trải nghiệm native mượt mà cho cả iOS và
+                  Android.
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className='sm:col-span-2 lg:col-span-1'>
               <CardHeader>
                 <Palette className='w-8 h-8 text-primary mb-2' />
-                <CardTitle>UI/UX Design</CardTitle>
+                <CardTitle className='text-lg sm:text-xl'>UI/UX Implementation</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className='text-muted-foreground'>
-                  Hiểu biết về design principles, user experience và có thể làm việc với Figma, Photoshop.
+                <p className='text-muted-foreground text-sm sm:text-base'>
+                  Chuyển đổi designs từ Figma thành mã nguồn. Tích hợp RESTful APIs, GraphQL và quản lý state hiệu quả.
                 </p>
               </CardContent>
             </Card>
@@ -192,24 +197,24 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section className='py-20 px-4 bg-mute text-center'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-br from-primary/5 via-background to-secondary/5 text-center'>
         <div className='max-w-6xl mx-auto'>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl font-bold mb-4'>Kỹ năng</h2>
-            <p className='text-muted-foreground'>Các công nghệ và tools tôi sử dụng</p>
+          <div className='text-center mb-12 md:mb-16'>
+            <h2 className='text-2xl sm:text-3xl font-bold mb-3 sm:mb-4'>Kỹ năng</h2>
+            <p className='text-muted-foreground text-sm sm:text-base'>Các công nghệ và tools tôi sử dụng</p>
           </div>
-          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-8 place-items-center'>
+          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-4 sm:gap-6 md:gap-8 place-items-center'>
             {skills.map((skill) => (
               <a
                 href={skill.link}
                 target='_blank'
                 key={skill.name}
-                className='flex flex-col items-center space-y-2 group'
+                className='flex flex-col items-center space-y-2 group w-full'
               >
-                <div className='relative w-12 h-12 transition-transform duration-300 group-hover:scale-110'>
+                <div className='relative w-10 h-10 sm:w-12 sm:h-12 transition-transform duration-300 group-hover:scale-110'>
                   <Image src={skill.icon} alt={skill.name} fill className='object-contain' />
                 </div>
-                <span className='text-gray-400 text-sm'>{skill.name}</span>
+                <span className='text-gray-400 text-xs sm:text-sm text-center'>{skill.name}</span>
               </a>
             ))}
           </div>
@@ -217,17 +222,17 @@ export default function Portfolio() {
       </section>
 
       {/* Projects Section */}
-      <section className='py-20 px-4'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6'>
         <div className='max-w-6xl mx-auto'>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl font-bold mb-4'>Dự án nổi bật</h2>
-            <p className='text-muted-foreground'>Một số dự án tôi đã thực hiện gần đây</p>
+          <div className='text-center mb-12 md:mb-16'>
+            <h2 className='text-2xl sm:text-3xl font-bold mb-3 sm:mb-4'>Dự án nổi bật</h2>
+            <p className='text-muted-foreground text-sm sm:text-base'>Một số dự án tôi đã thực hiện gần đây</p>
           </div>
 
-          <div className='grid lg:grid-cols-3 gap-8'>
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
             {projects.map((project, index) => (
               <Card key={index} className='overflow-hidden py-0 group hover:shadow-lg transition-shadow'>
-                <div className='relative h-48'>
+                <div className='relative h-40 sm:h-48'>
                   <Image
                     src={project.image || '/placeholder.svg'}
                     alt={project.title}
@@ -235,9 +240,9 @@ export default function Portfolio() {
                     className='object-cover group-hover:scale-105 transition-transform duration-300'
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle>{project.title}</CardTitle>
-                  <CardDescription>{project.description}</CardDescription>
+                <CardHeader className='pb-3'>
+                  <CardTitle className='text-lg sm:text-xl'>{project.title}</CardTitle>
+                  <CardDescription className='text-sm'>{project.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className='flex flex-wrap gap-2 mb-4'>
@@ -248,26 +253,26 @@ export default function Portfolio() {
                     ))}
                   </div>
                   <div className='flex gap-2 pb-6'>
-                    <Button variant='outline' size='sm' className='gap-2 w-1/2 bg-transparent'>
+                    <Button variant='outline' size='sm' className='gap-2 flex-1 bg-transparent'>
                       <a
                         href={project.github}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='flex items-center gap-2 w-1/2'
+                        className='flex items-center justify-center gap-2 w-full'
                       >
                         <FaGithub className='w-4 h-4' />
-                        Code
+                        <span className='hidden xs:inline'>Code</span>
                       </a>
                     </Button>
-                    <Button size='sm' className='gap-2 w-1/2'>
+                    <Button size='sm' className='gap-2 flex-1'>
                       <a
                         href={project.demo}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='flex items-center gap-2 w-1/2'
+                        className='flex items-center justify-center gap-2 w-full'
                       >
                         <ExternalLink className='w-4 h-4' />
-                        Demo
+                        <span className='hidden xs:inline'>Demo</span>
                       </a>
                     </Button>
                   </div>
@@ -279,35 +284,41 @@ export default function Portfolio() {
       </section>
 
       {/* Experience Section */}
-      <section className='py-20 px-4 bg-muted/30'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-muted/30'>
         <div className='max-w-4xl mx-auto'>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl font-bold mb-4'>Kinh nghiệm làm việc</h2>
-            <p className='text-muted-foreground'>Hành trình phát triển sự nghiệp của tôi</p>
+          <div className='text-center mb-12 md:mb-16'>
+            <h2 className='text-2xl sm:text-3xl font-bold mb-3 sm:mb-4'>Kinh nghiệm làm việc</h2>
+            <p className='text-muted-foreground text-sm sm:text-base'>Hành trình phát triển sự nghiệp của tôi</p>
           </div>
 
-          <div className='space-y-8'>
+          <div className='space-y-6 sm:space-y-8'>
             {experiences.map((exp, index) => (
               <Card key={index} className='gap-3'>
                 <CardHeader>
-                  <div className='flex justify-between items-start'>
-                    <div className='flex items-center gap-4'>
-                      <Image width={100} height={50} src='/images/icon-fpt.png' alt='' />
+                  <div className='flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4'>
+                    <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4'>
+                      <Image
+                        width={80}
+                        height={40}
+                        src='/images/icon-fpt.png'
+                        alt=''
+                        className='sm:w-[100px] sm:h-[50px]'
+                      />
                       <div>
-                        <CardTitle>{exp.company}</CardTitle>
-                        <CardDescription className='text-base mt-2 font-light text-primary'>
+                        <CardTitle className='text-lg sm:text-xl'>{exp.company}</CardTitle>
+                        <CardDescription className='text-sm sm:text-base mt-2 font-light text-primary'>
                           {exp.title}
                         </CardDescription>
                       </div>
                     </div>
-                    <Badge variant='outline' className='text-sm'>
+                    <Badge variant='outline' className='text-xs sm:text-sm self-start sm:self-auto'>
                       {exp.period}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
                   {Array.isArray(exp.description) && (
-                    <ul className='list-disc list-inside mt-2 text-muted-foreground space-y-1'>
+                    <ul className='list-disc list-inside mt-2 text-muted-foreground space-y-1 text-sm sm:text-base'>
                       {exp.description.map((point, idx) => (
                         <li key={idx}>{point}</li>
                       ))}
@@ -315,10 +326,10 @@ export default function Portfolio() {
                   )}
 
                   {exp.technologies && (
-                    <div className='mt-[-2px]'>
-                      <div className='flex flex-wrap gap-2 mt-5'>
+                    <div className='mt-4 sm:mt-5'>
+                      <div className='flex flex-wrap gap-2'>
                         {exp.technologies.map((tech) => (
-                          <Badge key={tech} variant='secondary'>
+                          <Badge key={tech} variant='secondary' className='text-xs sm:text-sm'>
                             {tech}
                           </Badge>
                         ))}
@@ -333,35 +344,35 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section className='py-20 px-4'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6'>
         <div className='max-w-5xl mx-auto text-center'>
-          <h2 className='text-3xl font-bold mb-4'>Liên hệ với tôi</h2>
-          <p className='text-muted-foreground mb-12'>
+          <h2 className='text-2xl sm:text-3xl font-bold mb-3 sm:mb-4'>Liên hệ với tôi</h2>
+          <p className='text-muted-foreground mb-8 sm:mb-12 text-sm sm:text-base px-4'>
             Sẵn sàng cho cơ hội hợp tác mới. Hãy liên hệ để thảo luận về dự án của bạn!
           </p>
 
-          <div className='grid md:grid-cols-3 gap-8 mb-12'>
-            <Card>
+          <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8'>
+            <Card className='sm:col-span-2 md:col-span-1'>
               <CardContent className='pt-6 text-center'>
                 <Mail className='w-8 h-8 text-primary mx-auto mb-4' />
-                <h3 className='font-semibold mb-2'>Email</h3>
-                <p className='text-muted-foreground text-sm'>trunghieunguyen2729@gmail.com</p>
+                <h3 className='font-semibold mb-2 text-base sm:text-lg'>Email</h3>
+                <p className='text-muted-foreground text-xs sm:text-sm break-all px-2'>trunghieunguyen2729@gmail.com</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className='pt-6 text-center'>
                 <Phone className='w-8 h-8 text-primary mx-auto mb-4' />
-                <h3 className='font-semibold mb-2'>Điện thoại</h3>
-                <p className='text-muted-foreground text-sm'>+84 819 438 687</p>
+                <h3 className='font-semibold mb-2 text-base sm:text-lg'>Điện thoại</h3>
+                <p className='text-muted-foreground text-xs sm:text-sm'>+84 819 438 687</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className='pt-6 text-center'>
                 <MapPin className='w-8 h-8 text-primary mx-auto mb-4' />
-                <h3 className='font-semibold mb-2'>Địa chỉ</h3>
-                <p className='text-muted-foreground text-sm'>TP. Hồ Chí Minh, Việt Nam</p>
+                <h3 className='font-semibold mb-2 text-base sm:text-lg'>Địa chỉ</h3>
+                <p className='text-muted-foreground text-xs sm:text-sm'>TP. Hồ Chí Minh, Việt Nam</p>
               </CardContent>
             </Card>
           </div>

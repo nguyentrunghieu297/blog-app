@@ -27,7 +27,9 @@ export default function RootLayout({
       <body className={beVietnamPro.className}>
         <QueryProvider>
           <Navbar />
-          <main className='p-4 max-w-[calc(100vw-5rem)] mx-auto min-h-[calc(100vh-126px)]'>{children}</main>
+          <main className='p-4 max-w-[calc(100vw)] md:max-w-[calc(100vw-12rem)] mx-auto min-h-[calc(100vh-126px)]'>
+            {children}
+          </main>
           <Footer />
         </QueryProvider>
       </body>

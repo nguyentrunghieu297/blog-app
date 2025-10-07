@@ -1,18 +1,12 @@
-'use client';
+'use client'
 
-import SplitText from '@/components/SplitText';
-import TextType from '@/components/TextType';
-import { StatsCounter } from '@/components/StatsCounter';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+import SplitText from '@/components/SplitText'
+import TextType from '@/components/TextType'
+import { StatsCounter } from '@/components/StatsCounter'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import {
   ArrowRight,
   BookOpen,
@@ -26,19 +20,19 @@ import {
   Calendar,
   Clock,
   Loader,
-  ExternalLink,
-} from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { FaGithub } from 'react-icons/fa';
+  ExternalLink
+} from 'lucide-react'
+import { FaGithub } from 'react-icons/fa'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   const stats = [
-    { label: 'Bài viết', value: 45, suffix: '+' },
-    { label: 'Dự án', value: 12, suffix: '+' },
-    { label: 'Năm kinh nghiệm', value: 4, suffix: '+' },
-    { label: 'Công nghệ', value: 20, suffix: '+' },
-  ];
+    { label: 'Bài viết', value: 15, suffix: '+' },
+    { label: 'Dự án', value: 3, suffix: '+' },
+    { label: 'Năm kinh nghiệm', value: 1, suffix: '+' },
+    { label: 'Công nghệ', value: 2, suffix: '+' }
+  ]
 
   const recentPosts = [
     {
@@ -55,8 +49,8 @@ export default function Home() {
       tags: ['Lịch sử Việt Nam', 'Hà Nội', 'Thăng Long'],
       author: {
         name: 'Tiến sĩ Nguyễn Văn Sử',
-        avatar: '/placeholder.svg?height=40&width=40',
-      },
+        avatar: '/placeholder.svg?height=40&width=40'
+      }
     },
     {
       id: '2',
@@ -72,14 +66,13 @@ export default function Home() {
       tags: ['React', 'JavaScript', 'Performance'],
       author: {
         name: 'Nguyễn Văn Dev',
-        avatar: '/placeholder.svg?height=40&width=40',
-      },
+        avatar: '/placeholder.svg?height=40&width=40'
+      }
     },
     {
       id: '3',
       title: 'Xây dựng API RESTful với Node.js và Express',
-      excerpt:
-        'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
+      excerpt: 'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
       slug: 'xay-dung-api-restful-nodejs',
       featuredImage:
         'https://images.unsplash.com/photo-1752184377529-b0989b6d5f5c?q=80&w=1166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -89,14 +82,13 @@ export default function Home() {
       tags: ['Node.js', 'Express', 'API'],
       author: {
         name: 'Trần Văn Backend',
-        avatar: '/placeholder.svg?height=40&width=40',
-      },
+        avatar: '/placeholder.svg?height=40&width=40'
+      }
     },
     {
       id: '4',
       title: 'Xây dựng API RESTful với Node.js và Express',
-      excerpt:
-        'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
+      excerpt: 'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
       slug: 'xay-dung-api-restful-nodejs',
       featuredImage:
         'https://images.unsplash.com/photo-1752184377529-b0989b6d5f5c?q=80&w=1166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -106,14 +98,13 @@ export default function Home() {
       tags: ['Node.js', 'Express', 'API'],
       author: {
         name: 'Trần Văn Backend',
-        avatar: '/placeholder.svg?height=40&width=40',
-      },
+        avatar: '/placeholder.svg?height=40&width=40'
+      }
     },
     {
       id: '5',
       title: 'Xây dựng API RESTful với Node.js và Express',
-      excerpt:
-        'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
+      excerpt: 'Hướng dẫn chi tiết cách xây dựng một API RESTful hoàn chỉnh sử dụng Node.js và Express framework.',
       slug: 'xay-dung-api-restful-nodejs',
       featuredImage:
         'https://images.unsplash.com/photo-1752184377529-b0989b6d5f5c?q=80&w=1166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -123,10 +114,10 @@ export default function Home() {
       tags: ['Node.js', 'Express', 'API'],
       author: {
         name: 'Trần Văn Backend',
-        avatar: '/placeholder.svg?height=40&width=40',
-      },
-    },
-  ];
+        avatar: '/placeholder.svg?height=40&width=40'
+      }
+    }
+  ]
 
   const projects = [
     {
@@ -137,45 +128,43 @@ export default function Home() {
       image:
         'https://images.unsplash.com/photo-1752503650851-cbc3f8b00679?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       github: 'https://github.com',
-      demo: 'https://demo.com',
+      demo: 'https://demo.com'
     },
     {
       title: 'Task Management App',
-      description:
-        'Ứng dụng quản lý công việc với tính năng real-time collaboration, drag & drop và notifications.',
+      description: 'Ứng dụng quản lý công việc với tính năng real-time collaboration, drag & drop và notifications.',
       tech: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
       image:
         'https://images.unsplash.com/photo-1752503650851-cbc3f8b00679?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       github: 'https://github.com',
-      demo: 'https://demo.com',
+      demo: 'https://demo.com'
     },
     {
       title: 'Blog CMS',
-      description:
-        'Hệ thống quản lý nội dung blog với editor WYSIWYG, SEO optimization và analytics dashboard.',
+      description: 'Hệ thống quản lý nội dung blog với editor WYSIWYG, SEO optimization và analytics dashboard.',
       tech: ['Vue.js', 'Laravel', 'MySQL', 'TinyMCE', 'Chart.js'],
       image:
         'https://images.unsplash.com/photo-1752503650851-cbc3f8b00679?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       github: 'https://github.com',
-      demo: 'https://demo.com',
-    },
-  ];
+      demo: 'https://demo.com'
+    }
+  ]
 
   const handleAnimationComplete = () => {
-    console.log('All letters have animated!');
-  };
+    console.log('All letters have animated!')
+  }
 
   return (
     <div className='min-h-screen bg-background'>
       {/* Hero Section */}
-      <section className='relative py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-secondary/5'>
+      <section className='relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary/5 via-background to-secondary/5'>
         <div className='max-w-6xl mx-auto'>
-          <div className='grid lg:grid-cols-2 gap-12 items-center'>
-            <div className='space-y-6'>
-              <div className='space-y-4'>
+          <div className='grid lg:grid-cols-2 gap-8 md:gap-12 items-center'>
+            <div className='space-y-4 sm:space-y-6'>
+              <div className='space-y-3 sm:space-y-4'>
                 <SplitText
                   text='👋 Chào mừng đến với blog của tôi'
-                  className='text-xs font-normal text-left'
+                  className='text-xs sm:text-sm font-normal text-left'
                   delay={100}
                   duration={0.6}
                   ease='power3.out'
@@ -187,14 +176,10 @@ export default function Home() {
                   textAlign='left'
                   onLetterAnimationComplete={handleAnimationComplete}
                 />
-                <div className='space-y-2 h-24'>
-                  <h1 className='text-3xl lg:text-5xl font-bold tracking-tight'>
-                    {/* Something new to me and maybe to you */}
+                <div className='space-y-2 h-20 sm:h-24 md:h-28'>
+                  <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight'>
                     <TextType
-                      text={[
-                        'Something new to me and maybe to you',
-                        'Điều gì đó mới mẻ với tôi và có thể với bạn',
-                      ]}
+                      text={['Something new to me and maybe to you', 'Điều gì đó mới mẻ với tôi và có thể với bạn']}
                       typingSpeed={75}
                       pauseDuration={1500}
                       showCursor={true}
@@ -203,21 +188,21 @@ export default function Home() {
                     />
                   </h1>
                 </div>
-                <p className='text-xl text-muted-foreground leading-relaxed'>
-                  Nơi tôi chia sẻ những kiến thức linh tinh được góp nhặt từ khắp nơi trên internet.
-                  Mục đích là để lưu giữ và chia sẻ với mọi người.
+                <p className='text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed'>
+                  Nơi tôi chia sẻ những kiến thức linh tinh được góp nhặt từ khắp nơi trên internet. Mục đích là để lưu
+                  giữ và chia sẻ với mọi người.
                 </p>
               </div>
 
-              <div className='flex flex-wrap gap-4'>
-                <Button size='lg' asChild>
+              <div className='flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4'>
+                <Button size='lg' asChild className='w-full sm:w-auto'>
                   <Link href='/blog' className='gap-2'>
                     <BookOpen className='w-4 h-4' />
                     Đọc Blog
                     <ArrowRight className='w-4 h-4' />
                   </Link>
                 </Button>
-                <Button variant='outline' size='lg' asChild>
+                <Button variant='outline' size='lg' asChild className='w-full sm:w-auto'>
                   <Link href='/portfolio' className='gap-2'>
                     <Code className='w-4 h-4' />
                     Xem Portfolio
@@ -226,8 +211,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='relative'>
-              <div className='relative w-96 h-80 mx-auto'>
+            <div className='relative order-first lg:order-last'>
+              <div className='relative w-full max-w-md mx-auto aspect-[4/3] lg:aspect-auto lg:h-80'>
                 <Image
                   src='https://images.unsplash.com/photo-1752784365239-773786d7848e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                   alt='Developer workspace'
@@ -242,16 +227,16 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className='py-16 px-4 bg-muted/30'>
+      <section className='py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-muted/30'>
         <div className='max-w-6xl mx-auto'>
           <StatsCounter stats={stats} />
         </div>
       </section>
 
       {/* Main Sections */}
-      <section className='py-20 px-4'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-6xl mx-auto'>
-          <div className='grid lg:grid-cols-3 gap-8'>
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
             {/* Blog Section */}
             <Card className='lg:col-span-1'>
               <CardHeader>
@@ -267,17 +252,15 @@ export default function Home() {
               </CardHeader>
               <CardContent className='space-y-4'>
                 <p className='text-muted-foreground'>
-                  Chia sẻ kinh nghiệm, tips & tricks, và những bài hướng dẫn chi tiết về web
-                  development.
+                  Chia sẻ kinh nghiệm, tips & tricks, và những bài hướng dẫn chi tiết về web development.
                 </p>
                 <div className='flex items-center gap-4 text-sm text-muted-foreground'>
                   <div className='flex items-center gap-1'>
                     <FileText className='w-4 h-4' />
-                    45+ bài viết
+                    15+ bài viết
                   </div>
                   <div className='flex items-center gap-1'>
-                    <Users className='w-4 h-4' />
-                    1.2k readers
+                    <Users className='w-4 h-4' />0 lượt xem
                   </div>
                 </div>
                 <Button asChild className='w-full'>
@@ -304,17 +287,15 @@ export default function Home() {
               </CardHeader>
               <CardContent className='space-y-4'>
                 <p className='text-muted-foreground'>
-                  Showcase các dự án đã thực hiện, kỹ năng và kinh nghiệm làm việc trong lĩnh vực
-                  web development.
+                  Showcase các dự án đã thực hiện, kỹ năng và kinh nghiệm làm việc trong lĩnh vực web development.
                 </p>
                 <div className='flex items-center gap-4 text-sm text-muted-foreground'>
                   <div className='flex items-center gap-1'>
                     <Star className='w-4 h-4' />
-                    12+ dự án
+                    3+ dự án
                   </div>
                   <div className='flex items-center gap-1'>
-                    <Zap className='w-4 h-4' />
-                    4+ năm kinh nghiệm
+                    <Zap className='w-4 h-4' />1 năm kinh nghiệm
                   </div>
                 </div>
                 <Button asChild className='w-full'>
@@ -327,7 +308,7 @@ export default function Home() {
             </Card>
 
             {/* Tools Section */}
-            <Card className='lg:col-span-1 relative overflow-hidden'>
+            <Card className='sm:col-span-2 lg:col-span-1 relative overflow-hidden'>
               <div className='absolute top-4 right-4'>
                 <Badge variant='secondary'>Sắp ra mắt</Badge>
               </div>
@@ -344,17 +325,14 @@ export default function Home() {
               </CardHeader>
               <CardContent className='space-y-4'>
                 <p className='text-muted-foreground'>
-                  Các công cụ nhỏ giúp cải thiện hiệu suất làm việc cho developers. Đang trong quá
-                  trình phát triển.
+                  Các công cụ nhỏ giúp cải thiện hiệu suất làm việc cho developers. Đang trong quá trình phát triển.
                 </p>
                 <div className='flex items-center gap-4 text-sm text-muted-foreground'>
                   <div className='flex items-center gap-1'>
-                    <Star className='w-4 h-4' />
-                    2+ tools
+                    <Star className='w-4 h-4' />0 tools
                   </div>
                   <div className='flex items-center gap-1'>
-                    <Zap className='w-4 h-4' />
-                    300+ người dùng
+                    <Zap className='w-4 h-4' />0 người dùng
                   </div>
                 </div>
                 <Button disabled className='w-full'>
@@ -368,14 +346,14 @@ export default function Home() {
       </section>
 
       {/* Recent Blog Posts */}
-      <section className='py-20 px-4 bg-muted/30'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-muted/30'>
         <div className='max-w-6xl mx-auto'>
-          <div className='flex justify-between items-center mb-6'>
+          <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8'>
             <div>
-              <h2 className='text-3xl font-bold mb-2'>Bài viết mới nhất</h2>
-              <p className='text-muted-foreground'>Những bài viết gần đây từ blog</p>
+              <h2 className='text-2xl sm:text-3xl font-bold mb-2'>Bài viết mới nhất</h2>
+              <p className='text-sm sm:text-base text-muted-foreground'>Những bài viết gần đây từ blog</p>
             </div>
-            <Button variant='outline' asChild>
+            <Button variant='outline' asChild className='w-full sm:w-auto'>
               <Link href='/blog'>
                 Xem tất cả
                 <ArrowRight className='w-4 h-4 ml-2' />
@@ -387,17 +365,17 @@ export default function Home() {
             <Carousel
               opts={{
                 align: 'start',
-                loop: false,
+                loop: false
               }}
               className='w-full'
             >
-              <CarouselContent className='-ml-2 md:-ml-4'>
+              <CarouselContent className='-ml-2 sm:-ml-3 md:-ml-4'>
                 {recentPosts.map((relatedPost) => (
                   <CarouselItem
                     key={relatedPost.id}
-                    className='pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3'
+                    className='pl-2 sm:pl-3 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3'
                   >
-                    <Card className='group hover:shadow-lg hover:shadow-black/10 transition-all duration-300 py-0 gap-0 h-full transform hover:-translate-y-2 mx-2 my-2'>
+                    <Card className='group hover:shadow-lg hover:shadow-black/10 transition-all duration-300 py-0 gap-0 h-full transform hover:-translate-y-2 mx-1 sm:mx-2 my-2'>
                       <CardHeader className='relative bg-amber-300 aspect-video overflow-hidden rounded-t-lg p-0'>
                         <Image
                           src={relatedPost.featuredImage || '/placeholder.svg'}
@@ -405,24 +383,18 @@ export default function Home() {
                           fill
                           className='object-cover group-hover:scale-105 transition-transform duration-300'
                         />
-                        <Badge className='absolute top-2 left-2 text-xs'>
-                          {relatedPost.category}
-                        </Badge>
+                        <Badge className='absolute top-2 left-2 text-xs'>{relatedPost.category}</Badge>
                       </CardHeader>
-                      <CardContent className='p-4 space-y-3 flex-1'>
+                      <CardContent className='p-3 sm:p-4 space-y-3 flex-1'>
                         <Link href={`/blog/${relatedPost.slug}`} className='block'>
-                          <h3 className='font-semibold line-clamp-2 group-hover:text-primary transition-colors'>
+                          <h3 className='font-semibold text-sm sm:text-base line-clamp-2 group-hover:text-primary transition-colors'>
                             {relatedPost.title}
                           </h3>
                         </Link>
-                        <p className='text-sm text-muted-foreground line-clamp-3'>
-                          {relatedPost.excerpt}
-                        </p>
+                        <p className='text-xs sm:text-sm text-muted-foreground line-clamp-3'>{relatedPost.excerpt}</p>
                         <div className='flex items-center text-xs text-muted-foreground space-x-2'>
                           <Calendar className='h-3 w-3' />
-                          <span>
-                            {new Date(relatedPost.publishedAt).toLocaleDateString('vi-VN')}
-                          </span>
+                          <span>{new Date(relatedPost.publishedAt).toLocaleDateString('vi-VN')}</span>
                           <Clock className='h-3 w-3' />
                           <span>{relatedPost.readTime}</span>
                         </div>
@@ -431,22 +403,22 @@ export default function Home() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious className='hidden sm:flex' />
+              <CarouselNext className='hidden sm:flex' />
             </Carousel>
           </div>
         </div>
       </section>
 
       {/* Featured Projects */}
-      <section className='py-20 px-4'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-6xl mx-auto'>
-          <div className='flex justify-between items-center mb-12'>
+          <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 sm:mb-12'>
             <div>
-              <h2 className='text-3xl font-bold mb-2'>Dự án nổi bật</h2>
-              <p className='text-muted-foreground'>Một số dự án tiêu biểu từ portfolio</p>
+              <h2 className='text-2xl sm:text-3xl font-bold mb-2'>Dự án nổi bật</h2>
+              <p className='text-sm sm:text-base text-muted-foreground'>Một số dự án tiêu biểu từ portfolio</p>
             </div>
-            <Button variant='outline' asChild>
+            <Button variant='outline' asChild className='w-full sm:w-auto'>
               <Link href='/portfolio'>
                 Xem portfolio
                 <ArrowRight className='w-4 h-4 ml-2' />
@@ -454,13 +426,13 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className='grid lg:grid-cols-3 gap-8'>
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
             {projects.map((project, index) => (
               <Card
                 key={index}
-                className='overflow-hidden py-0 group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2'
+                className='overflow-hidden py-0 group hover:shadow-lg gap-0 transition-all duration-300 transform hover:-translate-y-2'
               >
-                <div className='relative h-48 overflow-hidden'>
+                <div className='relative h-40 sm:h-48 overflow-hidden'>
                   <Image
                     src={project.image || '/placeholder.svg'}
                     alt={project.title}
@@ -468,11 +440,11 @@ export default function Home() {
                     className='object-cover group-hover:scale-105 transition-transform duration-300'
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle>{project.title}</CardTitle>
-                  <CardDescription>{project.description}</CardDescription>
+                <CardHeader className='p-4 sm:p-6'>
+                  <CardTitle className='text-base sm:text-lg'>{project.title}</CardTitle>
+                  <CardDescription className='text-xs sm:text-sm'>{project.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='px-6 py-4 sm:px-6 sm:py-2 pt-0'>
                   <div className='flex flex-wrap gap-2 mb-4'>
                     {project.tech.map((tech) => (
                       <Badge key={tech} variant='outline' className='text-xs'>
@@ -480,13 +452,13 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                  <div className='flex justify-end gap-2 pb-6'>
-                    <Button variant='outline' size='sm' className='gap-2 w-1/2 bg-transparent'>
-                      <FaGithub className='w-4 h-4' />
+                  <div className='flex justify-end gap-2 pb-2'>
+                    <Button variant='outline' size='sm' className='gap-2 w-1/2 bg-transparent text-xs sm:text-sm'>
+                      <FaGithub className='w-3 h-3 sm:w-4 sm:h-4' />
                       Code
                     </Button>
-                    <Button size='sm' className='gap-2 w-1/2'>
-                      <ExternalLink className='w-4 h-4' />
+                    <Button size='sm' className='gap-2 w-1/2 text-xs sm:text-sm'>
+                      <ExternalLink className='w-3 h-3 sm:w-4 sm:h-4' />
                       Demo
                     </Button>
                   </div>
@@ -498,20 +470,20 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-20 px-4 bg-primary/5'>
+      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary/5 via-background to-secondary/5'>
         <div className='max-w-4xl mx-auto text-center'>
-          <h2 className='text-3xl font-bold mb-4'>Cùng kết nối và học hỏi</h2>
-          <p className='text-xl text-muted-foreground mb-8'>
+          <h2 className='text-2xl sm:text-3xl font-bold mb-3 sm:mb-4'>Cùng kết nối và học hỏi</h2>
+          <p className='text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8'>
             Theo dõi blog để không bỏ lỡ những bài viết mới nhất về web development
           </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Button size='lg' asChild>
+          <div className='flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center'>
+            <Button size='lg' asChild className='w-full sm:w-auto'>
               <Link href='/blog'>
                 Đọc Blog ngay
                 <BookOpen className='w-4 h-4 ml-2' />
               </Link>
             </Button>
-            <Button variant='outline' size='lg'>
+            <Button variant='outline' size='lg' className='w-full sm:w-auto'>
               <Mail className='w-4 h-4 mr-2' />
               Đăng ký nhận thông báo
             </Button>
@@ -519,5 +491,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  );
+  )
 }
