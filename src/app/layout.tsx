@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={beVietnamPro.className}>
+      <body className={beVietnamPro.className} suppressHydrationWarning>
         <QueryProvider>
           <Navbar />
           <main className='p-4 max-w-[calc(100vw)] sm:max-w-[calc(100vw-4rem)] md:max-w-[calc(100vw-6rem)] lg:max-w-[calc(100vw-10rem)] xl:max-w-[calc(100vw-12rem)] mx-auto min-h-[calc(100vh-126px)]'>

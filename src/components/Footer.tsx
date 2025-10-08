@@ -1,11 +1,12 @@
-import { Code } from 'lucide-react'
+'use client'
+
 import Link from 'next/link'
+import { Code } from 'lucide-react'
 import { FaFacebook, FaGithub, FaLinkedin, FaMap, FaPhone } from 'react-icons/fa'
 import { IoIosMail } from 'react-icons/io'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
-
   return (
     <footer className='pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-8 text-sm sm:text-base px-12 sm:px-12 border-t bg-muted/30'>
       <div className='max-w-6xl mx-auto'>

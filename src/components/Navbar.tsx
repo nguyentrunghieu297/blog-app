@@ -10,8 +10,8 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from '@/com
 const navigationLinks = [
   { href: '/', label: 'Trang chủ', logo: true },
   { href: '/blog', label: 'Biết chút cho vui' },
-  // { href: '/forwork', label: 'Cần cho công việc' },
   { href: '/portfolio', label: 'Tự giới thiệu' }
+  // { href: '/forwork', label: 'Cần cho công việc' },
   // { href: '/admin', label: 'Admin' }
 ]
 
