@@ -13,7 +13,6 @@ interface BlogPostProps {
 }
 
 export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
-  console.log('Post: ', post)
   return (
     <div className='min-h-screen bg-background'>
       <div className='container mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-42 py-6 md:py-8'>
