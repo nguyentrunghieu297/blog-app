@@ -6,6 +6,7 @@ import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from '@/components/ui/sheet'
+import { SOCIALS } from '@/constants'
 
 const navigationLinks = [
   { href: '/', label: 'Trang chủ', logo: true },
@@ -38,13 +39,13 @@ export default function Navbar() {
           {/* CTA Button - Desktop */}
           <div className='hidden md:flex'>
             <div className='flex items-center space-x-4'>
-              <Link href={'https://www.facebook.com'}>
+              <Link href={SOCIALS.FACEBOOK} target='_blank' rel='noopener noreferrer'>
                 <FaFacebook className='size-5 text-muted-foreground transition duration-350 hover:text-blue-500' />
               </Link>
-              <Link href={'https://github.com'}>
+              <Link href={SOCIALS.GITHUB} target='_blank' rel='noopener noreferrer'>
                 <FaGithub className='size-5 text-muted-foreground transition duration-350 hover:text-black' />
               </Link>
-              <Link href={'https://www.linkedin.com'}>
+              <Link href={SOCIALS.LINKEDIN} target='_blank' rel='noopener noreferrer'>
                 <FaLinkedin className='size-5 text-muted-foreground transition duration-350 hover:text-blue-800' />
               </Link>
             </div>

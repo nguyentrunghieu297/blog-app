@@ -31,5 +31,10 @@ export const PAGINATION = {
 
 export const NUMBER_OF_TAGS = 5
 export const FILTER_TAGS_LIMIT = 15
-
 export const POSTS_PER_PAGE = 9
+
+export const SOCIALS = {
+  FACEBOOK: 'https://www.facebook.com/ngtrxhieu/',
+  GITHUB: 'https://github.com/nguyentrunghieu297',
+  LINKEDIN: 'https://www.linkedin.com/in/hieunt23/'
+}

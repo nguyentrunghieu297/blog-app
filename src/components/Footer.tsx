@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Code } from 'lucide-react'
 import { FaFacebook, FaGithub, FaLinkedin, FaMap, FaPhone } from 'react-icons/fa'
 import { IoIosMail } from 'react-icons/io'
+import { SOCIALS } from '@/constants'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -24,13 +25,13 @@ export function Footer() {
               và chia sẻ với mọi người.
             </p>
             <div className='flex gap-3 sm:gap-4'>
-              <Link href={'https://www.facebook.com'} aria-label='Facebook'>
+              <Link href={SOCIALS.FACEBOOK} target='_blank' aria-label='Facebook'>
                 <FaFacebook className='w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground transition duration-300 hover:text-blue-500' />
               </Link>
-              <Link href={'https://github.com'} aria-label='GitHub'>
+              <Link href={SOCIALS.GITHUB} target='_blank' aria-label='GitHub'>
                 <FaGithub className='w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground transition duration-300 hover:text-black' />
               </Link>
-              <Link href={'https://www.linkedin.com'} aria-label='LinkedIn'>
+              <Link href={SOCIALS.LINKEDIN} target='_blank' aria-label='LinkedIn'>
                 <FaLinkedin className='w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground transition duration-300 hover:text-blue-800' />
               </Link>
             </div>
@@ -40,22 +41,13 @@ export function Footer() {
           <div className='md:col-span-2'>
             <h3 className='font-semibold mb-3 sm:mb-4 text-base sm:text-lg'>Nội dung</h3>
             <div className='space-y-2 sm:space-y-2.5 text-muted-foreground text-sm sm:text-base'>
-              <Link
-                href='/blog'
-                className='block hover:text-foreground transition-colors hover:translate-x-1 duration-200'
-              >
+              <Link href='/blog' className='block hover:text-foreground transition-colors duration-200'>
                 Biết chút cho vui
               </Link>
-              <Link
-                href='/portfolio'
-                className='block hover:text-foreground transition-colors hover:translate-x-1 duration-200'
-              >
+              <Link href='/portfolio' className='block hover:text-foreground transition-colors duration-200'>
                 Tự giới thiệu
               </Link>
-              <Link
-                href='/tools'
-                className='block hover:text-foreground transition-colors hover:translate-x-1 duration-200'
-              >
+              <Link href='/tools' className='block hover:text-foreground transition-colors duration-200'>
                 Tools (Sắp ra mắt)
               </Link>
             </div>
