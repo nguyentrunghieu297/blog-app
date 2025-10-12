@@ -4,7 +4,6 @@ import { marked } from 'marked'
 import { Card } from '@/components/ui/card'
 import { Eye, Code, Copy, Download, Check } from 'lucide-react'
 
-// Configure marked options
 marked.setOptions({
   breaks: true,
   gfm: true
@@ -23,28 +22,12 @@ function hello() {
   console.log("Hello World!");
 }
 \`\`\`
-
-### Lists
-1. First item
-2. Second item
-3. Third item
-
-### Links
-[Visit GitHub](https://github.com)
-
-### Blockquotes
-> This is a blockquote
-> It can span multiple lines
-
----
-
-Start typing in the left panel to see the magic! ✨
 `
 
 export default function AdminPage() {
   const [markdown, setMarkdown] = useState(defaultMarkdown)
   const [copied, setCopied] = useState(false)
-  const [activeTab, setActiveTab] = useState('split') // split, edit, preview
+  const [activeTab, setActiveTab] = useState('split')
 
   const getHtml = () => {
     try {
@@ -77,23 +60,25 @@ export default function AdminPage() {
   const charCount = markdown.length
 
   return (
-    <div className='min-h-screen py-4'>
-      <div className='mx-auto max-w-9xl'>
+    <div className='min-h-screen py-4 px-3 sm:px-6'>
+      <div className='mx-auto max-w-7xl'>
         {/* Header */}
         <header className='mb-6'>
-          <div className='flex items-center justify-between mb-4'>
-            <div>
-              <h1 className='text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent'>
+          <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4'>
+            <div className='text-center sm:text-left'>
+              <h1 className='text-2xl sm:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent'>
                 Blog content editor
               </h1>
-              <p className='text-slate-600 dark:text-slate-400 mt-2'>Write beautiful markdown with live preview</p>
+              <p className='text-slate-600 dark:text-slate-400 mt-1 sm:mt-2 text-sm sm:text-base'>
+                Write beautiful markdown with live preview
+              </p>
             </div>
 
             {/* Action Buttons */}
-            <div className='flex gap-2'>
+            <div className='flex flex-wrap justify-center sm:justify-end gap-2'>
               <button
                 onClick={copyToClipboard}
-                className='flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 border border-slate-200 dark:border-slate-700 text-sm font-medium'
+                className='flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium transition-all'
               >
                 {copied ? (
                   <>
@@ -110,7 +95,7 @@ export default function AdminPage() {
 
               <button
                 onClick={downloadMarkdown}
-                className='flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-sm font-medium'
+                className='flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm hover:shadow-md text-xs sm:text-sm font-medium transition-all'
               >
                 <Download className='w-4 h-4' />
                 Download
@@ -119,51 +104,36 @@ export default function AdminPage() {
           </div>
 
           {/* View Toggle & Stats */}
-          <div className='flex items-center justify-between'>
-            <div className='flex bg-white dark:bg-slate-800 rounded-lg p-1 shadow-sm border border-slate-200 dark:border-slate-700'>
-              <button
-                onClick={() => setActiveTab('edit')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium ${
-                  activeTab === 'edit'
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                <Code className='w-4 h-4' />
-                Edit
-              </button>
-              <button
-                onClick={() => setActiveTab('split')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium ${
-                  activeTab === 'split'
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                <div className='flex gap-0.5'>
-                  <div className='w-2 h-4 bg-current rounded-sm' />
-                  <div className='w-2 h-4 bg-current rounded-sm' />
-                </div>
-                Split
-              </button>
-              <button
-                onClick={() => setActiveTab('preview')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium ${
-                  activeTab === 'preview'
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                <Eye className='w-4 h-4' />
-                Preview
-              </button>
+          <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3'>
+            <div className='flex justify-between sm:justify-start bg-white dark:bg-slate-800 rounded-lg p-1 shadow-sm border border-slate-200 dark:border-slate-700'>
+              {['edit', 'split', 'preview'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex w-full justify-center items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all ${
+                    activeTab === tab
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {tab === 'edit' && <Code className='w-4 h-4' />}
+                  {tab === 'split' && (
+                    <div className='flex gap-0.5'>
+                      <div className='w-2 h-4 bg-current rounded-sm' />
+                      <div className='w-2 h-4 bg-current rounded-sm' />
+                    </div>
+                  )}
+                  {tab === 'preview' && <Eye className='w-4 h-4' />}
+                  <span className='capitalize hidden xs:inline'>{tab}</span>
+                </button>
+              ))}
             </div>
 
             {/* Stats */}
-            <div className='flex gap-4 text-sm text-slate-600 dark:text-slate-400'>
+            <div className='flex justify-center sm:justify-end gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400'>
               <span>{wordCount} words</span>
               <span>•</span>
-              <span>{charCount} characters</span>
+              <span>{charCount} chars</span>
             </div>
           </div>
         </header>
@@ -174,36 +144,38 @@ export default function AdminPage() {
             activeTab === 'split' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'
           }`}
         >
-          {/* Editor Panel */}
+          {/* Editor */}
           {(activeTab === 'edit' || activeTab === 'split') && (
-            <Card className='flex p-0 gap-0 flex-col overflow-hidden shadow-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
-              <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700'>
+            <Card className='flex flex-col p-0 gap-0 overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
+              <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-3 sm:px-4 py-2 sm:py-3 border-b border-slate-200 dark:border-slate-700'>
                 <div className='flex items-center gap-2'>
                   <Code className='w-4 h-4 text-green-600 dark:text-green-400' />
-                  <h2 className='font-semibold text-sm text-slate-700 dark:text-slate-300'>Markdown Input</h2>
+                  <h2 className='font-semibold text-xs sm:text-sm text-slate-700 dark:text-slate-300'>
+                    Markdown Input
+                  </h2>
                 </div>
               </div>
               <textarea
                 value={markdown}
                 onChange={(e) => setMarkdown(e.target.value)}
-                className='flex-1 w-full p-6 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset leading-relaxed'
+                className='flex-1 w-full p-4 sm:p-6 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-xs sm:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset leading-relaxed'
                 placeholder='Type your markdown here...'
                 spellCheck={false}
               />
             </Card>
           )}
 
-          {/* Preview Panel */}
+          {/* Preview */}
           {(activeTab === 'preview' || activeTab === 'split') && (
-            <Card className='flex p-0 gap-0 flex-col overflow-hidden shadow-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
-              <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700'>
+            <Card className='flex flex-col p-0 gap-0 overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
+              <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-3 sm:px-4 py-2 sm:py-3 border-b border-slate-200 dark:border-slate-700'>
                 <div className='flex items-center gap-2'>
                   <Eye className='w-4 h-4 text-emerald-600 dark:text-emerald-400' />
-                  <h2 className='font-semibold text-sm text-slate-700 dark:text-slate-300'>Live Preview</h2>
+                  <h2 className='font-semibold text-xs sm:text-sm text-slate-700 dark:text-slate-300'>Live Preview</h2>
                 </div>
               </div>
               <div
-                className='blog-content overflow-auto p-6 prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-a:text-green-600 dark:prose-a:text-green-400 prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 bg-white dark:bg-slate-900'
+                className='blog-content overflow-auto p-4 sm:p-6 prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-2xl sm:prose-h1:text-3xl prose-h2:text-xl sm:prose-h2:text-2xl prose-a:text-green-600 dark:prose-a:text-green-400 prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 bg-white dark:bg-slate-900'
                 dangerouslySetInnerHTML={{ __html: getHtml() }}
               />
             </Card>
