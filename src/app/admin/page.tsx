@@ -83,7 +83,7 @@ export default function AdminPage() {
         <header className='mb-6'>
           <div className='flex items-center justify-between mb-4'>
             <div>
-              <h1 className='text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>
+              <h1 className='text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent'>
                 Blog content editor
               </h1>
               <p className='text-slate-600 dark:text-slate-400 mt-2'>Write beautiful markdown with live preview</p>
@@ -110,7 +110,7 @@ export default function AdminPage() {
 
               <button
                 onClick={downloadMarkdown}
-                className='flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-sm font-medium'
+                className='flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-sm font-medium'
               >
                 <Download className='w-4 h-4' />
                 Download
@@ -125,7 +125,7 @@ export default function AdminPage() {
                 onClick={() => setActiveTab('edit')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium ${
                   activeTab === 'edit'
-                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
@@ -136,7 +136,7 @@ export default function AdminPage() {
                 onClick={() => setActiveTab('split')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium ${
                   activeTab === 'split'
-                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
@@ -150,7 +150,7 @@ export default function AdminPage() {
                 onClick={() => setActiveTab('preview')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium ${
                   activeTab === 'preview'
-                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
@@ -179,14 +179,14 @@ export default function AdminPage() {
             <Card className='flex p-0 gap-0 flex-col overflow-hidden shadow-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
               <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700'>
                 <div className='flex items-center gap-2'>
-                  <Code className='w-4 h-4 text-blue-600 dark:text-blue-400' />
+                  <Code className='w-4 h-4 text-green-600 dark:text-green-400' />
                   <h2 className='font-semibold text-sm text-slate-700 dark:text-slate-300'>Markdown Input</h2>
                 </div>
               </div>
               <textarea
                 value={markdown}
                 onChange={(e) => setMarkdown(e.target.value)}
-                className='flex-1 w-full p-6 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset leading-relaxed'
+                className='flex-1 w-full p-6 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset leading-relaxed'
                 placeholder='Type your markdown here...'
                 spellCheck={false}
               />
@@ -198,12 +198,12 @@ export default function AdminPage() {
             <Card className='flex p-0 gap-0 flex-col overflow-hidden shadow-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
               <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700'>
                 <div className='flex items-center gap-2'>
-                  <Eye className='w-4 h-4 text-indigo-600 dark:text-indigo-400' />
+                  <Eye className='w-4 h-4 text-emerald-600 dark:text-emerald-400' />
                   <h2 className='font-semibold text-sm text-slate-700 dark:text-slate-300'>Live Preview</h2>
                 </div>
               </div>
               <div
-                className='blog-content overflow-auto p-6 prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 bg-white dark:bg-slate-900'
+                className='blog-content overflow-auto p-6 prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-a:text-green-600 dark:prose-a:text-green-400 prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 bg-white dark:bg-slate-900'
                 dangerouslySetInnerHTML={{ __html: getHtml() }}
               />
             </Card>
