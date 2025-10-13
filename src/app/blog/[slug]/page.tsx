@@ -6,7 +6,6 @@ import { useParams } from 'next/navigation'
 import BlogPost from './blog-post'
 import useViewBlogDetail from './hook/useViewBlogDetail'
 import Loading from '@/components/Loading'
-// import { blogPostHtml } from '@/mock/blog-detail-html'
 
 export default function BlogPostPage() {
   const params = useParams()
@@ -19,5 +18,4 @@ export default function BlogPostPage() {
   }
 
   return <BlogPost post={blogPostMd} relatedPosts={relatedPosts} />
-  // return <BlogPost post={blogPostHtml} relatedPosts={relatedPosts} />
 }
