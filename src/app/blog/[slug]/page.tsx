@@ -17,5 +17,5 @@ export default function BlogPostPage() {
     console.log('Blog Post Data: ', blogPostData)
   }
 
-  return <BlogPost post={blogPostMd} relatedPosts={relatedPosts} />
+  return <BlogPost post={blogPostData || blogPostMd} relatedPosts={relatedPosts} />
 }

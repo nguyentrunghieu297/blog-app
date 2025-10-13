@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { marked } from 'marked'
 import { Calendar, Clock, Tag, ChevronRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -13,6 +14,7 @@ interface BlogPostProps {
 }
 
 export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
+  const postContent = post.content ? marked(post.content.toString()) : ''
   return (
     <div className='min-h-screen bg-background'>
       <div className='container mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-42 py-6 md:py-8'>
@@ -70,7 +72,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
               </div>
 
               {/* Content với custom CSS classes */}
-              <div className='blog-content' dangerouslySetInnerHTML={{ __html: post.content ? post.content : '' }} />
+              <div className='blog-content' dangerouslySetInnerHTML={{ __html: postContent }} />
 
               {/* Author Bio */}
               <Card className='bg-muted/50'>

@@ -18,7 +18,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       {/* Featured Image */}
       <div className='relative aspect-video overflow-hidden'>
         <Image
-          src={post.featuredImage || '/placeholder.svg'}
+          src={post?.featuredImage || '/placeholder.svg'}
           alt={post.title}
           fill
           className='object-cover group-hover:scale-105 transition-transform duration-300'
