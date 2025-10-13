@@ -12,12 +12,10 @@ export const AUTHORITIES_ID = {
   ADMIN: 4
 }
 
-// Mã code màu
 export const THEME_CODES = {
   PRIMARY: '#2D3748'
 }
 
-// Regex số điện thoại VN
 export const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g
 
 export const PAGINATION = {
@@ -38,3 +36,18 @@ export const SOCIALS = {
   GITHUB: 'https://github.com/nguyentrunghieu297',
   LINKEDIN: 'https://www.linkedin.com/in/hieunt23/'
 }
+
+export const DEFAULT_MARKDOWN = `# Welcome to Markdown Editor
+
+## Features
+- **Live preview** as you type
+- Support for *italic* and **bold** text
+- Code blocks with syntax highlighting
+
+### Code Example
+\`\`\`javascript
+function hello() {
+  console.log("Hello World!");
+}
+\`\`\`
+`

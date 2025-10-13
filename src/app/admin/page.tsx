@@ -3,29 +3,15 @@ import { useState } from 'react'
 import { marked } from 'marked'
 import { Card } from '@/components/ui/card'
 import { Eye, Code, Copy, Download, Check } from 'lucide-react'
+import { DEFAULT_MARKDOWN } from '@/constants'
 
 marked.setOptions({
   breaks: true,
   gfm: true
 })
 
-const defaultMarkdown = `# Welcome to Markdown Editor
-
-## Features
-- **Live preview** as you type
-- Support for *italic* and **bold** text
-- Code blocks with syntax highlighting
-
-### Code Example
-\`\`\`javascript
-function hello() {
-  console.log("Hello World!");
-}
-\`\`\`
-`
-
 export default function AdminPage() {
-  const [markdown, setMarkdown] = useState(defaultMarkdown)
+  const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN)
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState('split')
 
@@ -61,7 +47,7 @@ export default function AdminPage() {
 
   return (
     <div className='min-h-screen py-4 px-3 sm:px-6'>
-      <div className='mx-auto max-w-7xl'>
+      <div className='mx-auto max-w-9xl'>
         {/* Header */}
         <header className='mb-6'>
           <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4'>
