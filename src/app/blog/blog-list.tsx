@@ -155,7 +155,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
           {categories.map((category) => (
             <button
               key={category.slug}
-              onClick={() => handleFilterChange('category', category.slug)}
+              onClick={() => handleFilterChange('category', category.slug ?? 'all')}
               className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
                 selectedCategory === category.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
               }`}
