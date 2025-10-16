@@ -1,30 +1,25 @@
 'use client'
 
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { marked } from 'marked'
 import { Card } from '@/components/ui/card'
-import { Eye, Code, Copy, Download, Check, X, Plus } from 'lucide-react'
+import { Eye, Code, X, Plus, Upload, Lock } from 'lucide-react'
 import { DEFAULT_MARKDOWN } from '@/constants'
+import { blogSchema } from '@/lib/zod/schema'
+import { createSlug } from '@/utils'
 import Image from 'next/image'
+import useCreateBlog from './hook/useCreateBlog'
+import ErrorMessage from '@/components/ErrorMessage'
+import * as z from 'zod'
 
 marked.setOptions({
   breaks: true,
   gfm: true
 })
 
-interface BlogMetadata {
-  title: string
-  excerpt: string
-  authorName: string
-  authorAvatar: string
-  authorBio: string
-  publishedAt: string
-  readTime: string
-  tags: string[]
-  featuredImage: string
-  categoryName: string
-  categorySlug: string
-}
+type BlogFormData = z.infer<typeof blogSchema>
 
 const viewOptions = [
   { key: 'edit', label: 'Chỉnh sửa' },
@@ -33,25 +28,41 @@ const viewOptions = [
 ]
 
 export default function AdminPage() {
+  const createBlogMutation = useCreateBlog()
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN)
-  const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState('split')
+  const [tagInput, setTagInput] = useState('')
 
-  const [metadata, setMetadata] = useState<BlogMetadata>({
-    title: '',
-    excerpt: '',
-    authorName: '',
-    authorAvatar: '',
-    authorBio: '',
-    publishedAt: new Date().toISOString().split('T')[0],
-    readTime: '',
-    tags: [],
-    featuredImage: '',
-    categoryName: '',
-    categorySlug: ''
+  const handleFormat = async () => {
+    console.log('Coming soon')
+  }
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isValid }
+  } = useForm<BlogFormData>({
+    resolver: zodResolver(blogSchema),
+    mode: 'onChange',
+    defaultValues: {
+      title: '',
+      excerpt: '',
+      authorName: '',
+      authorAvatar: '',
+      authorBio: '',
+      publishedAt: new Date().toISOString().split('T')[0],
+      isPublished: true,
+      tags: [],
+      featuredImage: '',
+      categoryName: '',
+      categorySlug: ''
+    }
   })
 
-  const [tagInput, setTagInput] = useState('')
+  const tags = watch('tags')
+  const featuredImage = watch('featuredImage')
 
   const getHtml = () => {
     try {
@@ -61,63 +72,39 @@ export default function AdminPage() {
     }
   }
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(markdown)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const downloadMarkdown = () => {
-    const blob = new Blob([markdown], { type: 'text/markdown' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'tai-lieu.md'
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
-  const exportBlogData = () => {
+  const onSubmit = (data: BlogFormData) => {
     const blogData = {
-      id: Date.now().toString(),
-      title: metadata.title,
-      excerpt: metadata.excerpt,
-      content: getHtml(),
+      title: data.title,
+      excerpt: data.excerpt,
+      slug: createSlug(data.title),
+      content: markdown,
       author: {
-        name: metadata.authorName,
-        avatar: metadata.authorAvatar,
-        bio: metadata.authorBio
+        name: data.authorName,
+        avatar: data.authorAvatar || '',
+        bio: data.authorBio || ''
       },
-      publishedAt: metadata.publishedAt,
-      readTime: metadata.readTime,
-      tags: metadata.tags,
-      featuredImage: metadata.featuredImage,
+      publishedAt: data.publishedAt,
+      isPublished: data.isPublished,
+      tags: data.tags || [],
+      featuredImage: data.featuredImage,
       category: {
-        name: metadata.categoryName,
-        slug: metadata.categorySlug,
-        count: 0
+        name: data.categoryName || '',
+        slug: createSlug(data.categoryName || '')
       }
     }
 
-    const dataStr = JSON.stringify(blogData, null, 2)
-    const blob = new Blob([dataStr], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'bai-viet.json'
-    a.click()
-    URL.revokeObjectURL(url)
+    createBlogMutation.mutate(blogData)
   }
 
   const addTag = () => {
-    if (tagInput.trim() && !metadata.tags.includes(tagInput.trim())) {
-      setMetadata({ ...metadata, tags: [...metadata.tags, tagInput.trim()] })
+    if (tagInput.trim() && !tags?.includes(tagInput.trim())) {
+      setValue('tags', [...(tags ?? []), tagInput.trim()], { shouldValidate: true })
       setTagInput('')
     }
   }
 
   const removeTag = (tagToRemove: string) => {
-    setMetadata({ ...metadata, tags: metadata.tags.filter((tag) => tag !== tagToRemove) })
+    setValue('tags', tags?.filter((tag) => tag !== tagToRemove) ?? [], { shouldValidate: true })
   }
 
   const handleTagInputKeyDown = (e: React.KeyboardEvent) => {
@@ -149,220 +136,220 @@ export default function AdminPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className='flex flex-wrap justify-center sm:justify-end gap-2'>
+            <div className='flex  flex-wrap justify-center sm:justify-end gap-2'>
               <button
-                onClick={copyToClipboard}
-                className='flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium transition-all'
+                onClick={handleSubmit(onSubmit)}
+                disabled={!isValid}
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                  isValid
+                    ? 'bg-green-600 hover:bg-green-700 text-white cursor-pointer'
+                    : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                }`}
               >
-                {copied ? (
-                  <>
-                    <Check className='w-4 h-4 text-green-500' />
-                    <span className='text-green-600 dark:text-green-400'>Đã sao chép!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className='w-4 h-4 text-slate-600 dark:text-slate-400' />
-                    <span className='text-slate-700 dark:text-slate-300'>Sao chép</span>
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={downloadMarkdown}
-                className='flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium transition-all'
-              >
-                <Download className='w-4 h-4 text-slate-600 dark:text-slate-400' />
-                <span className='text-slate-700 dark:text-slate-300'>Tải Markdown</span>
-              </button>
-
-              <button
-                onClick={exportBlogData}
-                className='flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-all'
-              >
-                <Download className='w-4 h-4' />
-                <span>Xuất bài viết</span>
+                <Upload className='w-4 h-4' />
+                <span className='w-content'>Tải lên</span>
               </button>
             </div>
           </div>
         </header>
 
-        <Card className='mb-4 p-4 sm:p-6 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-            {/* Title */}
-            <div className='lg:col-span-2'>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Tiêu đề *</label>
-              <input
-                type='text'
-                value={metadata.title}
-                onChange={(e) => setMetadata({ ...metadata, title: e.target.value })}
-                placeholder='Nhập tiêu đề bài viết'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-
-            {/* Excerpt */}
-            <div className='lg:col-span-2'>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Tóm tắt *</label>
-              <textarea
-                value={metadata.excerpt}
-                onChange={(e) => setMetadata({ ...metadata, excerpt: e.target.value })}
-                placeholder='Mô tả ngắn về bài viết'
-                rows={3}
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm resize-none'
-              />
-            </div>
-
-            {/* Author Name */}
-            <div>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Tên tác giả *</label>
-              <input
-                type='text'
-                value={metadata.authorName}
-                onChange={(e) => setMetadata({ ...metadata, authorName: e.target.value })}
-                placeholder='Họ và tên tác giả'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-
-            {/* Author Avatar URL */}
-            <div>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
-                Ảnh đại diện tác giả
-              </label>
-              <input
-                type='url'
-                value={metadata.authorAvatar}
-                onChange={(e) => setMetadata({ ...metadata, authorAvatar: e.target.value })}
-                placeholder='https://vi-du.com/avatar.jpg'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-
-            {/* Author Bio */}
-            <div className='lg:col-span-2'>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
-                Giới thiệu tác giả
-              </label>
-              <textarea
-                value={metadata.authorBio}
-                onChange={(e) => setMetadata({ ...metadata, authorBio: e.target.value })}
-                placeholder='Giới thiệu ngắn về tác giả'
-                rows={2}
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm resize-none'
-              />
-            </div>
-
-            {/* Published Date */}
-            <div>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
-                Ngày xuất bản *
-              </label>
-              <input
-                type='date'
-                value={metadata.publishedAt}
-                onChange={(e) => setMetadata({ ...metadata, publishedAt: e.target.value })}
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-
-            {/* Read Time */}
-            <div>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Thời gian đọc</label>
-              <input
-                type='text'
-                value={metadata.readTime}
-                onChange={(e) => setMetadata({ ...metadata, readTime: e.target.value })}
-                placeholder='Ví dụ: 5 phút đọc'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-
-            {/* Featured Image */}
-            <div className='lg:col-span-2'>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Ảnh nổi bật</label>
-              <input
-                type='url'
-                value={metadata.featuredImage}
-                onChange={(e) => setMetadata({ ...metadata, featuredImage: e.target.value })}
-                placeholder='https://vi-du.com/hinh-anh.jpg'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-              {metadata.featuredImage && (
-                <div className='mt-2'>
-                  <Image
-                    src={metadata.featuredImage || '/placeholder.svg'}
-                    alt='Xem trước ảnh nổi bật'
-                    className='w-full h-40 object-cover rounded-lg'
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none'
-                    }}
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Tags */}
-            <div className='lg:col-span-2'>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Thẻ (Tags)</label>
-              <div className='flex gap-2 mb-2'>
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Card className='mb-4 p-4 sm:p-6 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+              {/* Title */}
+              <div className='lg:col-span-2'>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Tiêu đề <span className='text-red-500'>*</span>
+                </label>
                 <input
                   type='text'
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyDown={handleTagInputKeyDown}
-                  placeholder='Thêm thẻ và nhấn Enter'
-                  className='flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
+                  {...register('title')}
+                  placeholder='Nhập tiêu đề bài viết'
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.title
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm`}
                 />
-                <button
-                  onClick={addTag}
-                  className='px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-all flex items-center gap-1'
-                >
-                  <Plus className='w-4 h-4' />
-                  Thêm
-                </button>
+                <ErrorMessage message={errors.title?.message} />
               </div>
-              <div className='flex flex-wrap gap-2'>
-                {metadata.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className='inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm'
+
+              {/* Excerpt */}
+              <div className='lg:col-span-2'>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Tóm tắt <span className='text-red-500'>*</span>
+                </label>
+                <textarea
+                  {...register('excerpt')}
+                  placeholder='Mô tả ngắn về bài viết'
+                  rows={3}
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.excerpt
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm resize-none`}
+                />
+                <ErrorMessage message={errors.excerpt?.message} />
+              </div>
+
+              {/* Published Date */}
+              <div>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Ngày xuất bản <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type='date'
+                  {...register('publishedAt')}
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.publishedAt
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm`}
+                />
+                <ErrorMessage message={errors.publishedAt?.message} />
+              </div>
+
+              {/* Category Name */}
+              <div>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Tên danh mục
+                </label>
+                <input
+                  type='text'
+                  {...register('categoryName')}
+                  placeholder='Ví dụ: Lịch sử'
+                  className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
+                />
+              </div>
+
+              {/* Featured Image */}
+              <div className='lg:col-span-2'>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Ảnh nổi bật</label>
+                <input
+                  type='url'
+                  {...register('featuredImage')}
+                  placeholder='https://vi-du.com/hinh-anh.jpg'
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.featuredImage
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm`}
+                />
+                <ErrorMessage message={errors.featuredImage?.message} />
+                {featuredImage && (
+                  <div className='mt-2'>
+                    <Image
+                      src={featuredImage || '/placeholder.svg'}
+                      alt='Xem trước ảnh nổi bật'
+                      width={800}
+                      height={160}
+                      className='w-full h-40 object-cover rounded-lg'
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Tags */}
+              <div className='lg:col-span-2'>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Thẻ (Tags)</label>
+                <div className='flex gap-2 mb-2'>
+                  <input
+                    type='text'
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={handleTagInputKeyDown}
+                    placeholder='Thêm thẻ và nhấn Enter'
+                    className='flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
+                  />
+                  <button
+                    type='button'
+                    onClick={addTag}
+                    className='px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-all flex items-center gap-1'
                   >
-                    {tag}
-                    <button onClick={() => removeTag(tag)} className='hover:text-green-900 dark:hover:text-green-200'>
-                      <X className='w-3 h-3' />
-                    </button>
-                  </span>
-                ))}
+                    <Plus className='w-4 h-4' />
+                    Thêm
+                  </button>
+                </div>
+                <div className='flex flex-wrap gap-2'>
+                  {tags &&
+                    tags?.map((tag, index) => (
+                      <span
+                        key={index}
+                        className='inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm'
+                      >
+                        {tag}
+                        <button
+                          type='button'
+                          onClick={() => removeTag(tag)}
+                          className='hover:text-green-900 dark:hover:text-green-200'
+                        >
+                          <X className='w-3 h-3' />
+                        </button>
+                      </span>
+                    ))}
+                </div>
+              </div>
+
+              {/* Author Name */}
+              <div>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Tên tác giả <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type='text'
+                  {...register('authorName')}
+                  placeholder='Họ và tên tác giả'
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.authorName
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm`}
+                />
+                <ErrorMessage message={errors.authorName?.message} />
+              </div>
+
+              {/* Author Avatar URL */}
+              <div>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Ảnh đại diện tác giả
+                </label>
+                <input
+                  type='url'
+                  {...register('authorAvatar')}
+                  placeholder='https://vi-du.com/avatar.jpg'
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.authorAvatar
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm`}
+                />
+                <ErrorMessage message={errors.authorAvatar?.message} />
+              </div>
+
+              {/* Author Bio */}
+              <div className='lg:col-span-2'>
+                <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
+                  Giới thiệu tác giả
+                </label>
+                <textarea
+                  {...register('authorBio')}
+                  placeholder='Giới thiệu ngắn về tác giả'
+                  rows={2}
+                  className={`w-full px-4 py-2 rounded-lg border ${
+                    errors.authorBio
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-slate-600 focus:ring-green-500'
+                  } bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 text-sm resize-none`}
+                />
+                <ErrorMessage message={errors.authorBio?.message} />
               </div>
             </div>
-
-            {/* Category Name */}
-            <div>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>Tên danh mục</label>
-              <input
-                type='text'
-                value={metadata.categoryName}
-                onChange={(e) => setMetadata({ ...metadata, categoryName: e.target.value })}
-                placeholder='Ví dụ: Lịch sử'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-
-            {/* Category Slug */}
-            <div>
-              <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
-                Đường dẫn danh mục (Slug)
-              </label>
-              <input
-                type='text'
-                value={metadata.categorySlug}
-                onChange={(e) => setMetadata({ ...metadata, categorySlug: e.target.value })}
-                placeholder='Ví dụ: lich-su'
-                className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-              />
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </form>
 
         {/* View Toggle & Stats */}
         <div className='mb-4'>
@@ -391,6 +378,15 @@ export default function AdminPage() {
               ))}
             </div>
 
+            {/* Format Button */}
+            <button
+              onClick={handleFormat}
+              className='ml-auto flex items-center gap-2 px-4 py-2 bg-gray-300 text-white rounded-lg font-light transition-all'
+            >
+              <Lock className='w-4 h-4' />
+              Format Markdown
+            </button>
+
             {/* Stats */}
             <div className='flex justify-center sm:justify-end gap-4 text-xs sm:text-sm text-slate-600 dark:text-slate-400'>
               <span>{wordCount} từ</span>
@@ -409,7 +405,7 @@ export default function AdminPage() {
           {/* Editor */}
           {(activeTab === 'edit' || activeTab === 'split') && (
             <Card className='flex flex-col p-0 gap-0 overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'>
-              <div className='bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-3 sm:px-4 py-2 sm:py-3 border-b border-slate-200 dark:border-slate-700'>
+              <div className='flex items-center justify-between bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-3 sm:px-4 py-2 sm:py-3 border-b border-slate-200 dark:border-slate-700'>
                 <div className='flex items-center gap-2'>
                   <Code className='w-4 h-4 text-green-600 dark:text-green-400' />
                   <h2 className='font-semibold text-xs sm:text-sm text-slate-700 dark:text-slate-300'>

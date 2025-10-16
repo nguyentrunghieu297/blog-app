@@ -18,7 +18,7 @@ export interface RelatedPost {
 }
 
 export interface BlogPost {
-  id: string
+  id?: string
   title: string
   slug?: string
   excerpt: string
@@ -29,7 +29,7 @@ export interface BlogPost {
     bio?: string
   }
   publishedAt: string
-  readTime: string
+  readTime?: string
   tags: string[]
   featuredImage: string | any
   category: Category
@@ -45,8 +45,8 @@ export interface RecentPost {
 
 export interface Category {
   name: string
-  slug: string
-  count: number
+  slug?: string
+  count?: number
 }
 
 export interface MonthlyArchive {

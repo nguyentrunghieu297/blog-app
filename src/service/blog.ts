@@ -55,12 +55,26 @@ const getArchives = async (): Promise<{ month: string; count: number; slug: stri
   }
 }
 
+const createBlogPost = async (blogData: Partial<BlogPost>): Promise<BlogPost> => {
+  try {
+    const { data } = await apiInstance.post<ApiResponse<BlogPost>>(
+      `${process.env.NEXT_PUBLIC_VIEW_CREATE_BLOG_API}`,
+      blogData
+    )
+    return data?.data
+  } catch (error) {
+    console.error('Error creating blog post:', error)
+    throw new Error('Failed to create blog post')
+  }
+}
+
 const blogApi = {
   getBlogList,
   getBlogDetail,
   getCategories,
   getTags,
-  getArchives
+  getArchives,
+  createBlogPost
 }
 
 export default blogApi
