@@ -381,7 +381,7 @@ export default function AdminPage() {
             {/* Format Button */}
             <button
               onClick={handleFormat}
-              className='ml-auto flex items-center gap-2 px-4 py-2 bg-gray-300 text-white rounded-lg font-light transition-all'
+              className='ml-auto hidden  md:flex items-center gap-2 px-4 py-2 bg-gray-300 text-white rounded-lg font-light transition-all'
             >
               <Lock className='w-4 h-4' />
               Format Markdown
