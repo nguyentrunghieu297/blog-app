@@ -258,6 +258,18 @@ body {
     @apply text-xl font-semibold mt-8 mb-3 text-foreground/90;
   }
 
+  .blog-content h4 {
+    @apply text-lg font-semibold mt-6 mb-2 text-foreground/80;
+  }
+
+  .blog-content h5 {
+    @apply text-base font-semibold mt-4 mb-2 text-foreground/70;
+  }
+
+  .blog-content h6 {
+    @apply text-sm font-semibold mt-4 mb-2 text-foreground/70 uppercase tracking-wide;
+  }
+
   /* Paragraphs */
   .blog-content p {
     @apply my-4 text-lg leading-8 text-muted-foreground;
@@ -273,13 +285,57 @@ body {
   }
 
   .blog-content li {
-    @apply text-muted-foreground;
+    @apply text-muted-foreground leading-7;
+  }
+
+  .blog-content li > ul,
+  .blog-content li > ol {
+    @apply my-2;
+  }
+
+  /* Task lists */
+  .blog-content input[type='checkbox'] {
+    @apply mr-2 align-middle;
   }
 
   /* Blockquotes */
   .blog-content blockquote {
-    @apply border-l-4 border-blue-500 bg-blue-50 px-6 py-1 my-8 rounded-md;
+    @apply border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-950/20 px-6 py-1 my-8 rounded-md;
     @apply italic text-muted-foreground relative;
+  }
+
+  .blog-content blockquote p {
+    @apply my-3;
+  }
+
+  /* Tables */
+  .blog-content table {
+    @apply w-full my-8 border-collapse overflow-hidden rounded-lg shadow-sm;
+  }
+
+  .blog-content thead {
+    @apply bg-muted;
+  }
+
+  .blog-content th {
+    @apply px-6 py-3 text-left text-sm font-semibold text-foreground border-b-2 border-border;
+  }
+
+  .blog-content td {
+    @apply px-6 py-4 text-sm text-muted-foreground border-b border-border;
+  }
+
+  .blog-content tbody tr {
+    @apply hover:bg-muted/50 transition-colors duration-150;
+  }
+
+  .blog-content tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  /* Responsive table wrapper */
+  .blog-content .table-wrapper {
+    @apply overflow-x-auto -mx-4 sm:mx-0;
   }
 
   /* Images */
@@ -287,8 +343,23 @@ body {
     @apply rounded-xl ml-auto mr-auto my-4 max-w-full shadow-md;
   }
 
-  .blog-content em {
+  /* Chỉ áp dụng cho em ngay sau img */
+  .blog-content img + em {
     @apply block text-center text-base text-muted-foreground font-light italic mt-0;
+  }
+
+  /* Em bình thường vẫn giữ nguyên */
+  .blog-content em {
+    @apply italic;
+  }
+
+  /* Figure with caption */
+  .blog-content figure {
+    @apply my-8;
+  }
+
+  .blog-content figcaption {
+    @apply text-center text-sm text-muted-foreground mt-2 italic;
   }
 
   /* Inline code & preformatted blocks */
@@ -297,18 +368,70 @@ body {
   }
 
   .blog-content pre {
-    @apply bg-muted p-5 rounded-lg overflow-x-auto my-6 text-sm font-mono;
+    @apply bg-muted p-5 rounded-lg overflow-x-auto my-6 text-sm font-mono border border-border;
   }
 
-  /* Strong text */
+  .blog-content pre code {
+    @apply bg-transparent p-0 text-foreground;
+  }
+
+  /* Horizontal rule */
+  .blog-content hr {
+    @apply my-12 border-0 border-t-2 border-border;
+  }
+
+  /* Strong & emphasis */
   .blog-content strong {
     @apply font-semibold text-foreground;
+  }
+
+  .blog-content em:not(img + em) {
+    @apply italic;
+  }
+
+  /* Mark/highlight */
+  .blog-content mark {
+    @apply bg-yellow-200 dark:bg-yellow-900/40 px-1 rounded;
+  }
+
+  /* Deleted & inserted text */
+  .blog-content del {
+    @apply line-through text-muted-foreground/60;
+  }
+
+  .blog-content ins {
+    @apply underline decoration-green-500;
+  }
+
+  /* Subscript & superscript */
+  .blog-content sub,
+  .blog-content sup {
+    @apply text-xs;
+  }
+
+  /* Abbreviation */
+  .blog-content abbr {
+    @apply cursor-help border-b border-dotted border-muted-foreground;
+  }
+
+  /* Definition list */
+  .blog-content dl {
+    @apply my-6;
+  }
+
+  .blog-content dt {
+    @apply font-semibold text-foreground mt-4;
+  }
+
+  .blog-content dd {
+    @apply ml-6 mt-2 text-muted-foreground;
   }
 
   /* Spacing for better rhythm */
   .blog-content > *:first-child {
     @apply mt-0;
   }
+
   .blog-content > *:last-child {
     @apply mb-0;
   }
@@ -316,5 +439,24 @@ body {
   /* Links */
   .blog-content a {
     @apply text-primary hover:underline underline-offset-2 transition-colors duration-200;
+  }
+
+  .blog-content a:hover {
+    @apply text-primary/80;
+  }
+
+  /* Keyboard input */
+  .blog-content kbd {
+    @apply bg-muted border border-border rounded px-2 py-1 text-xs font-mono shadow-sm;
+  }
+
+  /* Sample output */
+  .blog-content samp {
+    @apply bg-muted px-2 py-1 rounded text-sm font-mono;
+  }
+
+  /* Variable */
+  .blog-content var {
+    @apply italic font-mono text-primary;
   }
 }
