@@ -459,4 +459,8 @@ body {
   .blog-content var {
     @apply italic font-mono text-primary;
   }
+
+  .blog-content textarea {
+    @apply scroll-smooth;
+  }
 }

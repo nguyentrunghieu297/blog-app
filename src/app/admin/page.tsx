@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { marked } from 'marked'
@@ -32,6 +32,59 @@ export default function AdminPage() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN)
   const [activeTab, setActiveTab] = useState('split')
   const [tagInput, setTagInput] = useState('')
+
+  const editorRef = useRef<HTMLTextAreaElement | null>(null)
+  const previewRef = useRef<HTMLDivElement | null>(null)
+  const isSyncingScroll = useRef(false)
+
+  const syncScroll = useCallback(
+    (source: 'edit' | 'preview') => {
+      if (isSyncingScroll.current || activeTab !== 'split') return
+
+      const editor = editorRef.current
+      const preview = previewRef.current
+
+      if (!editor || !preview) return
+
+      isSyncingScroll.current = true
+
+      const editorScrollHeight = editor.scrollHeight - editor.clientHeight
+      const previewScrollHeight = preview.scrollHeight - preview.clientHeight
+
+      if (source === 'edit') {
+        const ratio = editorScrollHeight > 0 ? editor.scrollTop / editorScrollHeight : 0
+        preview.scrollTop = ratio * previewScrollHeight
+      } else if (source === 'preview') {
+        const ratio = previewScrollHeight > 0 ? preview.scrollTop / previewScrollHeight : 0
+        editor.scrollTop = ratio * editorScrollHeight
+      }
+
+      // Dùng requestAnimationFrame thay vì setTimeout để smooth hơn
+      requestAnimationFrame(() => {
+        isSyncingScroll.current = false
+      })
+    },
+    [activeTab, isSyncingScroll]
+  )
+
+  // Cập nhật useEffect
+  useEffect(() => {
+    const editor = editorRef.current
+    const preview = previewRef.current
+
+    if (!editor || !preview) return
+
+    const handleEditorScroll = () => syncScroll('edit')
+    const handlePreviewScroll = () => syncScroll('preview')
+
+    editor.addEventListener('scroll', handleEditorScroll, { passive: true })
+    preview.addEventListener('scroll', handlePreviewScroll, { passive: true })
+
+    return () => {
+      editor.removeEventListener('scroll', handleEditorScroll)
+      preview.removeEventListener('scroll', handlePreviewScroll)
+    }
+  }, [activeTab, syncScroll])
 
   const handleFormat = async () => {
     console.log('Coming soon')
@@ -414,9 +467,11 @@ export default function AdminPage() {
                 </div>
               </div>
               <textarea
+                ref={editorRef}
                 value={markdown}
+                onScroll={() => syncScroll('edit')}
                 onChange={(e) => setMarkdown(e.target.value)}
-                className='flex-1 w-full p-4 sm:p-6 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-xs sm:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset leading-relaxed'
+                className='flex-1 w-full p-4 sm:p-6 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-xs sm:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset leading-relaxed overflow-auto'
                 placeholder='Nhập nội dung Markdown tại đây...'
                 spellCheck={false}
               />
@@ -435,6 +490,8 @@ export default function AdminPage() {
                 </div>
               </div>
               <div
+                ref={previewRef}
+                onScroll={() => syncScroll('preview')}
                 className='blog-content overflow-auto p-4 sm:p-6 prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-2xl sm:prose-h1:text-3xl prose-h2:text-xl sm:prose-h2:text-2xl prose-a:text-green-600 dark:prose-a:text-green-400 prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 bg-white dark:bg-slate-900'
                 dangerouslySetInnerHTML={{ __html: getHtml() }}
               />

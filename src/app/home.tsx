@@ -176,7 +176,7 @@ export default function Home() {
                   textAlign='left'
                   onLetterAnimationComplete={handleAnimationComplete}
                 />
-                <div className='space-y-2 h-20 sm:h-24 md:h-28'>
+                <div className='space-y-2 h-20 sm:h-48 md:h-32'>
                   <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight'>
                     <TextType
                       text={['Something new to me and maybe to you', 'Điều gì đó mới mẻ với tôi và có thể với bạn']}
@@ -234,27 +234,27 @@ export default function Home() {
       </section>
 
       {/* Main Sections */}
-      <section className='py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-6xl mx-auto'>
-          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
+      <section className='py-10 sm:py-14 md:py-20 px-3 sm:px-6 lg:px-10 xl:px-16'>
+        <div className='max-w-7xl mx-auto'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8'>
             {/* Blog Section */}
-            <Card className='lg:col-span-1'>
+            <Card className='flex flex-col justify-between'>
               <CardHeader>
                 <div className='flex items-center gap-3'>
                   <div className='w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center'>
                     <BookOpen className='w-5 h-5 text-blue-600 dark:text-blue-400' />
                   </div>
                   <div>
-                    <CardTitle>Blog</CardTitle>
-                    <CardDescription>Kiến thức & Hướng dẫn</CardDescription>
+                    <CardTitle className='text-base sm:text-lg md:text-xl'>Blog</CardTitle>
+                    <CardDescription className='text-sm sm:text-base'>Kiến thức & Hướng dẫn</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className='space-y-4'>
-                <p className='text-muted-foreground'>
+                <p className='text-muted-foreground text-sm sm:text-base leading-relaxed'>
                   Chia sẻ kinh nghiệm, tips & tricks, và những bài hướng dẫn chi tiết về web development.
                 </p>
-                <div className='flex items-center gap-4 text-sm text-muted-foreground'>
+                <div className='flex items-center justify-between gap-4 text-xs sm:text-sm text-muted-foreground flex-wrap'>
                   <div className='flex items-center gap-1'>
                     <FileText className='w-4 h-4' />
                     15+ bài viết
@@ -263,7 +263,7 @@ export default function Home() {
                     <Users className='w-4 h-4' />0 lượt xem
                   </div>
                 </div>
-                <Button asChild className='w-full'>
+                <Button asChild className='w-full text-sm sm:text-base'>
                   <Link href='/blog'>
                     Khám phá Blog
                     <ArrowRight className='w-4 h-4 ml-2' />
@@ -273,23 +273,23 @@ export default function Home() {
             </Card>
 
             {/* Portfolio Section */}
-            <Card className='lg:col-span-1'>
+            <Card className='flex flex-col justify-between'>
               <CardHeader>
                 <div className='flex items-center gap-3'>
                   <div className='w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center'>
                     <Code className='w-5 h-5 text-green-600 dark:text-green-400' />
                   </div>
                   <div>
-                    <CardTitle>Portfolio</CardTitle>
-                    <CardDescription>Dự án & Kinh nghiệm</CardDescription>
+                    <CardTitle className='text-base sm:text-lg md:text-xl'>Portfolio</CardTitle>
+                    <CardDescription className='text-sm sm:text-base'>Dự án & Kinh nghiệm</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className='space-y-4'>
-                <p className='text-muted-foreground'>
+                <p className='text-muted-foreground text-sm sm:text-base leading-relaxed'>
                   Showcase các dự án đã thực hiện, kỹ năng và kinh nghiệm làm việc trong lĩnh vực web development.
                 </p>
-                <div className='flex items-center gap-4 text-sm text-muted-foreground'>
+                <div className='flex items-center justify-between gap-4 text-xs sm:text-sm text-muted-foreground flex-wrap'>
                   <div className='flex items-center gap-1'>
                     <Star className='w-4 h-4' />
                     3+ dự án
@@ -298,7 +298,7 @@ export default function Home() {
                     <Zap className='w-4 h-4' />1 năm kinh nghiệm
                   </div>
                 </div>
-                <Button asChild className='w-full'>
+                <Button asChild className='w-full text-sm sm:text-base'>
                   <Link href='/portfolio'>
                     Xem Portfolio
                     <ArrowRight className='w-4 h-4 ml-2' />
@@ -308,9 +308,11 @@ export default function Home() {
             </Card>
 
             {/* Tools Section */}
-            <Card className='sm:col-span-2 lg:col-span-1 relative overflow-hidden'>
+            <Card className='relative overflow-hidden flex flex-col justify-between sm:col-span-2 lg:col-span-1'>
               <div className='absolute top-4 right-4'>
-                <Badge variant='secondary'>Sắp ra mắt</Badge>
+                <Badge variant='secondary' className='text-xs sm:text-sm'>
+                  Sắp ra mắt
+                </Badge>
               </div>
               <CardHeader>
                 <div className='flex items-center gap-3'>
@@ -318,16 +320,16 @@ export default function Home() {
                     <Wrench className='w-5 h-5 text-purple-600 dark:text-purple-400' />
                   </div>
                   <div>
-                    <CardTitle>Tools</CardTitle>
-                    <CardDescription>Tiện ích hữu ích</CardDescription>
+                    <CardTitle className='text-base sm:text-lg md:text-xl'>Tools</CardTitle>
+                    <CardDescription className='text-sm sm:text-base'>Tiện ích hữu ích</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className='space-y-4'>
-                <p className='text-muted-foreground'>
+                <p className='text-muted-foreground text-sm sm:text-base leading-relaxed'>
                   Các công cụ nhỏ giúp cải thiện hiệu suất làm việc cho developers. Đang trong quá trình phát triển.
                 </p>
-                <div className='flex items-center gap-4 text-sm text-muted-foreground'>
+                <div className='flex items-center justify-between gap-4 text-xs sm:text-sm text-muted-foreground flex-wrap'>
                   <div className='flex items-center gap-1'>
                     <Star className='w-4 h-4' />0 tools
                   </div>
@@ -335,7 +337,7 @@ export default function Home() {
                     <Zap className='w-4 h-4' />0 người dùng
                   </div>
                 </div>
-                <Button disabled className='w-full'>
+                <Button disabled className='w-full text-sm sm:text-base'>
                   <Loader />
                   Đang phát triển...
                 </Button>
