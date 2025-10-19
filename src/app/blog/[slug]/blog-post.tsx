@@ -26,7 +26,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
               <header className='space-y-4'>
                 <div className='flex items-center space-x-2 text-sm text-muted-foreground'>
                   <Link href='/blog' className='hover:text-primary'>
-                    Blog
+                    Biết chút cho vui
                   </Link>
                   <ChevronRight className='h-4 w-4' />
                   <span>{post.category.name}</span>

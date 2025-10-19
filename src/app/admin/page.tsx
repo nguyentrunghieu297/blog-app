@@ -13,6 +13,8 @@ import Image from 'next/image'
 import useCreateBlog from './hook/useCreateBlog'
 import ErrorMessage from '@/components/ErrorMessage'
 import * as z from 'zod'
+import useViewCategories from '../blog/hook/useViewCategories'
+import Loading from '@/components/Loading'
 
 marked.setOptions({
   breaks: true,
@@ -29,9 +31,18 @@ const viewOptions = [
 
 export default function AdminPage() {
   const createBlogMutation = useCreateBlog()
+  const { data: viewCategoriesQuery, isLoading } = useViewCategories()
+  const [categories, setCategories] = useState(viewCategoriesQuery?.slice(1) || [])
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN)
   const [activeTab, setActiveTab] = useState('split')
   const [tagInput, setTagInput] = useState('')
+  const [isAddingCategory, setIsAddingCategory] = useState(false)
+
+  useEffect(() => {
+    if (viewCategoriesQuery) {
+      setCategories(viewCategoriesQuery.slice(1))
+    }
+  }, [viewCategoriesQuery])
 
   const editorRef = useRef<HTMLTextAreaElement | null>(null)
   const previewRef = useRef<HTMLDivElement | null>(null)
@@ -173,6 +184,10 @@ export default function AdminPage() {
     .filter((w) => w.length > 0).length
   const charCount = markdown.length
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <div className='min-h-screen py-4 px-3 sm:px-6'>
       <div className='mx-auto max-w-9xl'>
@@ -266,14 +281,55 @@ export default function AdminPage() {
               {/* Category Name */}
               <div>
                 <label className='block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2'>
-                  Tên danh mục
+                  Danh mục bài viết
                 </label>
-                <input
-                  type='text'
+
+                <select
                   {...register('categoryName')}
-                  placeholder='Ví dụ: Lịch sử'
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (value === 'new') {
+                      setIsAddingCategory(true)
+                      setValue('categoryName', '')
+                    } else {
+                      setIsAddingCategory(false)
+                      setValue('categoryName', value)
+                    }
+                  }}
                   className='w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
-                />
+                >
+                  <option value=''>-- Chọn danh mục --</option>
+                  {categories.map((cat, index) => (
+                    <option key={index} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))}
+                  <option value='new'>Thêm danh mục mới</option>
+                </select>
+
+                {isAddingCategory && (
+                  <div className='mt-2 flex gap-2'>
+                    <input
+                      type='text'
+                      placeholder='Nhập danh mục mới'
+                      onChange={(e) => setValue('categoryName', e.target.value)}
+                      className='flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm'
+                    />
+                    <button
+                      type='button'
+                      onClick={() => {
+                        const newCat = { name: watch('categoryName') ?? '' }
+                        if (newCat.name?.trim()) {
+                          setCategories([...categories, newCat])
+                          setIsAddingCategory(false)
+                        }
+                      }}
+                      className='px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium'
+                    >
+                      Lưu
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Featured Image */}
