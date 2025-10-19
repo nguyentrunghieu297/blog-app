@@ -46,9 +46,9 @@ export default function BlogCard({ post }: BlogCardProps) {
               {tag}
             </Badge>
           ))}
-          {post.tags.length > 3 && (
+          {post.tags.length > NUMBER_OF_TAGS && (
             <Badge variant='outline' className='text-xs'>
-              +{post.tags.length - 3}
+              +{post.tags.length - NUMBER_OF_TAGS}
             </Badge>
           )}
         </div>
