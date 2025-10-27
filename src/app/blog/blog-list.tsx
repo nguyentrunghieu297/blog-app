@@ -1,17 +1,17 @@
 'use client'
 
-import BlogCard from '@/components/blog-component/BlogCard'
-import { useState } from 'react'
-import { Search, Filter, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { useState, useReducer } from 'react'
+import { Search, Filter, ChevronLeft, ChevronRight, X, Grid3x3, List } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { filterReducer, initialFilterState, useFilteredPosts } from '@/hook/useFilteredPosts'
+import { usePagination } from '@/hook/usePagination'
+import { POSTS_PER_PAGE } from '@/constants'
 import type { BlogPost, Category, MonthlyArchive, PopularTag } from '@/types/blog'
-import { FILTER_TAGS_LIMIT } from '@/constants'
-import FilterTag from '@/components/blog-component/FilterTag'
-import ShowMoreBtn from '@/components/blog-component/ShowMoreBtn'
+import BlogCard from '@/components/blog-component/BlogCard'
+import BlogFilters from '@/components/blog-component/BlogFilter'
+import BlogItem from '@/components/blog-component/BlogItem'
 
 interface BlogListProps {
   posts: BlogPost[]
@@ -20,238 +20,70 @@ interface BlogListProps {
   popularTags: PopularTag[]
 }
 
-const POSTS_PER_PAGE = 9
-
 export default function BlogList({ posts, categories, monthlyArchive, popularTags }: BlogListProps) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [selectedTag, setSelectedTag] = useState('')
-  const [selectedArchive, setSelectedArchive] = useState('all')
+  const [filters, dispatch] = useReducer(filterReducer, initialFilterState)
   const [showAllTags, setShowAllTags] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [viewMode, setViewMode] = useState('grid') // 'grid' or 'list'
 
-  // Filter posts based on search term, category, and tag
-  const filteredPosts = posts.filter((post) => {
-    const [year, month] = selectedArchive.split('-')
-    const targetYear = Number.parseInt(year)
-    const targetMonth = Number.parseInt(month)
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === 'all' || post.category.slug === selectedCategory
-    const matchesTag = !selectedTag || post.tags.some((tag) => tag.toLowerCase().includes(selectedTag.toLowerCase()))
+  // Get filtered posts
+  const filteredPosts = useFilteredPosts(posts, filters)
 
-    const matchesArchive =
-      selectedArchive === 'all' ||
-      (new Date(post.publishedAt).getFullYear() === targetYear &&
-        new Date(post.publishedAt).getMonth() + 1 === targetMonth)
-
-    return matchesSearch && matchesCategory && matchesTag && matchesArchive
-  })
-
-  // Pagination calculations
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
-  const endIndex = startIndex + POSTS_PER_PAGE
-  const currentPosts = filteredPosts.slice(startIndex, endIndex)
-
-  // Reset to page 1 when filters change
-  const resetFilters = () => {
-    setSearchTerm('')
-    setSelectedCategory('all')
-    setSelectedTag('')
-    setSelectedArchive('all')
-    setCurrentPage(1)
-  }
+  // Get pagination data
+  const pagination = usePagination(filteredPosts, POSTS_PER_PAGE)
 
   // Handle filter changes and reset to page 1
   const handleFilterChange = (filterType: string, value: string) => {
-    setCurrentPage(1)
+    pagination.resetPage()
     switch (filterType) {
       case 'search':
-        setSearchTerm(value)
+        dispatch({ type: 'SET_SEARCH', payload: value })
         break
       case 'category':
-        setSelectedCategory(value)
+        dispatch({ type: 'SET_CATEGORY', payload: value })
         break
       case 'tag':
-        setSelectedTag(value)
+        dispatch({ type: 'SET_TAG', payload: value })
         break
       case 'archive':
-        setSelectedArchive(value)
+        dispatch({ type: 'SET_ARCHIVE', payload: value })
         break
     }
   }
 
-  // Generate page numbers for pagination
-  const getPageNumbers = () => {
-    const pages = []
-    const maxVisiblePages = 5
-
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i)
-      }
-    } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) {
-          pages.push(i)
-        }
-        pages.push('...')
-        pages.push(totalPages)
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1)
-        pages.push('...')
-        for (let i = totalPages - 3; i <= totalPages; i++) {
-          pages.push(i)
-        }
-      } else {
-        pages.push(1)
-        pages.push('...')
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i)
-        }
-        pages.push('...')
-        pages.push(totalPages)
-      }
-    }
-
-    return pages
+  // Reset all filters
+  const resetFilters = () => {
+    dispatch({ type: 'RESET_FILTERS' })
+    pagination.resetPage()
   }
 
-  const FilterContent = () => (
-    <div className='space-y-6 p-3'>
-      {/* Search */}
-      <Card>
-        <CardHeader>
-          <CardTitle className='text-lg font-semibold flex items-center gap-2'>
-            <Search className='h-5 w-5' />
-            Tìm kiếm
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className='relative'>
-            <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
-            <Input
-              placeholder='Tìm kiếm bài viết...'
-              value={searchTerm}
-              onChange={(e) => handleFilterChange('search', e.target.value)}
-              className='pl-10'
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Categories */}
-      <Card>
-        <CardHeader>
-          <CardTitle className='text-lg font-semibold flex items-center gap-2'>
-            <Filter className='h-5 w-5' />
-            Danh mục
-          </CardTitle>
-        </CardHeader>
-        <CardContent className='space-y-2'>
-          {categories.map((category) => (
-            <button
-              key={category.slug}
-              onClick={() => handleFilterChange('category', category.slug ?? 'all')}
-              className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
-                selectedCategory === category.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
-              }`}
-            >
-              <span>{category.name}</span>
-              <Badge variant='secondary' className='text-xs'>
-                {category.count}
-              </Badge>
-            </button>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Monthly Archive */}
-      <Card>
-        <CardHeader>
-          <CardTitle className='text-lg font-semibold'>Bài viết theo tháng</CardTitle>
-        </CardHeader>
-        <CardContent className='space-y-2'>
-          {monthlyArchive.map((archive) => (
-            <button
-              key={archive.slug}
-              onClick={() => handleFilterChange('archive', archive.slug)}
-              className={`flex items-center justify-between w-full py-2 px-3 text-sm rounded-md transition-colors ${
-                selectedArchive === archive.slug ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
-              }`}
-            >
-              <span className='group-hover:translate-x-1 transition-transform'>{archive.month}</span>
-              <Badge variant='secondary' className='text-xs'>
-                {archive.count}
-              </Badge>
-            </button>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Popular Tags */}
-      <Card>
-        <CardHeader>
-          <CardTitle className='text-lg font-semibold'>Tags phổ biến</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className='flex flex-wrap gap-2'>
-            {(showAllTags ? popularTags : popularTags.slice(0, FILTER_TAGS_LIMIT)).map((tag) => (
-              <FilterTag
-                key={tag.name}
-                tag={tag}
-                selectedTag={selectedTag}
-                setSelectedTag={(value) => handleFilterChange('tag', value)}
-              />
-            ))}
-          </div>
-
-          {popularTags.length > FILTER_TAGS_LIMIT && (
-            <ShowMoreBtn
-              isExpanded={showAllTags}
-              onToggle={() => setShowAllTags(!showAllTags)}
-              expandedText='Thu gọn'
-              collapsedText='Xem thêm'
-              className='mt-3'
-              showChevron={true}
-            />
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  )
-
-  const activeFilterCount =
-    (searchTerm ? 1 : 0) +
-    (selectedCategory !== 'all' ? 1 : 0) +
-    (selectedTag ? 1 : 0) +
-    (selectedArchive !== 'all' ? 1 : 0)
+  // Calculate active filter count
+  const activeFilterCount = [
+    filters.searchTerm,
+    filters.selectedCategory !== 'all',
+    filters.selectedTag,
+    filters.selectedArchive !== 'all'
+  ].filter(Boolean).length
 
   return (
     <div className='min-h-screen bg-background'>
-      <div className='container mx-auto px-4 py-8'>
+      <div className='container mx-auto p-4'>
         {/* Page Header */}
         <div className='mb-8'>
-          <h1 className='text-3xl lg:text-4xl font-bold mb-4'>Blog</h1>
+          <h1 className='text-3xl lg:text-4xl font-bold mb-4'>Biết chút cho vui</h1>
           <p className='text-lg text-muted-foreground'>
             Khám phá các bài viết về công nghệ, lịch sử, văn hóa và nhiều chủ đề thú vị khác
           </p>
         </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
-          <aside className='hidden lg:block lg:col-span-1 space-y-6 h-full lg:sticky lg:top-16'>
-            <FilterContent />
-          </aside>
-
           {/* Main Content - Blog Posts */}
           <main className='lg:col-span-3'>
+            {/* Mobile Filter Sheet */}
             <div className='lg:hidden mb-6'>
               <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
                 <SheetTrigger asChild>
-                  <Button variant='outline' className='w-full relative'>
+                  <Button variant='outline' className='w-full relative' aria-label='Mở bộ lọc'>
                     <Filter className='h-4 w-4 mr-2' />
                     Bộ lọc
                     {activeFilterCount > 0 && (
@@ -261,12 +93,27 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                     )}
                   </Button>
                 </SheetTrigger>
-                <SheetContent side='left' className='w-[300px] sm:w-[400px] overflow-y-auto'>
+                <SheetContent
+                  side='left'
+                  className='w-[300px] sm:w-[400px] overflow-y-auto'
+                  aria-describedby='filter-description'
+                >
                   <SheetHeader>
                     <SheetTitle>Bộ lọc</SheetTitle>
                   </SheetHeader>
+                  <p id='filter-description' className='sr-only'>
+                    Bộ lọc để tìm kiếm và lọc bài viết theo danh mục, tháng và tags
+                  </p>
                   <div className='mt-6'>
-                    <FilterContent />
+                    <BlogFilters
+                      filters={filters}
+                      categories={categories}
+                      monthlyArchive={monthlyArchive}
+                      popularTags={popularTags}
+                      onFilterChange={handleFilterChange}
+                      showAllTags={showAllTags}
+                      onToggleShowAllTags={() => setShowAllTags(!showAllTags)}
+                    />
                   </div>
                   {activeFilterCount > 0 && (
                     <div className='sticky bottom-0 bg-background pt-4 pb-2 border-t mt-6'>
@@ -288,72 +135,111 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
             </div>
 
             {/* Results Info */}
-            <div className='pb-6 flex items-center justify-between'>
+            <div className='pb-6 h-12 flex items-center justify-between'>
               <div>
                 <p className='text-sm text-muted-foreground'>
-                  Hiển thị {startIndex + 1}-{Math.min(endIndex, filteredPosts.length)} của {filteredPosts.length} bài
-                  viết
-                  {searchTerm && ` cho "${searchTerm}"`}
-                  {selectedCategory !== 'all' &&
-                    ` trong danh mục "${categories.find((c) => c.slug === selectedCategory)?.name}"`}
-                  {selectedTag && ` với tag "${selectedTag}"`}
+                  Hiển thị {pagination.startIndex + 1}-{Math.min(pagination.endIndex, filteredPosts.length)} của{' '}
+                  {filteredPosts.length} bài viết
+                  {filters.searchTerm && ` cho "${filters.searchTerm}"`}
+                  {filters.selectedCategory !== 'all' &&
+                    ` trong danh mục "${categories.find((c) => c.slug === filters.selectedCategory)?.name}"`}
+                  {filters.selectedTag && ` với tag "${filters.selectedTag}"`}
                 </p>
               </div>
 
-              {(searchTerm || selectedCategory !== 'all' || selectedTag || selectedArchive !== 'all') && (
-                <Button variant='outline' size='sm' onClick={resetFilters} className='hidden lg:flex'>
-                  Xóa bộ lọc
-                </Button>
-              )}
+              <div className='flex gap-3 mt-3'>
+                {activeFilterCount > 0 && (
+                  <Button variant='outline' size='sm' onClick={resetFilters} className='hidden lg:flex'>
+                    Xóa bộ lọc
+                  </Button>
+                )}
+
+                {/* View Toggle Buttons */}
+                <div className='flex items-center border rounded-md'>
+                  <Button
+                    variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                    size='sm'
+                    onClick={() => setViewMode('grid')}
+                    className='rounded-r-none'
+                  >
+                    <Grid3x3 className='h-4 w-4' />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'list' ? 'default' : 'ghost'}
+                    size='sm'
+                    onClick={() => setViewMode('list')}
+                    className='rounded-l-none'
+                  >
+                    <List className='h-4 w-4' />
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Blog Posts Grid */}
-            {currentPosts.length > 0 ? (
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
-                {currentPosts.map((post) => (
-                  <BlogCard key={post.id} post={post} />
-                ))}
-              </div>
-            ) : (
-              <div className='text-center py-12 mt-12'>
-                <div className='text-muted-foreground mb-4'>
-                  <Search className='h-12 w-12 mx-auto mb-4 opacity-50' />
-                  <h3 className='text-lg font-semibold mb-2'>Không tìm thấy bài viết</h3>
-                  <p>Thử thay đổi từ khóa tìm kiếm hoặc bộ lọc của bạn</p>
+            <div>
+              {pagination.currentItems.length > 0 ? (
+                <div>
+                  {viewMode === 'grid' ? (
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
+                      {pagination.currentItems.map((post) => (
+                        <BlogCard key={post.id} post={post} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className='flex flex-col divide-y'>
+                      {pagination.currentItems.map((post) => (
+                        <BlogItem key={post.id} post={post} />
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <Button variant='outline' onClick={resetFilters}>
-                  Xóa tất cả bộ lọc
-                </Button>
-              </div>
-            )}
+              ) : (
+                <div className='text-center py-12 mt-12'>
+                  <div className='text-muted-foreground mb-4'>
+                    <Search className='h-12 w-12 mx-auto mb-4 opacity-50' />
+                    <h3 className='text-lg font-semibold mb-2'>Không tìm thấy bài viết</h3>
+                    <p>Thử thay đổi từ khóa tìm kiếm hoặc bộ lọc của bạn</p>
+                  </div>
+                  <Button variant='outline' onClick={resetFilters}>
+                    Xóa tất cả bộ lọc
+                  </Button>
+                </div>
+              )}
+            </div>
 
             {/* Pagination */}
-            {totalPages > 1 && currentPosts.length > 0 && (
-              <div className='mt-12 flex justify-center'>
+            {pagination.totalPages > 1 && pagination.currentItems.length > 0 && (
+              <nav className='mt-12 flex justify-center' aria-label='Phân trang'>
                 <div className='flex items-center space-x-1'>
                   {/* Previous Button */}
                   <Button
                     variant='outline'
                     size='sm'
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
+                    onClick={() => pagination.setCurrentPage(pagination.currentPage - 1)}
+                    disabled={pagination.currentPage === 1}
                     className='flex items-center gap-1'
+                    aria-label='Trang trước'
                   >
                     <ChevronLeft className='h-4 w-4' />
                     Trước
                   </Button>
 
                   {/* Page Numbers */}
-                  {getPageNumbers().map((page, index) => (
+                  {pagination.getPageNumbers().map((page, index) => (
                     <div key={index}>
                       {page === '...' ? (
-                        <span className='px-3 py-2 text-sm text-muted-foreground'>...</span>
+                        <span className='px-3 py-2 text-sm text-muted-foreground' aria-hidden='true'>
+                          ...
+                        </span>
                       ) : (
                         <Button
-                          variant={currentPage === page ? 'default' : 'outline'}
+                          variant={pagination.currentPage === page ? 'default' : 'outline'}
                           size='sm'
-                          onClick={() => setCurrentPage(page as number)}
+                          onClick={() => pagination.setCurrentPage(page as number)}
                           className='min-w-[40px]'
+                          aria-label={`Trang ${page}`}
+                          aria-current={pagination.currentPage === page ? 'page' : undefined}
                         >
                           {page}
                         </Button>
@@ -365,17 +251,31 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                   <Button
                     variant='outline'
                     size='sm'
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    onClick={() => pagination.setCurrentPage(pagination.currentPage + 1)}
+                    disabled={pagination.currentPage === pagination.totalPages}
                     className='flex items-center gap-1'
+                    aria-label='Trang sau'
                   >
                     Sau
                     <ChevronRight className='h-4 w-4' />
                   </Button>
                 </div>
-              </div>
+              </nav>
             )}
           </main>
+
+          {/* Desktop Sidebar */}
+          <aside className='hidden lg:block lg:col-span-1 space-y-6 h-full lg:sticky lg:top-16'>
+            <BlogFilters
+              filters={filters}
+              categories={categories}
+              monthlyArchive={monthlyArchive}
+              popularTags={popularTags}
+              onFilterChange={handleFilterChange}
+              showAllTags={showAllTags}
+              onToggleShowAllTags={() => setShowAllTags(!showAllTags)}
+            />
+          </aside>
         </div>
       </div>
     </div>

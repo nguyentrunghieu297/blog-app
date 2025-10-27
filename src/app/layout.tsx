@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
 import { Be_Vietnam_Pro } from 'next/font/google'
-import '@/styles/globals.css'
-import Navbar from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
+import type { Metadata } from 'next'
+import Navbar from '@/components/Navbar'
 import QueryProvider from '@/lib/react-query/query-provider'
+import '@/styles/globals.css'
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ['latin'],
