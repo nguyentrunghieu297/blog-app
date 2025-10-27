@@ -147,7 +147,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
                 </p>
               </div>
 
-              <div className='flex gap-3 mt-3'>
+              <div className='flex gap-3 mt-0 md:mt-3'>
                 {activeFilterCount > 0 && (
                   <Button variant='outline' size='sm' onClick={resetFilters} className='hidden lg:flex'>
                     Xóa bộ lọc
