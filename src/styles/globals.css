@@ -251,7 +251,7 @@ body {
   }
 
   .blog-content h2 {
-    @apply text-2xl font-semibold mt-12 mb-4 pb-2 border-b border-border text-foreground/90;
+    @apply text-2xl font-semibold mt-12 mb-4 pb-2 border-border text-foreground/90;
   }
 
   .blog-content h3 {

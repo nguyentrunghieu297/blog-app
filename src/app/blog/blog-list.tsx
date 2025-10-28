@@ -24,7 +24,7 @@ export default function BlogList({ posts, categories, monthlyArchive, popularTag
   const [filters, dispatch] = useReducer(filterReducer, initialFilterState)
   const [showAllTags, setShowAllTags] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [viewMode, setViewMode] = useState('grid') // 'grid' or 'list'
+  const [viewMode, setViewMode] = useState('list') // 'grid' or 'list'
 
   // Get filtered posts
   const filteredPosts = useFilteredPosts(posts, filters)

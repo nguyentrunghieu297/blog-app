@@ -12,7 +12,7 @@ interface BlogListItemProps {
 
 export default function BlogItem({ post }: BlogListItemProps) {
   return (
-    <article className='flex flex-col md:flex-row gap-6 border-b pb-6 mb-6 hover:bg-muted/30 transition'>
+    <article className='flex flex-col md:flex-row gap-6 border-b pb-6 mb-6 hover:bg-muted/30 transition-all'>
       {/* Image */}
       <div className='relative w-full md:w-1/3 aspect-video overflow-hidden rounded-lg'>
         <Link href={`/blog/${post.slug}`}>
