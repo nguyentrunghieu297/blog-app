@@ -1,7 +1,7 @@
-import { WeatherData } from '@/hook/useWeather'
 import { formatDate } from '@/utils/date-helpers'
 import { LunarDate } from '@/utils/lunar-calendar'
 import { WeatherIcon } from './weather-icon'
+import { WeatherData } from '@/types/news'
 import React from 'react'
 
 interface HeaderProps {
