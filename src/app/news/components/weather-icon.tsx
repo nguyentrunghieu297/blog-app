@@ -1,6 +1,6 @@
 import React from 'react'
 import { Cloud, CloudRain, Sun } from 'lucide-react'
-import { WeatherData } from '@/hook/useWeather'
+import { WeatherData } from '@/types/news'
 
 interface WeatherIconProps {
   condition: WeatherData['condition']
