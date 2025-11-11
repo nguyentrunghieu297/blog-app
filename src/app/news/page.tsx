@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Header } from './components/header'
 import { Navigation } from './components/navigation'
 import { NewsArticle } from './components/news-article'
@@ -12,10 +12,18 @@ import { useCurrentTime } from '@/hook/useCurrentTime'
 import { useWeather } from '@/hook/useWeather'
 import { convertToLunar, getVietnameseYear } from '@/utils/lunar-calendar'
 import { getTimeOfDay } from '@/utils/date-helpers'
-import { MarketItem, NewsArticle as NewsArticleType, SectorItem } from '@/types/news'
+import { MarketItem, SectorItem } from '@/types/news'
+import { SidebarToggle } from './components/sidebar-toggle'
+import { SidebarOverlay } from './components/sidebar-overlay'
+import useViewNews from './hook/use-view-news'
+import NewsArticleSkeleton from './components/news-article-skeleton'
 
 export default function FinancialNewsLayout() {
-  const [activeTab, setActiveTab] = useState('Tổng quan')
+  const [activeTab, setActiveTab] = useState('tong-quan')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const { data: news, isLoading } = useViewNews()
   const currentTime = useCurrentTime()
   const weather = useWeather()
 
@@ -37,19 +45,10 @@ export default function FinancialNewsLayout() {
     { name: 'Bất động sản', value: '1.990,18', change: '-4.65%', isNegative: true }
   ]
 
-  const newsArticles: NewsArticleType[] = [
-    {
-      id: 1,
-      title: 'TP.HCM duy trì tăng trưởng mạnh cuối năm, sức mua và thu ngân sách bứt phá',
-      content:
-        'Tháng 10 và 10 tháng đầu năm, TP.HCM ghi nhận chỉ số tiêu thụ sản phẩm công nghiệp tăng gần 10%, doanh thu bán lẻ và dịch vụ tiêu dùng đạt hơn 1,57 triệu tỷ đồng (tăng 15%). Thu ngân sách Nhà nước đạt hơn 652.500 tỷ đồng, nhờ dòng vốn đầu tư tư nhân và giao dịch đất sôi động, đặc biệt từ nhà đất tăng 180,7%, thuế thu nhập cá nhân tăng 21,6%.',
-      source: 'vietnamnet'
-    }
-  ]
-
   return (
     <div className='min-h-screen bg-white'>
-      <div className='flex'>
+      <div className='flex flex-col lg:flex-row'>
+        {/* Main Content */}
         <div className='flex-1 border-gray-200'>
           <Header
             currentTime={currentTime}
@@ -58,23 +57,41 @@ export default function FinancialNewsLayout() {
             vietnameseYear={vietnameseYear}
             timeOfDay={timeOfDay}
           />
-          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-          <div className='px-8 py-8 space-y-8'>
-            {[...Array(5)].map((_, i) => (
-              <NewsArticle key={i} article={newsArticles[0]} />
-            ))}
+          <Navigation
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+          />
+
+          <div className='px-4 md:px-6 lg:px-8 py-6 md:py-8 space-y-4 md:space-y-6'>
+            {isLoading
+              ? [...Array(10)].map((_, i) => <NewsArticleSkeleton key={i} />)
+              : news && news.map((article, i) => <NewsArticle key={i} article={article} />)}
           </div>
         </div>
 
-        <div className='w-96 bg-white'>
-          <div className='p-6 space-y-6'>
+        {/* Sidebar - Desktop */}
+        <div className='hidden xl:block w-96 bg-white border-l border-gray-200'>
+          <div className='p-6 space-y-6 sticky top-0'>
             <QuoteCard />
             <FollowTopics />
             <MarketDataCard currentTime={currentTime} marketData={marketData} />
             <SectorIndices currentTime={currentTime} sectorData={sectorData} />
           </div>
         </div>
+
+        {/* Sidebar Toggle Button - Tablet/Mobile */}
+        <SidebarToggle onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+
+        {/* Sidebar Overlay - Tablet/Mobile */}
+        <SidebarOverlay isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}>
+          <QuoteCard />
+          <FollowTopics />
+          <MarketDataCard currentTime={currentTime} marketData={marketData} />
+          <SectorIndices currentTime={currentTime} sectorData={sectorData} />
+        </SidebarOverlay>
       </div>
     </div>
   )

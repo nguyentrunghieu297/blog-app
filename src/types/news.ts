@@ -25,10 +25,14 @@ export interface WeatherData {
 }
 
 export interface NewsArticle {
-  id: number
   title: string
-  content: string
-  source: string
+  description: string
+  link: string
+  pubDate: string
+  sourceIcon: string
+  sourceName: string
+  category: string
+  featuredImage: string
 }
 
 export interface DateInfo {

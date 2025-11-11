@@ -1,6 +1,6 @@
 import { MarketItem } from '@/types/news'
 import { formatDate } from '@/utils/date-helpers'
-import React from 'react'
+import React, { useState } from 'react'
 
 interface MarketDataCardProps {
   currentTime: Date
@@ -9,6 +9,7 @@ interface MarketDataCardProps {
 
 export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData }) => {
   const { day, month, year } = formatDate(currentTime)
+  const [activeTab, setActiveTab] = useState<'stocks' | 'gold' | 'forex' | 'agriculture'>('stocks')
 
   return (
     <div className='border-b border-gray-200 pb-6'>
@@ -21,8 +22,44 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
       </div>
       <div className='space-y-1 mb-5'>
         <div className='flex items-center space-x-4 pb-3 border-b border-gray-200'>
-          <button className='text-sm font-medium text-gray-900 border-b-2 border-gray-900 pb-1'>Chứng khoán</button>
-          <button className='text-sm text-gray-500 hover:text-gray-900'>Vàng</button>
+          <button
+            onClick={() => setActiveTab('stocks')}
+            className={`text-sm font-medium pb-1 ${
+              activeTab === 'stocks' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            Chứng khoán
+          </button>
+          <button
+            onClick={() => setActiveTab('gold')}
+            className={`text-sm pb-1 ${
+              activeTab === 'gold'
+                ? 'text-gray-900 border-b-2 border-gray-900 font-medium'
+                : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            Vàng
+          </button>
+          <button
+            onClick={() => setActiveTab('forex')}
+            className={`text-sm pb-1 ${
+              activeTab === 'forex'
+                ? 'text-gray-900 border-b-2 border-gray-900 font-medium'
+                : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            Ngoại tệ
+          </button>
+          <button
+            onClick={() => setActiveTab('agriculture')}
+            className={`text-sm pb-1 ${
+              activeTab === 'agriculture'
+                ? 'text-gray-900 border-b-2 border-gray-900 font-medium'
+                : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            Nông sản
+          </button>
         </div>
       </div>
       <div className='space-y-4'>
