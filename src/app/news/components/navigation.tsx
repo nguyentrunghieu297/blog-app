@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, X } from 'lucide-react'
+import { ChevronDown, X } from 'lucide-react'
 
 interface NavigationProps {
   activeTab: string
@@ -31,52 +31,74 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button
             key={tab.key}
             onClick={() => onTabChange(tab.key)}
-            className={`py-4 text-sm font-medium transition-colors whitespace-nowrap ${
-              activeTab === tab.key
-                ? 'border-b-2 border-gray-800 text-gray-900'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
+            className={`relative py-4 text-sm font-medium transition-all duration-300 ease-in-out whitespace-nowrap ${
+              activeTab === tab.key ? 'text-gray-900' : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             {tab.label}
+            {/* Animated underline */}
+            <span
+              className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out ${
+                activeTab === tab.key ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+              }`}
+            />
           </button>
         ))}
       </nav>
 
       {/* Mobile Navigation Toggle */}
       <div className='lg:hidden border-b border-gray-200 px-4 py-3 flex items-center justify-between'>
-        <span className='text-sm font-medium text-gray-900'>
+        <span className='text-sm font-medium text-gray-900 transition-opacity duration-200'>
           {tabs.find((t) => t.key === activeTab)?.label || 'Menu'}
         </span>
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className='p-2 hover:bg-gray-100 rounded-lg transition-colors'
+          className='p-2 hover:bg-gray-100 rounded-lg transition-all duration-200'
           aria-label='Toggle menu'
         >
-          {isMobileMenuOpen ? <X className='w-5 h-5' /> : <Menu className='w-5 h-5' />}
+          <div className='relative w-5 h-5'>
+            <X
+              className={`w-5 h-5 absolute inset-0 transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'
+              }`}
+            />
+            <ChevronDown
+              className={`w-5 h-5 absolute inset-0 transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-0 -rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'
+              }`}
+            />
+          </div>
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className='lg:hidden border-b border-gray-200 bg-white'>
-          {tabs.map((tab) => (
+      {/* Mobile Menu Dropdown with smooth animation */}
+      <div
+        className={`lg:hidden border-b border-gray-200 bg-white overflow-hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className='divide-y divide-gray-100'>
+          {tabs.map((tab, index) => (
             <button
               key={tab.key}
               onClick={() => {
                 onTabChange(tab.key)
                 setIsMobileMenuOpen(false)
               }}
-              className={`w-full text-left px-4 py-3 text-sm font-medium transition-colors ${
+              className={`w-full text-left px-4 py-3 text-sm font-medium transition-all duration-200 ${
                 activeTab === tab.key
-                  ? 'bg-gray-50 text-gray-900 border-l-4 border-gray-800'
-                  : 'text-gray-600 hover:bg-gray-50'
+                  ? 'bg-gray-50 text-gray-900 border-l-4 border-l-gray-800'
+                  : 'text-gray-600 hover:bg-gray-50 hover:translate-x-1'
               }`}
+              style={{
+                transitionDelay: isMobileMenuOpen ? `${index * 30}ms` : '0ms'
+              }}
             >
               {tab.label}
             </button>
           ))}
         </div>
-      )}
+      </div>
     </>
   )
 }

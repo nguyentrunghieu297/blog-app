@@ -15,7 +15,9 @@ const nextConfig: NextConfig = {
       'i1-vnexpress.vnecdn.net',
       'cdn2.tuoitre.vn',
       'i1-giaitri.vnecdn.net',
-      'i1-kinhdoanh.vnecdn.net'
+      'i1-kinhdoanh.vnecdn.net',
+      'daknong.1cdn.vn',
+      'i1-suckhoe.vnecdn.net'
     ]
   }
 }

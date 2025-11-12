@@ -9,9 +9,9 @@ export const QuoteCard: React.FC = () => (
         <X className='w-4 h-4' />
       </button>
     </div>
-    <blockquote className='text-sm text-gray-700 italic mb-3 leading-relaxed'>
+    <blockquote className='text-sm text-gray-700 italic mb-2 leading-relaxed'>
       Cuộc hành trình ngàn dặm bắt đầu từ một bước chân.
     </blockquote>
-    <p className='text-xs text-gray-500'>Lão Tử</p>
+    <p className='text-xs text-gray-500 text-right'>- Lão Tử -</p>
   </div>
 )

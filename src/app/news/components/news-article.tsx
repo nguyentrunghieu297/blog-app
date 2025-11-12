@@ -16,7 +16,7 @@ export const NewsArticle: React.FC<NewsArticleProps> = ({ article }) => {
       href={article.link}
       target='_blank'
       rel='noopener noreferrer'
-      className='block pb-4 border-b border-gray-50 last:border-b-0 hover:border-gray-200 p-3 md:p-4 -mx-3 md:-mx-4 rounded-lg transition-all duration-300 ease-in-out cursor-pointer'
+      className='block pb-4 border-b border-gray-50 last:border-b-0 hover:border-gray-200 p-3 md:p-4 -mx-3 md:-mx-4 transition-all duration-300 ease-in-out cursor-pointer'
     >
       <article className='flex gap-3 md:gap-4'>
         {/* Article Image - Responsive sizes */}
