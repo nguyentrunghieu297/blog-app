@@ -14,13 +14,16 @@ export const Navigation: React.FC<NavigationProps> = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen
 }) => {
+  // Đồng bộ với BE
   const tabs = [
     { label: 'Tổng quan', key: 'tong-quan' },
     { label: 'Kinh Tế', key: 'kinh-te' },
-    { label: 'Bất Động Sản', key: 'bat-dong-san' },
     { label: 'Công Nghệ', key: 'cong-nghe' },
     { label: 'Doanh Nghiệp', key: 'doanh-nghiep' },
-    { label: 'Thế Giới', key: 'the-gioi' }
+    { label: 'Thế Giới', key: 'the-gioi' },
+    { label: 'Thời Sự', key: 'thoi-su' },
+    { label: 'Giải Trí', key: 'giai-tri' },
+    { label: 'Giáo Dục', key: 'giao-duc' }
   ]
 
   return (
@@ -36,7 +39,6 @@ export const Navigation: React.FC<NavigationProps> = ({
             }`}
           >
             {tab.label}
-            {/* Animated underline */}
             <span
               className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out ${
                 activeTab === tab.key ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
@@ -71,10 +73,10 @@ export const Navigation: React.FC<NavigationProps> = ({
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown with smooth animation */}
+      {/* Mobile Menu Dropdown */}
       <div
         className={`lg:hidden border-b border-gray-200 bg-white overflow-hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          isMobileMenuOpen ? 'max-h-[32rem] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <div className='divide-y divide-gray-100'>

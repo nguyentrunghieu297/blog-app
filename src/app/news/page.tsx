@@ -23,7 +23,9 @@ export default function FinancialNewsLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  const { data: news, isLoading } = useViewNews()
+  // Truyền category vào hook
+  const { data: news, isLoading } = useViewNews({ category: activeTab, limit: 30 })
+
   const currentTime = useCurrentTime()
   const weather = useWeather()
 
@@ -31,7 +33,6 @@ export default function FinancialNewsLayout() {
   const vietnameseYear = getVietnameseYear(lunar.year)
   const timeOfDay = getTimeOfDay(currentTime.getHours())
 
-  // Mock data - should be fetched from API
   const marketData: MarketItem[] = [
     { name: 'VN-INDEX', value: '1.639,65', change: '-29,92', isNegative: true },
     { name: 'HNX-INDEX', value: '265,85', change: '-1,11', isNegative: true },
@@ -44,6 +45,12 @@ export default function FinancialNewsLayout() {
     { name: 'Tài chính', value: '2.254,64', change: '-1.72%', isNegative: true },
     { name: 'Bất động sản', value: '1.990,18', change: '-4.65%', isNegative: true }
   ]
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab)
+    // Scroll to top khi đổi tab
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <div className='min-h-screen bg-white'>
@@ -60,15 +67,19 @@ export default function FinancialNewsLayout() {
 
           <Navigation
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={handleTabChange}
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
           />
 
           <div className='px-4 md:px-6 lg:px-8 py-6 md:py-8 space-y-4 md:space-y-6'>
-            {isLoading
-              ? [...Array(10)].map((_, i) => <NewsArticleSkeleton key={i} />)
-              : news && news.map((article, i) => <NewsArticle key={i} article={article} />)}
+            {isLoading ? (
+              [...Array(10)].map((_, i) => <NewsArticleSkeleton key={i} />)
+            ) : news && news.length > 0 ? (
+              news.map((article, i) => <NewsArticle key={i} article={article} />)
+            ) : (
+              <div className='text-center py-12 text-gray-500'>Không có bài viết nào trong danh mục này</div>
+            )}
           </div>
         </div>
 
