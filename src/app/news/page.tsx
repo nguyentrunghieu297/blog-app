@@ -27,7 +27,7 @@ export default function FinancialNewsLayout() {
   const { data: news, isLoading } = useViewNews({ category: activeTab, limit: 30 })
 
   const currentTime = useCurrentTime()
-  const { weather, location, changeLocation, availableLocations } = useWeather()
+  const { isClient, weather, location, changeLocation, availableLocations } = useWeather()
 
   const lunar = convertToLunar(currentTime)
   const vietnameseYear = getVietnameseYear(lunar.year)
@@ -66,6 +66,7 @@ export default function FinancialNewsLayout() {
             location={location}
             availableLocations={availableLocations}
             onLocationChange={changeLocation}
+            isClient={isClient}
           />
 
           <Navigation

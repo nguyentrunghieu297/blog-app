@@ -1,9 +1,9 @@
+import React, { useState, useRef, useEffect } from 'react'
 import { formatDate } from '@/utils/date-helpers'
 import { LunarDate } from '@/utils/lunar-calendar'
 import { WeatherIcon } from './weather-icon'
 import { WeatherData } from '@/types/news'
 import { Location } from '@/hook/useWeather'
-import React, { useState, useRef, useEffect } from 'react'
 
 interface HeaderProps {
   currentTime: Date
@@ -14,6 +14,7 @@ interface HeaderProps {
   location: Location
   availableLocations: Location[]
   onLocationChange: (location: Location) => void
+  isClient?: boolean
 }
 
 export const Header: React.FC<HeaderProps> = ({

@@ -33,20 +33,27 @@ export const VIETNAM_LOCATIONS: Location[] = [
 const STORAGE_KEY = 'weather_location'
 
 export const useWeather = () => {
-  // Lấy location từ localStorage hoặc mặc định là TP.HCM
-  const getInitialLocation = (): Location => {
-    if (typeof window === 'undefined') return VIETNAM_LOCATIONS[0]
+  // Khởi tạo với location mặc định để tránh hydration error
+  const [location, setLocation] = useState<Location>(VIETNAM_LOCATIONS[0])
+  const [weather, setWeather] = useState<WeatherData>({ temp: '--', condition: 'loading' })
+  const [isClient, setIsClient] = useState(false)
 
+  // Load location từ localStorage chỉ ở client-side
+  useEffect(() => {
+    setIsClient(true)
     const saved = localStorage.getItem(STORAGE_KEY)
     if (saved) {
-      const parsed = JSON.parse(saved)
-      return VIETNAM_LOCATIONS.find((loc) => loc.name === parsed.name) || VIETNAM_LOCATIONS[0]
+      try {
+        const parsed = JSON.parse(saved)
+        const foundLocation = VIETNAM_LOCATIONS.find((loc) => loc.name === parsed.name)
+        if (foundLocation) {
+          setLocation(foundLocation)
+        }
+      } catch (error) {
+        console.error('Error loading saved location:', error)
+      }
     }
-    return VIETNAM_LOCATIONS[0]
-  }
-
-  const [location, setLocation] = useState<Location>(getInitialLocation)
-  const [weather, setWeather] = useState<WeatherData>({ temp: '--', condition: 'loading' })
+  }, [])
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -78,5 +85,5 @@ export const useWeather = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newLocation))
   }
 
-  return { weather, location, changeLocation, availableLocations: VIETNAM_LOCATIONS }
+  return { isClient, weather, location, changeLocation, availableLocations: VIETNAM_LOCATIONS }
 }
