@@ -23,7 +23,8 @@ const nextConfig: NextConfig = {
       'cdn-images.vtv.vn',
       'cdn-i.vtcnews.vn',
       'i1-thethao.vnecdn.net',
-      'i1-dulich.vnecdn.net'
+      'i1-dulich.vnecdn.net',
+      'i1-giadinh.vnecdn.net'
     ]
   }
 }
