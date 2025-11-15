@@ -17,7 +17,13 @@ const nextConfig: NextConfig = {
       'i1-giaitri.vnecdn.net',
       'i1-kinhdoanh.vnecdn.net',
       'daknong.1cdn.vn',
-      'i1-suckhoe.vnecdn.net'
+      'i1-suckhoe.vnecdn.net',
+      'cafefcdn.com',
+      'nld.mediacdn.vn',
+      'cdn-images.vtv.vn',
+      'cdn-i.vtcnews.vn',
+      'i1-thethao.vnecdn.net',
+      'i1-dulich.vnecdn.net'
     ]
   }
 }

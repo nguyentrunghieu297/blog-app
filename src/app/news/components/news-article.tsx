@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { NewsArticle as NewsArticleType } from '@/types/news'
 import { getRelativeTime } from '@/utils/time-helpers'
-import { Clock } from 'lucide-react'
+import { Clock, ImageOff } from 'lucide-react'
 
 interface NewsArticleProps {
   article: NewsArticleType
@@ -20,7 +20,7 @@ export const NewsArticle: React.FC<NewsArticleProps> = ({ article }) => {
     >
       <article className='flex gap-3 md:gap-4'>
         {/* Article Image - Responsive sizes */}
-        {article.featuredImage && (
+        {article.featuredImage ? (
           <div className='flex-shrink-0 w-24 h-20 sm:w-32 sm:h-24 md:w-36 md:h-28 relative overflow-hidden rounded-md'>
             <Image
               src={article.featuredImage}
@@ -29,6 +29,13 @@ export const NewsArticle: React.FC<NewsArticleProps> = ({ article }) => {
               className='object-cover transition-transform duration-300 ease-in-out hover:scale-105'
               sizes='(max-width: 640px) 96px, (max-width: 768px) 128px, 144px'
             />
+          </div>
+        ) : (
+          <div className='flex-shrink-0 w-24 h-20 sm:w-32 sm:h-24 md:w-36 md:h-28 bg-gray-100 rounded-md border border-gray-200 flex items-center justify-center text-gray-400'>
+            <div className='flex flex-col items-center gap-1'>
+              <ImageOff className='w-5 h-5' />
+              <span className='text-[10px] sm:text-xs'>Ảnh lỗi</span>
+            </div>
           </div>
         )}
 

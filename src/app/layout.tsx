@@ -13,8 +13,11 @@ const beVietnamPro = Be_Vietnam_Pro({
 })
 
 export const metadata: Metadata = {
-  title: 'N.T.Hieu - Vài thứ hay ho',
-  description: 'Blog cá nhân của tôi - Trên thông thiên văn, dưới tường địa lý'
+  title: 'Simple Feed',
+  description: 'Những gì tôi đọc, xem và học được.',
+  icons: {
+    icon: '/favicon.ico'
+  }
 }
 
 export default function RootLayout({

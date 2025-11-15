@@ -16,14 +16,37 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   // Đồng bộ với BE
   const tabs = [
-    { label: 'Tổng quan', key: 'tong-quan' },
-    { label: 'Kinh Tế', key: 'kinh-te' },
-    { label: 'Công Nghệ', key: 'cong-nghe' },
-    { label: 'Doanh Nghiệp', key: 'doanh-nghiep' },
-    { label: 'Thế Giới', key: 'the-gioi' },
-    { label: 'Thời Sự', key: 'thoi-su' },
-    { label: 'Giải Trí', key: 'giai-tri' },
-    { label: 'Giáo Dục', key: 'giao-duc' }
+    { label: 'Tổng quan', key: 'tong-quan', description: 'Tất cả tin tức' },
+    {
+      label: 'Kinh Tế',
+      key: 'kinh-te-tai-chinh',
+      description: 'Kinh doanh, tài chính, chứng khoán, BĐS'
+    },
+    {
+      label: 'Công Nghệ',
+      key: 'cong-nghe-khoa-hoc',
+      description: 'Công nghệ, khoa học, chuyển đổi số'
+    },
+    {
+      label: 'Thời Sự',
+      key: 'thoi-su-the-gioi',
+      description: 'Tin trong nước, quốc tế, pháp luật'
+    },
+    {
+      label: 'Văn Hóa',
+      key: 'van-hoa-giai-tri',
+      description: 'Giải trí, văn hóa, du lịch'
+    },
+    {
+      label: 'Giáo Dục & Sức Khỏe',
+      key: 'giao-duc-suc-khoe',
+      description: 'Giáo dục, y tế, đời sống trẻ'
+    },
+    {
+      label: 'Thể Thao & Đời Sống',
+      key: 'the-thao-doi-song',
+      description: 'Thể thao, ô tô, đời sống'
+    }
   ]
 
   return (
