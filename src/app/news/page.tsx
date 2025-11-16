@@ -23,8 +23,15 @@ export default function FinancialNewsLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  // Truyền category vào hook
-  const { data: news, isLoading } = useViewNews({ category: activeTab, limit: 30 })
+  // ✅ Fix: Giảm limit mặc định để load nhanh hơn
+  const {
+    data: news,
+    isLoading,
+    error
+  } = useViewNews({
+    category: activeTab,
+    limit: 20
+  })
 
   const currentTime = useCurrentTime()
   const { isClient, weather, location, changeLocation, availableLocations } = useWeather()
@@ -48,8 +55,31 @@ export default function FinancialNewsLayout() {
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab)
-    // Scroll to top khi đổi tab
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // ✅ Fix: Render different states
+  const renderNewsContent = () => {
+    if (error) {
+      return (
+        <div className='text-center py-12'>
+          <div className='text-red-500 mb-2'>❌ Có lỗi xảy ra khi tải tin tức</div>
+          <button onClick={() => window.location.reload()} className='text-sm text-blue-600 hover:underline'>
+            Thử lại
+          </button>
+        </div>
+      )
+    }
+
+    if (isLoading) {
+      return [...Array(10)].map((_, i) => <NewsArticleSkeleton key={i} />)
+    }
+
+    if (!news || news.length === 0) {
+      return <div className='text-center py-12 text-gray-500'>Không có bài viết nào trong danh mục này</div>
+    }
+
+    return news.map((article, i) => <NewsArticle key={`${article.link}-${i}`} article={article} />)
   }
 
   return (
@@ -76,15 +106,7 @@ export default function FinancialNewsLayout() {
             setIsMobileMenuOpen={setIsMobileMenuOpen}
           />
 
-          <div className='px-4 md:px-6 lg:px-8 py-6 md:py-8 space-y-4 md:space-y-6'>
-            {isLoading ? (
-              [...Array(10)].map((_, i) => <NewsArticleSkeleton key={i} />)
-            ) : news && news.length > 0 ? (
-              news.map((article, i) => <NewsArticle key={i} article={article} />)
-            ) : (
-              <div className='text-center py-12 text-gray-500'>Không có bài viết nào trong danh mục này</div>
-            )}
-          </div>
+          <div className='px-4 md:px-6 lg:px-8 py-6 md:py-8 space-y-4 md:space-y-6'>{renderNewsContent()}</div>
         </div>
 
         {/* Sidebar - Desktop */}

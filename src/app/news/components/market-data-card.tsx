@@ -1,6 +1,6 @@
 import { MarketItem } from '@/types/news'
 import { formatDate } from '@/utils/date-helpers'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 interface MarketDataCardProps {
   currentTime: Date
@@ -24,15 +24,25 @@ const TABS: Tab[] = [
 export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData }) => {
   const { day, month, year } = formatDate(currentTime)
   const [activeTab, setActiveTab] = useState<TabType>('stocks')
+  const [isClient, setIsClient] = useState(false)
+
+  // Chỉ format time ở client-side để tránh hydration mismatch
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Memoize formatted time để tránh tính toán lại mỗi render
   const formattedTime = useMemo(() => {
+    if (!isClient) {
+      // Trả về placeholder cho server-side render
+      return '--:-- --/--/----'
+    }
     const hours = currentTime.getHours().toString().padStart(2, '0')
     const minutes = currentTime.getMinutes().toString().padStart(2, '0')
     const dayStr = day.toString().padStart(2, '0')
     const monthStr = month.toString().padStart(2, '0')
     return `${hours}:${minutes} ${dayStr}/${monthStr}/${year}`
-  }, [currentTime, day, month, year])
+  }, [isClient, currentTime, day, month, year])
 
   // Component con cho tab button để tránh lặp lại code
   const TabButton = ({ tab }: { tab: Tab }) => {

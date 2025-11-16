@@ -25,7 +25,11 @@ const nextConfig: NextConfig = {
       'i1-thethao.vnecdn.net',
       'i1-dulich.vnecdn.net',
       'i1-giadinh.vnecdn.net',
-      'vcdn1-thethao.vnecdn.net'
+      'vcdn1-thethao.vnecdn.net',
+      'vcdn1-vnexpress.vnecdn.net',
+      'vcdn1-giaitri.vnecdn.net',
+      'vcdn1-suckhoe.vnecdn.net',
+      'icdn.dantri.com.vn'
     ]
   }
 }
