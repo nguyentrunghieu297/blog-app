@@ -13,7 +13,7 @@ const beVietnamPro = Be_Vietnam_Pro({
 })
 
 export const metadata: Metadata = {
-  title: 'Simple Feed',
+  title: 'Vài thứ hay ho',
   description: 'Những gì tôi đọc, xem và học được.',
   icons: {
     icon: '/favicon.ico'

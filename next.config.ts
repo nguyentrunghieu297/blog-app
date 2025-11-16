@@ -29,7 +29,9 @@ const nextConfig: NextConfig = {
       'vcdn1-vnexpress.vnecdn.net',
       'vcdn1-giaitri.vnecdn.net',
       'vcdn1-suckhoe.vnecdn.net',
-      'icdn.dantri.com.vn'
+      'icdn.dantri.com.vn',
+      'vcdn1-kinhdoanh.vnecdn.net',
+      'vcdn1-dulich.vnecdn.net'
     ]
   }
 }

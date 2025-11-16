@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import { TrendingUp, TrendingDown } from 'lucide-react'
 import { formatDate } from '@/utils/date-helpers'
 import { SectorItem } from '@/types/news'
@@ -9,17 +11,29 @@ interface SectorIndicesProps {
 }
 
 export const SectorIndices: React.FC<SectorIndicesProps> = ({ currentTime, sectorData }) => {
+  const [clientTime, setClientTime] = useState<Date | null>(null)
+
+  useEffect(() => {
+    setClientTime(new Date()) // đảm bảo giờ lấy đúng phía client
+  }, [])
+
   const { day, month, year } = formatDate(currentTime)
 
   return (
     <div>
       <div className='flex items-center justify-between mb-5'>
         <h3 className='font-semibold text-base'>Chỉ số ngành</h3>
+
         <span className='text-xs text-gray-500'>
-          {currentTime.getHours().toString().padStart(2, '0')}:{currentTime.getMinutes().toString().padStart(2, '0')}{' '}
-          {day.toString().padStart(2, '0')}/{month.toString().padStart(2, '0')}/{year}
+          {clientTime
+            ? `${clientTime.getHours().toString().padStart(2, '0')}:${clientTime
+                .getMinutes()
+                .toString()
+                .padStart(2, '0')} ${day}/${month}/${year}`
+            : '--:--'}
         </span>
       </div>
+
       <div className='space-y-4'>
         {sectorData.map((sector, index) => (
           <div key={index} className='flex items-center justify-between'>
