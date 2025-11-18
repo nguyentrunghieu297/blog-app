@@ -23,7 +23,7 @@ const TABS: Tab[] = [
 
 export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData }) => {
   const { day, month, year } = formatDate(currentTime)
-  const [activeTab, setActiveTab] = useState<TabType>('stocks')
+  const [activeTab, setActiveTab] = useState<TabType>('agriculture')
   const [isClient, setIsClient] = useState(false)
 
   // Chỉ format time ở client-side để tránh hydration mismatch
