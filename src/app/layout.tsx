@@ -1,15 +1,23 @@
-import { Be_Vietnam_Pro } from 'next/font/google'
+import { Be_Vietnam_Pro, Merriweather } from 'next/font/google'
 import { Footer } from '@/components/Footer'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import QueryProvider from '@/lib/react-query/query-provider'
 import '@/styles/globals.css'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ['latin'],
   weight: ['400', '600', '700'], // tuỳ độ đậm bạn muốn dùng
   display: 'swap',
   variable: '--font-be-vietnam' // tùy chọn nếu muốn dùng với class
+})
+
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['400', '700'], // tuỳ độ đậm bạn muốn dùng
+  display: 'swap',
+  variable: '--font-merriweather' // tùy chọn nếu muốn dùng với class
 })
 
 export const metadata: Metadata = {
@@ -27,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={beVietnamPro.className} suppressHydrationWarning>
+      <body className={merriweather.className} suppressHydrationWarning>
         <QueryProvider>
           <Navbar />
           <main className='p-1 md:p-4 max-w-[calc(100vw)] sm:max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] lg:max-w-[calc(100vw-9rem)] xl:max-w-[calc(100vw-12rem)] mx-auto min-h-[calc(100vh-126px)]'>
