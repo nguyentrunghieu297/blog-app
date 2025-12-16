@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { marked } from 'marked'
@@ -6,6 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { useEffect } from 'react'
+import { createHeadingId } from '@/utils'
 import type { BlogPost as PostBLog, RelatedPost } from '@/types/blog'
 
 interface BlogPostProps {
@@ -13,8 +16,74 @@ interface BlogPostProps {
   relatedPosts: RelatedPost[]
 }
 
+// Cấu hình marked với custom renderer
+const renderer = new marked.Renderer()
+
+renderer.heading = function ({ tokens, depth }) {
+  const text = this.parser.parseInline(tokens)
+  const rawText = tokens
+    .map((t) => {
+      if ('text' in t) return t.text
+      if ('raw' in t) return t.raw
+      return ''
+    })
+    .join('')
+  const id = createHeadingId(rawText)
+
+  return `<h${depth} id="${id}">${text}</h${depth}>\n`
+}
+
+// Cấu hình marked
+marked.setOptions({
+  renderer: renderer,
+  gfm: true,
+  breaks: false
+})
+
 export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
   const postContent = post.content ? marked(post.content.toString()) : ''
+
+  useEffect(() => {
+    // Hàm xử lý smooth scroll
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+
+      // Kiểm tra xem có phải là thẻ <a> và có href bắt đầu bằng #
+      if (target.tagName === 'A') {
+        const href = target.getAttribute('href')
+        if (href && href.startsWith('#')) {
+          e.preventDefault()
+          const targetId = href.substring(1)
+          const element = document.getElementById(targetId)
+
+          if (element) {
+            const offset = 100 // Offset để tránh header che khuất
+            const elementPosition = element.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - offset
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          }
+        }
+      }
+    }
+
+    // Thêm event listener
+    const contentDiv = document.querySelector('.blog-content')
+    if (contentDiv) {
+      contentDiv.addEventListener('click', handleClick as EventListener)
+    }
+
+    // Cleanup
+    return () => {
+      if (contentDiv) {
+        contentDiv.removeEventListener('click', handleClick as EventListener)
+      }
+    }
+  }, [postContent])
+
   return (
     <div className='min-h-screen bg-background'>
       <div className='container mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-42 py-6 md:py-8'>
@@ -72,7 +141,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
               </div>
 
               {/* Content với custom CSS classes */}
-              <div className='blog-content' dangerouslySetInnerHTML={{ __html: postContent }} />
+              <div className='blog-content scroll-smooth' dangerouslySetInnerHTML={{ __html: postContent }} />
 
               {/* Author Bio */}
               <Card className='bg-muted/50'>
