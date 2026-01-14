@@ -23,22 +23,22 @@ export const Navigation: React.FC<NavigationProps> = ({
       description: 'Kinh doanh, tài chính, chứng khoán, BĐS'
     },
     {
-      label: 'Công Nghệ',
-      key: 'cong-nghe-khoa-hoc',
-      description: 'Công nghệ, khoa học, chuyển đổi số'
-    },
-    {
       label: 'Thời Sự',
       key: 'thoi-su-the-gioi',
       description: 'Tin trong nước, quốc tế, pháp luật'
     },
     {
-      label: 'Văn Hóa',
+      label: 'Công Nghệ',
+      key: 'cong-nghe-khoa-hoc',
+      description: 'Công nghệ, khoa học, chuyển đổi số'
+    },
+    {
+      label: 'Văn Hóa & Giáo Dục',
       key: 'van-hoa-giai-tri',
       description: 'Giải trí, văn hóa, du lịch'
     },
     {
-      label: 'Giáo Dục & Sức Khỏe',
+      label: 'Y Tế & Sức Khỏe',
       key: 'giao-duc-suc-khoe',
       description: 'Giáo dục, y tế, đời sống trẻ'
     },
