@@ -30,7 +30,7 @@ export default function FinancialNewsLayout() {
     error
   } = useViewNews({
     category: activeTab,
-    limit: 20
+    limit: 30
   })
 
   const currentTime = useCurrentTime()
