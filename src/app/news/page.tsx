@@ -17,23 +17,25 @@ import { SidebarToggle } from './components/sidebar-toggle'
 import { SidebarOverlay } from './components/sidebar-overlay'
 import useViewNews from './hook/use-view-news'
 import NewsArticleSkeleton from './components/news-article-skeleton'
+import useViewOilPrices from './hook/use-view-oil-prices'
 
 export default function FinancialNewsLayout() {
   const [activeTab, setActiveTab] = useState('all')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  // Lấy tất cả tin tức
   const {
     data: news,
     isLoading,
     error
   } = useViewNews({
-    category: 'tong-quan', // Lấy tất cả tin
+    category: 'tong-quan',
     limit: 50
   })
 
-  // Filter theo nguồn báo
+  const { data: oilPrices } = useViewOilPrices()
+  console.log('Oil Prices Data:', oilPrices)
+
   const filteredNews = useMemo(() => {
     if (!news || activeTab === 'all') return news
 
@@ -41,13 +43,11 @@ export default function FinancialNewsLayout() {
       const source = article.source?.toLowerCase() || ''
       const link = article.link?.toLowerCase() || ''
 
-      // Map nguồn báo với domain
       const sourceMap: Record<string, string[]> = {
         vnexpress: ['vnexpress'],
         tuoitre: ['tuoitre'],
         thanhnien: ['thanhnien'],
         dantri: ['dantri'],
-        vietnamnet: ['infonet.vietnamnet.vn', 'vietnamnet', 'vietnamnet.vn'],
         nguoilaodong: ['nld', 'nguoilaodong', 'nld.com.vn'],
         baolamdong: ['baolamdong']
       }
@@ -144,7 +144,8 @@ export default function FinancialNewsLayout() {
           <div className='p-6 space-y-6 sticky top-0'>
             <QuoteCard />
             <FollowTopics />
-            <MarketDataCard currentTime={currentTime} marketData={marketData} />
+            {/* ✅ Truyền oilPrices vào MarketDataCard */}
+            <MarketDataCard currentTime={currentTime} marketData={marketData} oilPrices={oilPrices} />
             <SectorIndices currentTime={currentTime} sectorData={sectorData} />
           </div>
         </div>
@@ -156,7 +157,8 @@ export default function FinancialNewsLayout() {
         <SidebarOverlay isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}>
           <QuoteCard />
           <FollowTopics />
-          <MarketDataCard currentTime={currentTime} marketData={marketData} />
+          {/* ✅ Truyền oilPrices vào MarketDataCard */}
+          <MarketDataCard currentTime={currentTime} marketData={marketData} oilPrices={oilPrices} />
           <SectorIndices currentTime={currentTime} sectorData={sectorData} />
         </SidebarOverlay>
       </div>

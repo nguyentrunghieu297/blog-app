@@ -1,13 +1,15 @@
 import { MarketItem } from '@/types/news'
+import { OilPrices, OilPricesResponse } from '@/types/oil'
 import { formatDate } from '@/utils/date-helpers'
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 
 interface MarketDataCardProps {
   currentTime: Date
   marketData: MarketItem[]
+  oilPrices?: OilPrices
 }
 
-type TabType = 'stocks' | 'gold' | 'forex' | 'agriculture'
+type TabType = 'oil' | 'gold' | 'forex' | 'agriculture'
 
 interface Tab {
   id: TabType
@@ -15,20 +17,20 @@ interface Tab {
 }
 
 const TABS: Tab[] = [
+  { id: 'oil', label: 'Xăng dầu' },
   { id: 'agriculture', label: 'Nông sản' },
-  { id: 'stocks', label: 'Chứng khoán' },
   { id: 'gold', label: 'Vàng' },
   { id: 'forex', label: 'Ngoại tệ' }
 ]
 
-export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData }) => {
+export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData, oilPrices }) => {
   const { day, month, year } = formatDate(currentTime)
-  const [activeTab, setActiveTab] = useState<TabType>('agriculture')
+  const [activeTab, setActiveTab] = useState<TabType>('oil')
   const [isClient, setIsClient] = useState(false)
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
   const tabRefs = useRef<Record<TabType, HTMLButtonElement | null>>({
+    oil: null,
     agriculture: null,
-    stocks: null,
     gold: null,
     forex: null
   })
@@ -37,7 +39,6 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
     setIsClient(true)
   }, [])
 
-  // ✅ Update indicator position khi tab thay đổi
   useEffect(() => {
     const activeButton = tabRefs.current[activeTab]
     if (activeButton) {
@@ -59,7 +60,30 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
     return `${hours}:${minutes} ${dayStr}/${monthStr}/${year}`
   }, [isClient, currentTime, day, month, year])
 
-  // ✅ Redesigned TabButton - auto width, flex grow
+  // ✅ Format thời gian cập nhật giá xăng dầu
+  const oilPriceUpdateTime = useMemo(() => {
+    if (!oilPrices?.updatedAt || !isClient) return formattedTime
+
+    const updatedDate = new Date(oilPrices.updatedAt)
+    const hours = updatedDate.getHours().toString().padStart(2, '0')
+    const minutes = updatedDate.getMinutes().toString().padStart(2, '0')
+    const day = updatedDate.getDate().toString().padStart(2, '0')
+    const month = (updatedDate.getMonth() + 1).toString().padStart(2, '0')
+    const year = updatedDate.getFullYear()
+    return `${hours}:${minutes} ${day}/${month}/${year}`
+  }, [oilPrices, isClient, formattedTime])
+
+  // ✅ Format số tiền VND
+  const formatPrice = (price: number): string => {
+    return price.toLocaleString('vi-VN')
+  }
+
+  // ✅ Format thay đổi giá
+  const formatChange = (change: number): string => {
+    const sign = change >= 0 ? '+' : ''
+    return `${sign}${change.toLocaleString('vi-VN')}`
+  }
+
   const TabButton = ({ tab }: { tab: Tab }) => {
     const isActive = activeTab === tab.id
     const handleRef = useCallback(
@@ -94,31 +118,70 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
     </div>
   )
 
-  return (
-    <div className='border-b border-gray-200 pb-6'>
-      <div className='flex items-center justify-between mb-5'>
-        <h3 className='font-semibold text-base'>Thị trường</h3>
-        <span className='text-xs text-gray-500'>{formattedTime}</span>
-      </div>
+  // ✅ Component hiển thị giá xăng dầu mới
+  const OilPriceCard = ({ item }: { item: OilPricesResponse['data']['items'][0] }) => {
+    const pvoilData = item.prices.PVOIL
+    const petrolimexData = item.prices.Petrolimex
+    const displayData = pvoilData || petrolimexData
 
-      {/* ✅ Redesigned Tab Navigation - với sliding indicator */}
-      <nav className='mb-5' aria-label='Các danh mục thị trường'>
-        <div className='flex items-stretch border-b border-gray-200 relative'>
-          {TABS.map((tab) => (
-            <TabButton key={tab.id} tab={tab} />
-          ))}
-          {/* ✅ Sliding indicator */}
-          <span
-            className='absolute bottom-0 h-0.5 bg-black transition-all duration-300 ease-out'
-            style={{
-              left: `${indicatorStyle.left}px`,
-              width: `${indicatorStyle.width}px`
-            }}
-          />
+    if (!displayData) return null
+
+    const isPositive = displayData.change >= 0
+    const changeColor = isPositive ? 'text-green-600' : 'text-red-600'
+
+    return (
+      <div className='bg-gray-50 rounded-lg p-3'>
+        <div className='text-xs text-gray-600 mb-1.5 line-clamp-1' title={item.product}>
+          {item.product}
         </div>
-      </nav>
+        <div className='text-base font-bold text-gray-900 mb-0.5'>{formatPrice(displayData.price)} đ</div>
+        <div className='flex items-center justify-between'>
+          <div className={`text-xs font-medium ${changeColor}`}>{formatChange(displayData.change)}</div>
+          {pvoilData && <div className='text-[10px] text-gray-500 font-medium'>PVOIL</div>}
+          {!pvoilData && petrolimexData && <div className='text-[10px] text-gray-500 font-medium'>PTL</div>}
+        </div>
+      </div>
+    )
+  }
 
-      {/* Market data display */}
+  // ✅ Render nội dung theo tab
+  const renderContent = () => {
+    if (activeTab === 'oil') {
+      if (!oilPrices?.items) {
+        return (
+          <div className='bg-gray-50 rounded-lg p-4 text-center text-sm text-gray-500'>
+            Đang cập nhật giá xăng dầu...
+          </div>
+        )
+      }
+
+      const items = oilPrices.items
+
+      return (
+        <div className='space-y-3'>
+          <div className='grid grid-cols-2 gap-3'>
+            {items.slice(0, 2).map((item, index) => (
+              <OilPriceCard key={`oil-${index}`} item={item} />
+            ))}
+          </div>
+          <div className='grid grid-cols-2 gap-3'>
+            {items.slice(2, 4).map((item, index) => (
+              <OilPriceCard key={`oil-${index + 2}`} item={item} />
+            ))}
+          </div>
+          {items.length > 4 && (
+            <div className='grid grid-cols-2 gap-3'>
+              {items.slice(4, 6).map((item, index) => (
+                <OilPriceCard key={`oil-${index + 4}`} item={item} />
+              ))}
+            </div>
+          )}
+        </div>
+      )
+    }
+
+    // Hiển thị dữ liệu chứng khoán cho các tab khác
+    return (
       <div className='space-y-3'>
         <div className='grid grid-cols-2 gap-3'>
           {marketData.slice(0, 2).map((item, index) => (
@@ -131,6 +194,34 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
           ))}
         </div>
       </div>
+    )
+  }
+
+  const displayTime = activeTab === 'oil' ? oilPriceUpdateTime : formattedTime
+
+  return (
+    <div className='border-b border-gray-200 pb-6'>
+      <div className='flex items-center justify-between mb-5'>
+        <h3 className='font-semibold text-base'>Thị trường</h3>
+        <span className='text-xs text-gray-500'>{displayTime}</span>
+      </div>
+
+      <nav className='mb-5' aria-label='Các danh mục thị trường'>
+        <div className='flex items-stretch border-b border-gray-200 relative'>
+          {TABS.map((tab) => (
+            <TabButton key={tab.id} tab={tab} />
+          ))}
+          <span
+            className='absolute bottom-0 h-0.5 bg-black transition-all duration-300 ease-out'
+            style={{
+              left: `${indicatorStyle.left}px`,
+              width: `${indicatorStyle.width}px`
+            }}
+          />
+        </div>
+      </nav>
+
+      {renderContent()}
     </div>
   )
 }

@@ -3,7 +3,9 @@
 export type ApiResponse<T> = {
   data: T
   message?: string
-  status: number
+  status?: number
+  success: boolean
+  cached?: boolean
 }
 
 export interface RelatedPost {
