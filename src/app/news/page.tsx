@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Header } from './components/header'
 import { Navigation } from './components/navigation'
 import { NewsArticle } from './components/news-article'
@@ -19,19 +19,43 @@ import useViewNews from './hook/use-view-news'
 import NewsArticleSkeleton from './components/news-article-skeleton'
 
 export default function FinancialNewsLayout() {
-  const [activeTab, setActiveTab] = useState('tong-quan')
+  const [activeTab, setActiveTab] = useState('all')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  // ✅ Fix: Giảm limit mặc định để load nhanh hơn
+  // Lấy tất cả tin tức
   const {
     data: news,
     isLoading,
     error
   } = useViewNews({
-    category: activeTab,
-    limit: 30
+    category: 'tong-quan', // Lấy tất cả tin
+    limit: 50
   })
+
+  // Filter theo nguồn báo
+  const filteredNews = useMemo(() => {
+    if (!news || activeTab === 'all') return news
+
+    return news.filter((article) => {
+      const source = article.source?.toLowerCase() || ''
+      const link = article.link?.toLowerCase() || ''
+
+      // Map nguồn báo với domain
+      const sourceMap: Record<string, string[]> = {
+        vnexpress: ['vnexpress'],
+        tuoitre: ['tuoitre'],
+        thanhnien: ['thanhnien'],
+        dantri: ['dantri'],
+        vietnamnet: ['infonet.vietnamnet.vn', 'vietnamnet', 'vietnamnet.vn'],
+        nguoilaodong: ['nld', 'nguoilaodong', 'nld.com.vn'],
+        baolamdong: ['baolamdong']
+      }
+
+      const keywords = sourceMap[activeTab] || []
+      return keywords.some((keyword) => source.includes(keyword) || link.includes(keyword))
+    })
+  }, [news, activeTab])
 
   const currentTime = useCurrentTime()
   const { isClient, weather, location, changeLocation, availableLocations } = useWeather()
@@ -58,7 +82,6 @@ export default function FinancialNewsLayout() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // ✅ Fix: Render different states
   const renderNewsContent = () => {
     if (error) {
       return (
@@ -75,11 +98,18 @@ export default function FinancialNewsLayout() {
       return [...Array(10)].map((_, i) => <NewsArticleSkeleton key={i} />)
     }
 
-    if (!news || news.length === 0) {
-      return <div className='text-center py-12 text-gray-500'>Không có bài viết nào trong danh mục này</div>
+    if (!filteredNews || filteredNews.length === 0) {
+      return (
+        <div className='text-center py-12'>
+          <div className='text-gray-500 mb-2'>Không tìm thấy bài viết từ nguồn này</div>
+          <button onClick={() => setActiveTab('all')} className='text-sm text-blue-600 hover:underline'>
+            Xem tất cả nguồn
+          </button>
+        </div>
+      )
     }
 
-    return news.map((article, i) => <NewsArticle key={`${article.link}-${i}`} article={article} />)
+    return filteredNews.map((article, i) => <NewsArticle key={`${article.link}-${i}`} article={article} />)
   }
 
   return (

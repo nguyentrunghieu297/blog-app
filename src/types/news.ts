@@ -28,6 +28,7 @@ export interface NewsArticle {
   title: string
   description: string
   link: string
+  source: string
   pubDate: string
   sourceIcon: string
   sourceName: string
