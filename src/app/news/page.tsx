@@ -18,6 +18,7 @@ import { SidebarOverlay } from './components/sidebar-overlay'
 import useViewNews from './hook/use-view-news'
 import NewsArticleSkeleton from './components/news-article-skeleton'
 import useViewOilPrices from './hook/use-view-oil-prices'
+import useViewGoldPrices from './hook/use-view-gold-prices'
 
 export default function FinancialNewsLayout() {
   const [activeTab, setActiveTab] = useState('all')
@@ -34,7 +35,7 @@ export default function FinancialNewsLayout() {
   })
 
   const { data: oilPrices } = useViewOilPrices()
-  console.log('Oil Prices Data:', oilPrices)
+  const { data: goldPrices } = useViewGoldPrices()
 
   const filteredNews = useMemo(() => {
     if (!news || activeTab === 'all') return news
@@ -145,7 +146,12 @@ export default function FinancialNewsLayout() {
             <QuoteCard />
             <FollowTopics />
             {/* ✅ Truyền oilPrices vào MarketDataCard */}
-            <MarketDataCard currentTime={currentTime} marketData={marketData} oilPrices={oilPrices} />
+            <MarketDataCard
+              currentTime={currentTime}
+              marketData={marketData}
+              oilPrices={oilPrices}
+              goldPrices={goldPrices}
+            />
             <SectorIndices currentTime={currentTime} sectorData={sectorData} />
           </div>
         </div>
@@ -158,7 +164,12 @@ export default function FinancialNewsLayout() {
           <QuoteCard />
           <FollowTopics />
           {/* ✅ Truyền oilPrices vào MarketDataCard */}
-          <MarketDataCard currentTime={currentTime} marketData={marketData} oilPrices={oilPrices} />
+          <MarketDataCard
+            currentTime={currentTime}
+            marketData={marketData}
+            oilPrices={oilPrices}
+            goldPrices={goldPrices}
+          />
           <SectorIndices currentTime={currentTime} sectorData={sectorData} />
         </SidebarOverlay>
       </div>

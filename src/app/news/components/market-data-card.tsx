@@ -1,12 +1,15 @@
+import { GoldPrices } from '@/types/gold'
 import { MarketItem } from '@/types/news'
 import { OilPrices, OilPricesResponse } from '@/types/oil'
 import { formatDate } from '@/utils/date-helpers'
+import { ChevronsDown, ChevronsUp } from 'lucide-react'
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 
 interface MarketDataCardProps {
   currentTime: Date
   marketData: MarketItem[]
   oilPrices?: OilPrices
+  goldPrices?: GoldPrices
 }
 
 type TabType = 'oil' | 'gold' | 'forex' | 'agriculture'
@@ -23,7 +26,7 @@ const TABS: Tab[] = [
   { id: 'forex', label: 'Ngoại tệ' }
 ]
 
-export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData, oilPrices }) => {
+export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData, oilPrices, goldPrices }) => {
   const { day, month, year } = formatDate(currentTime)
   const [activeTab, setActiveTab] = useState<TabType>('oil')
   const [isClient, setIsClient] = useState(false)
@@ -136,9 +139,47 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
         </div>
         <div className='text-base font-bold text-gray-900 mb-0.5'>{formatPrice(displayData.price)} đ</div>
         <div className='flex items-center justify-between'>
-          <div className={`text-xs font-medium ${changeColor}`}>{formatChange(displayData.change)}</div>
+          <div className={`text-xs font-medium ${changeColor}`}>
+            {formatChange(displayData.change)} đ
+            {isPositive ? (
+              <ChevronsUp className='ml-1 inline w-3 h-3 mr-1' />
+            ) : (
+              <ChevronsDown className='ml-1 inline w-3 h-3 mr-1' />
+            )}{' '}
+          </div>
           {pvoilData && <div className='text-[10px] text-gray-500 font-medium'>PVOIL</div>}
           {!pvoilData && petrolimexData && <div className='text-[10px] text-gray-500 font-medium'>PTL</div>}
+        </div>
+      </div>
+    )
+  }
+
+  const normalizeGoldPrice = (value: number) => {
+    // Nếu số quá lớn → chia về nghìn
+    if (value > 1_000_000) {
+      return Math.round(value / 1000)
+    }
+    return value
+  }
+
+  const GoldPriceCard = ({ item }: { item: GoldPrices['items'][0] }) => {
+    const buyPrice = normalizeGoldPrice(item.buy.price)
+    const buyChange = normalizeGoldPrice(item.buy.change)
+    const isPositive = buyChange >= 0
+
+    return (
+      <div className='bg-gray-50 rounded-lg p-3'>
+        <div className='text-sm font-medium text-gray-900 mb-1 line-clamp-1'>{item.brand}</div>
+
+        <div className='text-lg font-bold text-gray-900'>{formatPrice(buyPrice)} m</div>
+
+        <div className={`text-xs font-medium ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+          {formatChange(buyChange)} m
+          {isPositive ? (
+            <ChevronsUp className='ml-1 inline w-3 h-3 mr-1' />
+          ) : (
+            <ChevronsDown className='ml-1 inline w-3 h-3 mr-1' />
+          )}
         </div>
       </div>
     )
@@ -176,6 +217,22 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
               ))}
             </div>
           )}
+        </div>
+      )
+    }
+
+    if (activeTab === 'gold') {
+      if (!goldPrices?.items?.length) {
+        return (
+          <div className='bg-gray-50 rounded-lg p-4 text-center text-sm text-gray-500'>Đang cập nhật giá vàng...</div>
+        )
+      }
+
+      return (
+        <div className='grid grid-cols-2 gap-3'>
+          {goldPrices.items.slice(0, 6).map((item, index) => (
+            <GoldPriceCard key={`gold-${index}`} item={item} />
+          ))}
         </div>
       )
     }
