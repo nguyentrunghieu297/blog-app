@@ -1,3 +1,5 @@
+import { CURRENCY_NAMES } from '@/constants'
+import { CurrencyItem, ExchangeRateData } from '@/types/forex'
 import { GoldPrices } from '@/types/gold'
 import { MarketItem } from '@/types/news'
 import { OilPrices, OilPricesResponse } from '@/types/oil'
@@ -10,6 +12,7 @@ interface MarketDataCardProps {
   marketData: MarketItem[]
   oilPrices?: OilPrices
   goldPrices?: GoldPrices
+  forexData?: ExchangeRateData
 }
 
 type TabType = 'oil' | 'gold' | 'forex' | 'agriculture'
@@ -26,7 +29,13 @@ const TABS: Tab[] = [
   { id: 'forex', label: 'Ngoại tệ' }
 ]
 
-export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, marketData, oilPrices, goldPrices }) => {
+export const MarketDataCard: React.FC<MarketDataCardProps> = ({
+  currentTime,
+  marketData,
+  oilPrices,
+  goldPrices,
+  forexData
+}) => {
   const { day, month, year } = formatDate(currentTime)
   const [activeTab, setActiveTab] = useState<TabType>('oil')
   const [isClient, setIsClient] = useState(false)
@@ -41,6 +50,8 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
   useEffect(() => {
     setIsClient(true)
   }, [])
+
+  console.log('forexData in MarketDataCard: ', forexData)
 
   useEffect(() => {
     const activeButton = tabRefs.current[activeTab]
@@ -137,10 +148,10 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
         <div className='text-xs text-gray-600 mb-1.5 line-clamp-1' title={item.product}>
           {item.product}
         </div>
-        <div className='text-base font-bold text-gray-900 mb-0.5'>{formatPrice(displayData.price)} đ</div>
+        <div className='text-base font-bold text-gray-900 mb-0.5'>{formatPrice(displayData.price)} đ/Lít</div>
         <div className='flex items-center justify-between'>
           <div className={`text-xs font-medium ${changeColor}`}>
-            {formatChange(displayData.change)} đ
+            {formatChange(displayData.change)} đ/Lít
             {isPositive ? (
               <ChevronsUp className='ml-1 inline w-3 h-3 mr-1' />
             ) : (
@@ -184,6 +195,88 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
       </div>
     )
   }
+
+  const ForexPriceCard = ({ item }: { item: CurrencyItem }) => {
+    const hasBuyPrice = item.buy.price > 0
+    const buyIsPositive = item.buy.change >= 0
+    const sellIsPositive = item.sell.change >= 0
+
+    // ✅ Lấy tên đầy đủ
+    const fullName = CURRENCY_NAMES[item.code] || item.name
+
+    return (
+      <div className='bg-gray-50 rounded-lg p-3.5'>
+        {/* Header với mã và tên đầy đủ */}
+        <div className='mb-3'>
+          <div className='text-xs font-semibold text-gray-900'>
+            {fullName} - {item.name}
+          </div>
+        </div>
+
+        {hasBuyPrice ? (
+          <div className='space-y-2.5'>
+            {/* Giá mua */}
+            <div>
+              <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Mua</div>
+              <div className='flex items-baseline justify-between'>
+                <div className='text-lg font-bold text-gray-900'>{formatPrice(item.buy.price)}</div>
+                <div
+                  className={`text-xs font-semibold flex items-center gap-0.5 ${buyIsPositive ? 'text-green-600' : 'text-red-600'}`}
+                >
+                  {buyIsPositive ? <ChevronsUp className='w-3 h-3' /> : <ChevronsDown className='w-3 h-3' />}
+                  {formatChange(item.buy.change)}
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className='border-t border-gray-300' />
+
+            {/* Giá bán */}
+            <div>
+              <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Bán</div>
+              <div className='flex items-baseline justify-between'>
+                <div className='text-lg font-bold text-gray-900'>{formatPrice(item.sell.price)}</div>
+                <div
+                  className={`text-xs font-semibold flex items-center gap-0.5 ${sellIsPositive ? 'text-green-600' : 'text-red-600'}`}
+                >
+                  {sellIsPositive ? <ChevronsUp className='w-3 h-3' /> : <ChevronsDown className='w-3 h-3' />}
+                  {formatChange(item.sell.change)}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          // Chỉ hiển thị giá bán
+          <div>
+            <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Bán</div>
+            <div className='flex items-baseline justify-between'>
+              <div className='text-xl font-bold text-gray-900'>{formatPrice(item.sell.price)}</div>
+              <div
+                className={`text-sm font-semibold flex items-center gap-0.5 ${sellIsPositive ? 'text-green-600' : 'text-red-600'}`}
+              >
+                {sellIsPositive ? <ChevronsUp className='w-3.5 h-3.5' /> : <ChevronsDown className='w-3.5 h-3.5' />}
+                {formatChange(item.sell.change)}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Thêm vào trong component MarketDataCard
+  const forexUpdateTime = useMemo(() => {
+    if (!forexData?.items?.updatedAt || !isClient) return formattedTime
+
+    const updatedDate = new Date(forexData.items.updatedAt)
+    const hours = updatedDate.getHours().toString().padStart(2, '0')
+    const minutes = updatedDate.getMinutes().toString().padStart(2, '0')
+    const day = updatedDate.getDate().toString().padStart(2, '0')
+    const month = (updatedDate.getMonth() + 1).toString().padStart(2, '0')
+    const year = updatedDate.getFullYear()
+    return `${hours}:${minutes} ${day}/${month}/${year}`
+  }, [forexData, isClient, formattedTime])
 
   // ✅ Render nội dung theo tab
   const renderContent = () => {
@@ -237,6 +330,35 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
       )
     }
 
+    if (activeTab === 'forex') {
+      if (!forexData?.items?.items?.length) {
+        return (
+          <div className='bg-gray-50 rounded-lg p-4 text-center text-sm text-gray-500'>Đang cập nhật tỷ giá...</div>
+        )
+      }
+
+      const priorityCurrencies = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'SGD']
+      const sortedItems = [...forexData.items.items]
+        .filter((item) => item.sell.price > 0)
+        .sort((a, b) => {
+          const aIndex = priorityCurrencies.indexOf(a.code)
+          const bIndex = priorityCurrencies.indexOf(b.code)
+          if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex
+          if (aIndex !== -1) return -1
+          if (bIndex !== -1) return 1
+          return 0
+        })
+
+      return (
+        // ✅ Thêm responsive: 1 cột trên mobile nhỏ, 2 cột từ sm trở lên
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+          {sortedItems.slice(0, 6).map((item) => (
+            <ForexPriceCard key={`forex-${item.code}`} item={item} />
+          ))}
+        </div>
+      )
+    }
+
     // Hiển thị dữ liệu chứng khoán cho các tab khác
     return (
       <div className='space-y-3'>
@@ -254,17 +376,21 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({ currentTime, mar
     )
   }
 
-  const displayTime = activeTab === 'oil' ? oilPriceUpdateTime : formattedTime
-
+  const displayTime = useMemo(() => {
+    if (activeTab === 'oil') return oilPriceUpdateTime
+    if (activeTab === 'forex') return forexUpdateTime
+    return formattedTime
+  }, [activeTab, oilPriceUpdateTime, forexUpdateTime, formattedTime])
+  // Thêm responsive cho container chính
   return (
     <div className='border-b border-gray-200 pb-6'>
-      <div className='flex items-center justify-between mb-5'>
-        <h3 className='font-semibold text-base'>Thị trường</h3>
-        <span className='text-xs text-gray-500'>{displayTime}</span>
+      <div className='flex items-center justify-between mb-4'>
+        <h3 className='font-semibold text-base sm:text-lg'>Thị trường</h3>
+        <span className='text-[10px] sm:text-xs text-gray-500'>{displayTime}</span>
       </div>
 
-      <nav className='mb-5' aria-label='Các danh mục thị trường'>
-        <div className='flex items-stretch border-b border-gray-200 relative'>
+      <nav className='mb-4' aria-label='Các danh mục thị trường'>
+        <div className='flex items-stretch border-b border-gray-200 relative overflow-x-auto scrollbar-hide'>
           {TABS.map((tab) => (
             <TabButton key={tab.id} tab={tab} />
           ))}

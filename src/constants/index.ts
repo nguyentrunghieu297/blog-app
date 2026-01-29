@@ -25,6 +25,30 @@ export const PAGINATION = {
   DEFAULT_SORT_DIR: 'asc'
 }
 
+// Mapping mã tiền tệ sang tên đầy đủ
+export const CURRENCY_NAMES: Record<string, string> = {
+  USD: 'US Dollar',
+  EUR: 'Euro',
+  JPY: 'Japanese Yen',
+  KRW: 'South Korean Won',
+  SGD: 'Singapore',
+  AUD: 'Australian',
+  CAD: 'Canadian',
+  CHF: 'Swiss Franc',
+  CNY: 'Chinese Yuan',
+  DKK: 'Danish Krone',
+  GBP: 'British Pound',
+  HKD: 'Hong Kong',
+  INR: 'Indian Rupee',
+  KWD: 'Kuwaiti Dinar',
+  MYR: 'Malaysian Ringgit',
+  NOK: 'Norwegian Krone',
+  RUB: 'Russian Ruble',
+  SAR: 'Saudi Riyal',
+  SEK: 'Swedish Krona',
+  THB: 'Thai Baht'
+}
+
 // CARD CONSTANTS
 
 export const NUMBER_OF_TAGS = 3

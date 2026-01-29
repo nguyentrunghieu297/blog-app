@@ -19,6 +19,7 @@ import useViewNews from './hook/use-view-news'
 import NewsArticleSkeleton from './components/news-article-skeleton'
 import useViewOilPrices from './hook/use-view-oil-prices'
 import useViewGoldPrices from './hook/use-view-gold-prices'
+import useViewForex from './hook/use-view-forex'
 
 export default function FinancialNewsLayout() {
   const [activeTab, setActiveTab] = useState('all')
@@ -36,6 +37,7 @@ export default function FinancialNewsLayout() {
 
   const { data: oilPrices } = useViewOilPrices()
   const { data: goldPrices } = useViewGoldPrices()
+  const { data: forexPrices } = useViewForex()
 
   const filteredNews = useMemo(() => {
     if (!news || activeTab === 'all') return news
@@ -151,6 +153,7 @@ export default function FinancialNewsLayout() {
               marketData={marketData}
               oilPrices={oilPrices}
               goldPrices={goldPrices}
+              forexData={forexPrices}
             />
             <SectorIndices currentTime={currentTime} sectorData={sectorData} />
           </div>
@@ -169,6 +172,7 @@ export default function FinancialNewsLayout() {
             marketData={marketData}
             oilPrices={oilPrices}
             goldPrices={goldPrices}
+            forexData={forexPrices}
           />
           <SectorIndices currentTime={currentTime} sectorData={sectorData} />
         </SidebarOverlay>
