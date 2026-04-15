@@ -217,7 +217,7 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({
           <div className='space-y-2.5'>
             {/* Giá mua */}
             <div>
-              <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Mua</div>
+              <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Mua vào</div>
               <div className='flex items-baseline justify-between'>
                 <div className='text-lg font-bold text-gray-900'>{formatPrice(item.buy.price)}</div>
                 <div
@@ -234,7 +234,7 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({
 
             {/* Giá bán */}
             <div>
-              <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Bán</div>
+              <div className='text-[10px] text-gray-500 mb-1 uppercase tracking-wide'>Bán ra</div>
               <div className='flex items-baseline justify-between'>
                 <div className='text-lg font-bold text-gray-900'>{formatPrice(item.sell.price)}</div>
                 <div

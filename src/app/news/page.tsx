@@ -5,7 +5,6 @@ import { Header } from './components/header'
 import { Navigation } from './components/navigation'
 import { NewsArticle } from './components/news-article'
 import { QuoteCard } from './components/quote-card'
-import { FollowTopics } from './components/follow-topics'
 import { MarketDataCard } from './components/market-data-card'
 import { SectorIndices } from './components/sector-indices'
 import { useCurrentTime } from '@/hook/useCurrentTime'
@@ -146,7 +145,6 @@ export default function FinancialNewsLayout() {
         <div className='hidden xl:block w-96 bg-white border-l border-gray-200'>
           <div className='p-6 space-y-6 sticky top-0'>
             <QuoteCard />
-            <FollowTopics />
             {/* ✅ Truyền oilPrices vào MarketDataCard */}
             <MarketDataCard
               currentTime={currentTime}
@@ -165,7 +163,6 @@ export default function FinancialNewsLayout() {
         {/* Sidebar Overlay - Tablet/Mobile */}
         <SidebarOverlay isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}>
           <QuoteCard />
-          <FollowTopics />
           {/* ✅ Truyền oilPrices vào MarketDataCard */}
           <MarketDataCard
             currentTime={currentTime}
