@@ -31,12 +31,14 @@ export default function FinancialNewsLayout() {
     error
   } = useViewNews({
     category: 'tong-quan',
-    limit: 50
+    limit: 30
   })
 
   const { data: oilPrices } = useViewOilPrices()
   const { data: goldPrices } = useViewGoldPrices()
   const { data: forexPrices } = useViewForex()
+
+  console.log('Oil Prices:', oilPrices)
 
   const filteredNews = useMemo(() => {
     if (!news || activeTab === 'all') return news

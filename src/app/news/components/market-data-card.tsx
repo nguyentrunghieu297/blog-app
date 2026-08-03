@@ -51,8 +51,6 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({
     setIsClient(true)
   }, [])
 
-  console.log('forexData in MarketDataCard: ', forexData)
-
   useEffect(() => {
     const activeButton = tabRefs.current[activeTab]
     if (activeButton) {
@@ -89,13 +87,13 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({
 
   // ✅ Format số tiền VND
   const formatPrice = (price: number): string => {
-    return price.toLocaleString('vi-VN')
+    return price?.toLocaleString('vi-VN')
   }
 
   // ✅ Format thay đổi giá
   const formatChange = (change: number): string => {
     const sign = change >= 0 ? '+' : ''
-    return `${sign}${change.toLocaleString('vi-VN')}`
+    return `${sign}${change?.toLocaleString('vi-VN')}`
   }
 
   const TabButton = ({ tab }: { tab: Tab }) => {
@@ -135,12 +133,16 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({
   // ✅ Component hiển thị giá xăng dầu mới
   const OilPriceCard = ({ item }: { item: OilPricesResponse['data']['items'][0] }) => {
     const pvoilData = item.prices.PVOIL
-    const petrolimexData = item.prices.Petrolimex
-    const displayData = pvoilData || petrolimexData
+    const petrolimexData = item.prices.PETROLIMEX // ✅ sửa đúng key viết hoa
+    const source = pvoilData ? 'PVOIL' : petrolimexData ? 'PTL' : null
 
-    if (!displayData) return null
+    if (!source) return null
 
-    const isPositive = displayData.change >= 0
+    // ✅ Chuẩn hoá price/change theo đúng schema của từng nguồn
+    const price = pvoilData ? pvoilData.price : petrolimexData?.region1
+    const change = pvoilData ? pvoilData.change : undefined // Petrolimex không có dữ liệu thay đổi
+    const hasChange = typeof change === 'number'
+    const isPositive = hasChange ? change >= 0 : true
     const changeColor = isPositive ? 'text-green-600' : 'text-red-600'
 
     return (
@@ -148,18 +150,21 @@ export const MarketDataCard: React.FC<MarketDataCardProps> = ({
         <div className='text-xs text-gray-600 mb-1.5 line-clamp-1' title={item.product}>
           {item.product}
         </div>
-        <div className='text-base font-bold text-gray-900 mb-0.5'>{formatPrice(displayData.price)} đ/Lít</div>
+        <div className='text-base font-bold text-gray-900 mb-0.5'>{formatPrice(price || 0)} đ/Lít</div>
         <div className='flex items-center justify-between'>
-          <div className={`text-xs font-medium ${changeColor}`}>
-            {formatChange(displayData.change)} đ/Lít
-            {isPositive ? (
-              <ChevronsUp className='ml-1 inline w-3 h-3 mr-1' />
-            ) : (
-              <ChevronsDown className='ml-1 inline w-3 h-3 mr-1' />
-            )}{' '}
-          </div>
-          {pvoilData && <div className='text-[10px] text-gray-500 font-medium'>PVOIL</div>}
-          {!pvoilData && petrolimexData && <div className='text-[10px] text-gray-500 font-medium'>PTL</div>}
+          {hasChange ? (
+            <div className={`text-xs font-medium ${changeColor}`}>
+              {formatChange(change)} đ/Lít
+              {isPositive ? (
+                <ChevronsUp className='ml-1 inline w-3 h-3 mr-1' />
+              ) : (
+                <ChevronsDown className='ml-1 inline w-3 h-3 mr-1' />
+              )}
+            </div>
+          ) : (
+            <div className='text-xs text-gray-400'>—</div>
+          )}
+          <div className='text-[10px] text-gray-500 font-medium'>{source}</div>
         </div>
       </div>
     )

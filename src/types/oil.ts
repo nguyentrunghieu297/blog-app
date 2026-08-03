@@ -10,10 +10,14 @@ export interface OilPricesResponse {
         PVOIL?: {
           price: number
           change: number
+          region1: number
+          region2: number
         }
-        Petrolimex?: {
+        PETROLIMEX?: {
           price: number
           change: number
+          region1: number
+          region2: number
         }
       }
     }>
@@ -29,10 +33,14 @@ export interface OilPrices {
       PVOIL?: {
         price: number
         change: number
+        region1: number
+        region2: number
       }
-      Petrolimex?: {
+      PETROLIMEX?: {
         price: number
         change: number
+        region1: number
+        region2: number
       }
     }
   }>
